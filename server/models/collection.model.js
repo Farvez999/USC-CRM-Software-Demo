@@ -1,9 +1,17 @@
 const { default: mongoose } = require('mongoose');
 
 const collectionSchema = mongoose.Schema({
+    date: {
+        type: String,
+        required: [true, "Date is required"]
+    },
     purpose: {
         type: String,
         required: [true, "Purpose is required"]
+    },
+    payType: {
+        type: String,
+        required: [true, "Payment Type is required"]
     },
     discription: {
         type: String,

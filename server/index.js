@@ -32,6 +32,7 @@ app.use('/', require('./routes/pay.getway.routes'))
 app.use('/', require('./routes/expense.head.routes'))
 app.use('/', require('./routes/expense.routes'))
 app.use('/', require('./routes/collection.routes'))
+app.use('/', require('./routes/collection.head.routes'))
 app.use('/', require('./routes/loan.routes'))
 app.use('/', require('./routes/loan.head.routes'))
 

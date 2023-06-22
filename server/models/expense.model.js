@@ -1,9 +1,17 @@
 const { default: mongoose } = require('mongoose');
 
 const expenseSchema = mongoose.Schema({
+    date: {
+        type: Date,
+        required: [true, "Date is required"]
+    },
     purpose: {
         type: String,
         required: [true, "Purpose is required"]
+    },
+    expenseBy: {
+        type: String,
+        required: [true, "ExpenseBy is required"]
     },
     discription: {
         type: String,

@@ -26,15 +26,15 @@ const loanSchema = mongoose.Schema({
     },
     loanAmount: {
         type: Number,
-        required: [true, "Amount is required"],
+        required: [true, "Loan Amount is required"],
     },
     loanDue: {
         type: Number,
-        required: [true, "Amount is required"],
+        required: [true, "Loan Due is required"],
     },
     loanProvideDue: {
         type: Number,
-        required: [true, "Amount is required"],
+        required: [true, "Loan Provide Due is required"],
     },
     loanProvideStatus: {
         type: String,
