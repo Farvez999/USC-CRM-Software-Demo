@@ -11,7 +11,7 @@ const PurposeWiseReport = () => {
 
 
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/collection")
+        fetch("http://localhost:5000/collection")
             .then(response => response.json())
             .then(data => {
                 setCollectionData(data)

@@ -17,7 +17,7 @@ const CollectionDateWiseReport = () => {
 
     // Expense Api Load
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/collection")
+        fetch("http://localhost:5000/collection")
             .then(response => response.json())
             .then(data => {
                 // setFilterData(data)
@@ -27,7 +27,7 @@ const CollectionDateWiseReport = () => {
 
     // Collection Api Load
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
+        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setCourseCollectionData(data)

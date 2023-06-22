@@ -10,7 +10,7 @@ const AddExpense = () => {
     const { data: expenseHeadName = [], refetch } = useQuery({
         queryKey: ['expenseHeadName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/expense-head`);
+            const res = await fetch(`http://localhost:5000/expense-head`);
             const data = await res.json();
             return data;
         }
@@ -18,20 +18,24 @@ const AddExpense = () => {
 
     const addAdmission = (e) => {
         e.preventDefault();
+        const date = e.target.date.value;
         const voucherNo = e.target.voucherNo.value;
         const purpose = e.target.purpose.value;
+        const expenseBy = e.target.expenseBy.value;
         const amount = e.target.amount.value;
         const discription = e.target.discription.value;
 
         const personalData = {
+            date,
             voucherNo,
             purpose,
+            expenseBy,
             amount,
             discription
         }
-        console.log(voucherNo, purpose, amount, discription,);
+        console.log(date, voucherNo, purpose, expenseBy, amount, discription,);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/expense`, {
+        fetch(`http://localhost:5000/expense`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -65,6 +69,14 @@ const AddExpense = () => {
                             <div>
 
                                 <div className='flex flex-row gap-2'>
+
+                                    <div className="form-control mx-2">
+                                        <label className="label">
+                                            <span className="label-text">Date</span>
+                                        </label>
+                                        <input name="date" type="date" className="input input-sm w-full input-bordered" />
+                                    </div>
+
                                     <div className="form-control w-full">
                                         <label className="label">
                                             <span className="label-text">Voucher No</span>
@@ -91,6 +103,16 @@ const AddExpense = () => {
                                                 )
                                             }
                                         </select>
+                                    </div>
+
+                                    <div className="form-control w-full">
+                                        <label className="label">
+                                            <span className="label-text">Expense By</span>
+                                        </label>
+                                        <input type="text"
+                                            name="expenseBy"
+                                            placeholder='Enter Receive By Name'
+                                            className="input input-sm input-bordered w-full" />
                                     </div>
 
                                     <div className="form-control w-full">

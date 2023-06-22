@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
-const OtherSetting = () => {
+const PaymentTypeSetting = () => {
 
     const [payGetwayName, setPayGetwayName] = useState()
 
@@ -14,7 +14,7 @@ const OtherSetting = () => {
     const { data: payGetwaysName = [], refetch } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/pay-getway`);
+            const res = await fetch(`http://localhost:5000/pay-getway`);
             const data = await res.json();
             return data;
         }
@@ -23,7 +23,7 @@ const OtherSetting = () => {
     const handleDelete = (leads) => {
         console.log(leads);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete-pay-getway/${leads}`, {
+        fetch(`http://localhost:5000/delete-pay-getway/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -45,7 +45,7 @@ const OtherSetting = () => {
             name: payGetwayName
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/pay-getway`, {
+        fetch(`http://localhost:5000/pay-getway`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -63,11 +63,11 @@ const OtherSetting = () => {
 
     return (
         <div>
-            <h2 className='text-2xl font-bold'>Add Batch Name !</h2>
+            <h2 className='text-2xl font-bold'>Add Payment Type Name !</h2>
             <div className='m-2 text-2xl font-bold'>
                 {/* <h3 className='text-left my-2 ml-6'>Add Batch Name !</h3> */}
                 <input onChange={handleBatch} type="text" placeholder="Type Batch Name" className="input input-bordered input-md w-full max-w-xs" />
-                <button onClick={handlePaygetwayAdd} className="btn btn-md m-2">Add Batch Name</button>
+                <button onClick={handlePaygetwayAdd} className="btn btn-md m-2">Add Payment Name</button>
             </div>
             <div>
                 <div className="overflow-x-auto" style={{ height: '430px' }}>
@@ -77,7 +77,7 @@ const OtherSetting = () => {
                                 <tr>
                                     <th className='p-1 border-2'>#</th>
                                     <th className='p-1 border-2'>Date</th>
-                                    <th className='p-1 border-2'>Batch Name</th>
+                                    <th className='p-1 border-2'>Payment Type Name</th>
                                     <th className='p-1 border-2'>Action</th>
                                 </tr>
                             </thead>
@@ -107,4 +107,4 @@ const OtherSetting = () => {
     );
 };
 
-export default OtherSetting;
+export default PaymentTypeSetting;

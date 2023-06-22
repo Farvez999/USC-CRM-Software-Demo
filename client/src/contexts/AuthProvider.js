@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         try {
             if (!user?._id) {
-                axios.get("https://demo-usc-crm-server.vercel.app/logged-user", {
+                axios.get("http://localhost:5000/logged-user", {
                     headers: {
                         'content-type': 'application/json',
                         authorization: localStorage.getItem('access_token')
@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
         const password = e.target.password.value;
 
 
-        axios.post('https://demo-usc-crm-server.vercel.app/login', {
+        axios.post('http://localhost:5000/login', {
             email, password
         })
             .then(res => {
@@ -64,7 +64,7 @@ const AuthProvider = ({ children }) => {
         const user = { name: name, email: email, role: role, password: password };
 
 
-        fetch(`https://demo-usc-crm-server.vercel.app/users`, {
+        fetch(`http://localhost:5000/users`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

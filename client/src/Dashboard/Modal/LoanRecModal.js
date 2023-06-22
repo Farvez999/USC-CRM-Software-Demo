@@ -29,7 +29,7 @@ const LoanRecModal = ({ updateData, setUpdateData }) => {
 
 
 
-        axios.patch(`https://demo-usc-crm-server.vercel.app/update-loanPro-pay/${updateData._id}`, loanReceive)
+        axios.patch(`http://localhost:5000/update-loanPro-pay/${updateData._id}`, loanReceive)
             .then((data) => {
                 // console.log(data);
                 // setFilterData(data)

@@ -10,7 +10,7 @@ const Collection = () => {
     const { data: collections = [], refetch } = useQuery({
         queryKey: ['expenses'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/collection`);
+            const res = await fetch(`http://localhost:5000/collection`);
             const data = await res.json();
             return data;
         }
@@ -19,7 +19,7 @@ const Collection = () => {
 
     const handleDelete = (leads) => {
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete-collection/${leads._id}`, {
+        fetch(`http://localhost:5000/delete-collection/${leads._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -42,7 +42,7 @@ const Collection = () => {
 
     //Course Collection Api Load
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
+        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setCollectionData(data)
@@ -92,11 +92,12 @@ const Collection = () => {
     return (
         <div>
             <h2 className='text-2xl font-bold'>Total Collection!</h2>
-            <div className='border-2'>
-                <p className='text-2xl'>Total Course Collection: {totalColloction} BDT</p>
-                <p className='text-2xl'>Total Extram Collection: {totalSum} BDT</p>
+            <div className='border-2 p-2'>
+                <p className='text-1xl'>Total Course Collection: {totalColloction} BDT BDT + Total Extra Collection: {totalSum} BDT = Total Collection: {totalColloction + totalSum} BDT</p>
+                {/* <p className='text-2xl'>Total Course Collection: {totalColloction} BDT</p> */}
+                {/* <p className='text-2xl'>Total Extra Collection: {totalSum} BDT</p> */}
                 <hr></hr>
-                <p className='text-2xl'>Total Collection: {totalColloction + totalSum} BDT</p>
+                {/* <p className='text-2xl'>Total Collection: {totalColloction + totalSum} BDT</p> */}
             </div>
             <div>
                 <div className="overflow-x-auto" style={{ height: '430px' }}>
@@ -108,6 +109,7 @@ const Collection = () => {
                                     <th className='p-1 border-2'>Date</th>
                                     <th className='p-1 border-2'>Money Receipt</th>
                                     <th className='p-1 border-2'>Purpose Name</th>
+                                    <th className='p-1 border-2'>Payment Type</th>
                                     <th className='p-1 border-2'>Description</th>
                                     <th className='p-1 border-2'>Receive By</th>
                                     <th className='p-1 border-2'>Receive From</th>
@@ -122,9 +124,10 @@ const Collection = () => {
                                     collections?.collection?.map((online, i) =>
                                         <tr key={online._id}>
                                             <th className='p-1 border-2'>{i + 1}</th>
-                                            <td className='p-1 border-2'>{online?.createdAt.slice(0, -14)}</td>
+                                            <td className='p-1 border-2'>{online?.date?.slice(0, -14)}</td>
                                             <td className='p-1 border-2'>{online?.moneyReceipt}</td>
                                             <td className='p-1 border-2'>{online?.purpose}</td>
+                                            <td className='p-1 border-2'>{online?.payType}</td>
                                             <td className='p-1 border-2'>{online?.discription}</td>
                                             <td className='p-1 border-2'>{online?.receiveBy}</td>
                                             <td className='p-1 border-2'>{online?.receiveFrom}</td>

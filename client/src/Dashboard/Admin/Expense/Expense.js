@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 const Expense = () => {
 
+    const [collectionsCourse, setCollectionData] = useState([])
+
     const { data: expenses = [], refetch } = useQuery({
         queryKey: ['expenses'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/expense`);
+            const res = await fetch(`http://localhost:5000/expense`);
             const data = await res.json();
             return data;
         }
@@ -16,7 +18,7 @@ const Expense = () => {
     const handleDelete = (leads) => {
         console.log(leads._id);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete-expense/${leads._id}`, {
+        fetch(`http://localhost:5000/delete-expense/${leads._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -37,12 +39,86 @@ const Expense = () => {
         console.log(totalSum)
     }
 
+    // Total Extra Collections
+    const { data: extraCollections = [] } = useQuery({
+        queryKey: ['extraCollections'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/collection`);
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    var totalExtraCollection = 0;
+    for (var tec = 0; tec < extraCollections?.collection?.length; tec++) {
+        totalExtraCollection += extraCollections.collection[tec].amount
+        console.log(totalExtraCollection)
+    }
+    // Total Extra Collections
+
+
+    //Course Collection Api Load
+    useEffect(() => {
+        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
+            .then(response => response.json())
+            .then(data => {
+                setCollectionData(data)
+            })
+    }, [])
+
+    console.log(collectionsCourse)
+
+    //Course Collection Data
+    var resultProductDataFrist = collectionsCourse.filter(a => a.fristInstallment);
+    console.log(resultProductDataFrist)
+    // // setShow(true)
+
+    var resultProductDataTwo = collectionsCourse.filter(a => a.secondInstallment);
+    console.log(resultProductDataTwo)
+
+    var resultProductDataThird = collectionsCourse.filter(a => a.thirdInstallment);
+    console.log(resultProductDataThird)
+
+    // // const aa = [...resultProductDataFrist, ...resultProductDataTwo, ...resultProductDataThird]
+    // // setFilterData(aa)
+
+
+    var totalOne = 0;
+    for (var tsOne = 0; tsOne < resultProductDataFrist.length; tsOne++) {
+        totalOne += resultProductDataFrist[tsOne].fristInstallment
+    }
+    console.log("Sum of the array values is: ", totalOne);
+
+    var totalTwo = 0;
+    for (var tsTwo = 0; tsTwo < resultProductDataTwo.length; tsTwo++) {
+        totalTwo += resultProductDataTwo[tsTwo].secondInstallment
+    }
+
+    console.log("Sum of the array values is: ", totalTwo);
+
+    var totalThree = 0;
+    for (var tsThree = 0; tsThree < resultProductDataThird.length; tsThree++) {
+        totalThree += resultProductDataThird[tsThree].thirdInstallment
+    }
+    console.log("Sum of the array values is: ", totalThree);
+
+    const totalColloction = (totalOne + totalTwo + totalThree)
+    console.log(totalColloction)
+    // setCollectionTotal(totalColloction)
+
     return (
         <div>
             <h2 className='text-2xl font-bold my-2'>Expense!</h2>
-            <div className='flex flex-row justify-end mx-4 mb-2'>
-                <p className='text-2xl'>Total Expense: {totalSum} BDT</p>
+            <div className='border-2 p-2'>
+                <p className='text-1xl'>Total Course Collection: {totalColloction} BDT + Total Extra Collection: {totalExtraCollection} BDT - Total Expense: {totalSum} BDT = Total Cash In: {(totalColloction + totalExtraCollection) - totalSum} BDT</p>
+                {/* <p className='text-2xl'>Total Extra Collection: {totalExtraCollection} BDT</p>
+                <p className='text-2xl'>Total Expense: {totalSum} BDT</p> */}
+                <hr></hr>
+                {/* <p className='text-2xl'>Total Cash In: {(totalColloction + totalExtraCollection) - totalSum} BDT</p> */}
             </div>
+            {/* <div className='flex flex-row justify-end mx-4 mb-2'>
+                <p className='text-2xl'>Total Expense: {totalSum} BDT</p>
+            </div> */}
             <div>
                 <div className="overflow-x-auto" style={{ height: '430px' }}>
                     <form>
@@ -53,6 +129,7 @@ const Expense = () => {
                                     <th className='p-1 border-2'>Date</th>
                                     <th className='p-1 border-2'>Voucher No</th>
                                     <th className='p-1 border-2'>Purpose Name</th>
+                                    <th className='p-1 border-2'>Expense By</th>
                                     <th className='p-1 border-2'>Description</th>
                                     <th className='p-1 border-2'>Amount</th>
                                     <th className='p-1 border-2'>Action</th>
@@ -65,9 +142,10 @@ const Expense = () => {
                                     expenses?.expenses?.map((online, i) =>
                                         <tr key={online._id}>
                                             <th className='p-1 border-2'>{i + 1}</th>
-                                            <td className='p-1 border-2'>{online?.createdAt.slice(0, -14)}</td>
+                                            <td className='p-1 border-2'>{online?.date?.slice(0, -14)}</td>
                                             <td className='p-1 border-2'>{online?.voucherNo}</td>
                                             <td className='p-1 border-2'>{online?.purpose}</td>
+                                            <td className='p-1 border-2'>{online?.expenseBy}</td>
                                             <td className='p-1 border-2'>{online?.discription}</td>
                                             <td className='p-1 border-2'>{online?.amount}</td>
                                             <td className='p-1 border-2'>

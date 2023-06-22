@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ const AddCollection = () => {
     const { data: expenseHeadName = [], refetch } = useQuery({
         queryKey: ['expenseHeadName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/collection-head`);
+            const res = await fetch(`http://localhost:5000/collection-head`);
             const data = await res.json();
             return data;
         }
@@ -18,24 +18,28 @@ const AddCollection = () => {
 
     const addAdmission = (e) => {
         e.preventDefault();
+        const date = e.target.date.value;
         const moneyReceipt = e.target.moneyReceipt.value;
         const purpose = e.target.purpose.value;
+        const payType = e.target.payType.value;
         const amount = e.target.amount.value;
         const receiveBy = e.target.receiveBy.value;
         const receiveFrom = e.target.receiveFrom.value;
         const discription = e.target.discription.value;
 
         const personalData = {
+            date,
             moneyReceipt,
             purpose,
+            payType,
             amount,
             receiveBy,
             receiveFrom,
             discription
         }
-        console.log(moneyReceipt, purpose, amount, receiveBy, receiveFrom, discription,);
+        console.log(date, moneyReceipt, purpose, payType, amount, receiveBy, receiveFrom, discription,);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/collection`, {
+        fetch(`http://localhost:5000/collection`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -57,6 +61,17 @@ const AddCollection = () => {
     };
 
 
+    const { data: payGetwayName = [] } = useQuery({
+        queryKey: ['payGetwayName'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/pay-getway`);
+            const data = await res.json();
+            return data;
+        }
+    });
+    // console.log(payGetwayName)
+
+
     return (
         <div className='mt-2 w-12/12 mx-auto'>
 
@@ -69,6 +84,14 @@ const AddCollection = () => {
                             <div>
 
                                 <div className='flex flex-row gap-2'>
+
+                                    <div className="form-control mx-2">
+                                        <label className="label">
+                                            <span className="label-text">Date</span>
+                                        </label>
+                                        <input name="date" type="date" className="input input-sm w-full input-bordered" />
+                                    </div>
+
                                     <div className="form-control w-full">
                                         <label className="label">
                                             <span className="label-text">Money Receipt</span>
@@ -91,6 +114,24 @@ const AddCollection = () => {
                                                         key={user._id}
                                                         value={user.purpose}>
                                                         {user.purpose}
+                                                    </option>
+                                                )
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div className="form-control w-full">
+                                        <label className="label">
+                                            <span className="label-text">Collection Type</span>
+                                        </label>
+                                        <select name="payType" className="select select-bordered select-sm w-full">
+                                            <option disabled selected>Purpose Type</option>
+                                            {
+                                                payGetwayName?.users?.map((user) =>
+                                                    <option
+                                                        key={user._id}
+                                                        value={user.name}>
+                                                        {user.name}
                                                     </option>
                                                 )
                                             }

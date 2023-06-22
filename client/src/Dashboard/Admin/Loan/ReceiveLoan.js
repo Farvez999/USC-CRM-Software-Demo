@@ -10,7 +10,7 @@ const ReceiveLoan = () => {
     const { data: expenseHeadName = [], refetch } = useQuery({
         queryKey: ['expenseHeadName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/expense-head`);
+            const res = await fetch(`http://localhost:5000/loan-head`);
             const data = await res.json();
             return data;
         }
@@ -33,12 +33,13 @@ const ReceiveLoan = () => {
             loanReceive,
             loanAmount,
             loanDue: -1,
+            loanProvideDue: 0,
             discription,
             loanReceiveStatus: true
         }
         console.log(loanReceipt, loanPurpose, loanReceive, loanAmount, loanDue, discription,);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/loan`, {
+        fetch(`http://localhost:5000/loan`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

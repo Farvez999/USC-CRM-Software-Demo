@@ -12,7 +12,7 @@ const HeadSetting = () => {
     const { data: headsName = [], refetch } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
+            const res = await fetch(`http://localhost:5000/head`);
             const data = await res.json();
             return data;
         }
@@ -23,7 +23,7 @@ const HeadSetting = () => {
             name: headName
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/head`, {
+        fetch(`http://localhost:5000/head`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -42,7 +42,7 @@ const HeadSetting = () => {
     const handleDelete = (leads) => {
         console.log(leads);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete-head/${leads}`, {
+        fetch(`http://localhost:5000/delete-head/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

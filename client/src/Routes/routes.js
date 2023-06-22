@@ -48,7 +48,6 @@ import BatchSetting from "../Dashboard/Admin/Settings/BatchSetting";
 import CourseSetting from "../Dashboard/Admin/Settings/CourseSetting";
 import HeadSetting from "../Dashboard/Admin/Settings/HeadSetting";
 import CollectionReport from "../Dashboard/Admin/Report/CollectionReport";
-import OtherSetting from "../Dashboard/Admin/Settings/OtherSetting";
 import PayGetAccountsReport from "../Dashboard/Admin/Report/PayGetAccountsReport";
 import ExpenseHead from "../Dashboard/Admin/Expense/ExpenseHead";
 import Expense from "../Dashboard/Admin/Expense/Expense";
@@ -67,6 +66,7 @@ import AllProviderLoan from "../Dashboard/Admin/Loan/AllProviderLoan";
 import AllReceiveLoan from "../Dashboard/Admin/Loan/AllReceiveLoan";
 import CollectionHead from "../Dashboard/Admin/Collection/CollectionHead";
 import LoanHead from "../Dashboard/Admin/Loan/LoanHead";
+import PaymentTypeSetting from "../Dashboard/Admin/Settings/PaymentTypeSetting";
 
 const router = createBrowserRouter([
     {
@@ -189,8 +189,8 @@ const router = createBrowserRouter([
                 element: <HeadSetting></HeadSetting>
             },
             {
-                path: '/dashboard/setting/other',
-                element: <OtherSetting></OtherSetting>
+                path: '/dashboard/setting/payment-type',
+                element: <PaymentTypeSetting></PaymentTypeSetting>
             },
             {
                 path: '/dashboard/admin-pay-report',
