@@ -2,16 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import LoanModal from '../../Modal/LoanModal';
+import { Link } from 'react-router-dom';
 
 const AllReceiveLoan = () => {
 
     const [updateData, setUpdateData] = useState()
     const [filterData, setFilterData] = useState([])
 
+
     const { data: loans = [], refetch } = useQuery({
         queryKey: ['loans'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan?loanReceiveStatus=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan?loanReceiveStatus=true`);
             const data = await res.json();
             setFilterData(data)
             return data;
@@ -21,7 +23,7 @@ const AllReceiveLoan = () => {
     const handleDelete = (leads) => {
         console.log(leads._id);
 
-        fetch(`http://localhost:5000/delete-loan/${leads._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/delete-loan/${leads._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -40,6 +42,23 @@ const AllReceiveLoan = () => {
         setUpdateData(admission)
     }
 
+    const handleClick = (online) => {
+        console.log(online)
+        const value = online._id;
+        // setAmmoutId(value)
+        localStorage.setItem('myValue', value);
+    };
+
+    // 
+    const { data: payLoan = [] } = useQuery({
+        queryKey: ['payLoan'],
+        queryFn: async () => {
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan/pay`);
+            const data = await res.json();
+            return data;
+        }
+    });
+
     return (
         <div>
             <h1 className='text-2xl font-bold my-2'>All Receive Loan</h1>
@@ -56,8 +75,9 @@ const AllReceiveLoan = () => {
                                     <th className='p-1 border-2'>Loan Receiver Name</th>
                                     <th className='p-1 border-2'>Description</th>
                                     <th className='p-1 border-2'>Amount</th>
-                                    <th className='p-1 border-2'>Due</th>
-                                    <th className='p-1 border-2'>Action</th>
+                                    <th className='p-1 border-2'>Pay Loan</th>
+                                    <th className='p-1 border-2'>Details</th>
+                                    <th className='p-1 border-2'>Delete</th>
                                 </tr>
                             </thead>
 
@@ -65,6 +85,7 @@ const AllReceiveLoan = () => {
                                 {
                                     filterData?.loans?.length > 0 &&
                                     filterData?.loans?.map((online, i) =>
+
                                         <tr key={online._id}>
                                             <th className='p-1 border-2'>{i + 1}</th>
                                             <td className='p-1 border-2'>{online?.createdAt.slice(0, -14)}</td>
@@ -73,12 +94,20 @@ const AllReceiveLoan = () => {
                                             <td className='p-1 border-2'>{online?.loanReceive}</td>
                                             <td className='p-1 border-2'>{online?.discription}</td>
                                             <td className='p-1 border-2'>{online?.loanAmount}</td>
-                                            <td className='p-1 border-2'>{online?.loanDue === -1 ? online?.loanDue + 1 : online?.loanDue === 0 ? 'paid' : online?.loanDue}</td>
+
                                             <td className='p-1 border-2'>
-                                                <p className='btn btn-xs btn-warning' onClick={() => handleDelete(online)} >Delete</p>
                                                 <label onClick={() => handleUpdate(online)} htmlFor="loanModal" className="btn btn-xs btn-success ml-2">Loan Pay</label>
                                             </td>
+                                            <td className='p-1 border-2'>
+                                                <p className='btn btn-xs btn-warning' onClick={() => handleClick(online)}> <Link to='/dashboard/loan/pay-receive-loan'>Details</Link> </p>
+                                            </td>
+                                            <td className='p-1 border-2'>
+                                                <p className='btn btn-xs btn-danger' onClick={() => handleDelete(online)} >Delete</p>
+
+                                            </td>
+
                                         </tr>
+
                                     )
                                 }
 

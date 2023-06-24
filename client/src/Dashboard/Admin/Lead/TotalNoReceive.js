@@ -23,7 +23,7 @@ const TotalNoReceive = () => {
     const { data: totalNoReceive = [], refetch } = useQuery({
         queryKey: ['totalNoReceive',],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?noReceive=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?noReceive=true`);
             const data = await res.json();
             setFilterData(data)
             return data;
@@ -35,7 +35,7 @@ const TotalNoReceive = () => {
     const handleDelete = (noreceive) => {
         // console.log(noreceive);
 
-        fetch(`http://localhost:5000/delete/${noreceive}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/delete/${noreceive}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -55,7 +55,7 @@ const TotalNoReceive = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
             const data = await res.json();
             return data;
         }
@@ -64,7 +64,7 @@ const TotalNoReceive = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
             const data = await res.json();
             return data;
         }
@@ -73,7 +73,7 @@ const TotalNoReceive = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
             const data = await res.json();
             return data;
         }
@@ -82,7 +82,7 @@ const TotalNoReceive = () => {
     const { data: userName = [] } = useQuery({
         queryKey: ['userName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/users`);
             const data = await res.json();
             return data;
         }

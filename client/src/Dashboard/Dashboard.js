@@ -85,19 +85,19 @@ const Dashboard = () => {
         queryFn: async () => {
             if (user._id) {
                 if (user.role === 'admin') {
-                    const res = await fetch(`http://localhost:5000/leads`);
+                    const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads`);
                     const data = await res.json();
                     setFilterData(data)
                     return data;
                 }
                 else if (user.role === 'head') {
-                    const res = await fetch(`http://localhost:5000/leads/?head.name=${user.name}`);
+                    const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads/?head.name=${user.name}`);
                     const data = await res.json();
                     setFilterData(data)
                     return data;
                 }
                 else {
-                    const res = await fetch(`http://localhost:5000/leads?user.name=${user.name}`);
+                    const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?user.name=${user.name}`);
                     const data = await res.json();
                     setFilterData(data)
                     return data;
@@ -112,19 +112,19 @@ const Dashboard = () => {
         queryKey: ['admissions'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/leads?admission=true`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true`);
                 const data = await res.json();
                 setAddmissionData(data)
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/leads?admission=true&head.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true&head.name=${user.name}`);
                 const data = await res.json();
                 setAddmissionData(data)
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/leads?admission=true&user.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true&user.name=${user.name}`);
                 const data = await res.json();
                 setAddmissionData(data)
                 return data;
@@ -137,17 +137,17 @@ const Dashboard = () => {
         queryKey: ['closes'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/leads?close=true`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?close=true`);
                 const data = await res.json();
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/leads?close=true&head.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?close=true&head.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/leads?close=true&user.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?close=true&user.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
@@ -160,20 +160,20 @@ const Dashboard = () => {
         queryKey: ['todayFollowLeads'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 setTodayFollowup(data)
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 let lData = data.filter(lead => lead.head.name === user.name)
                 setTodayFollowup(lData)
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 let lData = data.filter(lead => lead.user.name === user.name)
                 setTodayFollowup(lData)
@@ -188,17 +188,17 @@ const Dashboard = () => {
         queryKey: ['onlines'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/leads?onlineInterested=true`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?onlineInterested=true`);
                 const data = await res.json();
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/leads?onlineInterested=true&head.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?onlineInterested=true&head.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/leads?onlineInterested=true&user.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?onlineInterested=true&user.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
@@ -210,17 +210,17 @@ const Dashboard = () => {
         queryKey: ['offlines'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/leads?offlineInterested=true`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?offlineInterested=true`);
                 const data = await res.json();
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/leads?offlineInterested=true&head.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?offlineInterested=true&head.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/leads?offlineInterested=true&user.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?offlineInterested=true&user.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
@@ -232,17 +232,17 @@ const Dashboard = () => {
         queryKey: ['seminarInteresteds', 'filterData'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/leads?seminarInterested=true`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?seminarInterested=true`);
                 const data = await res.json();
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/leads?seminarInterested=true&head.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?seminarInterested=true&head.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/leads?seminarInterested=true&user.name=${user.name}`, {
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?seminarInterested=true&user.name=${user.name}`, {
                     headers: { authorization: `bearer ${localStorage.getItem('accessToken')}` }
                 });
                 const data = await res.json();
@@ -256,17 +256,17 @@ const Dashboard = () => {
         queryKey: ['seminarAttends'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/leads?seminarAttend=true`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?seminarAttend=true`);
                 const data = await res.json();
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/leads?seminarAttend=true&head.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?seminarAttend=true&head.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/leads?seminarAttend=true&user.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?seminarAttend=true&user.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
@@ -278,17 +278,17 @@ const Dashboard = () => {
         queryKey: ['noReceives'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/leads?noReceive=true`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?noReceive=true`);
                 const data = await res.json();
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/leads?noReceive=true&head.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?noReceive=true&head.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/leads?noReceive=true&user.name=${user.name}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?noReceive=true&user.name=${user.name}`);
                 const data = await res.json();
                 return data;
             }

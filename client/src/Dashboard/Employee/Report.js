@@ -19,7 +19,7 @@ const Report = () => {
         queryKey: ['allleads', user],
         queryFn: async () => {
             if (user._id) {
-                const res = await fetch(`http://localhost:5000/leads/${user._id}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads/${user._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -31,7 +31,7 @@ const Report = () => {
     const { data: admissions = [] } = useQuery({
         queryKey: ['admissions'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?admission=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true`);
             const data = await res.json();
             return data;
         }
@@ -40,7 +40,7 @@ const Report = () => {
     const { data: closes = [] } = useQuery({
         queryKey: ['closes'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?close=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?close=true`);
             const data = await res.json();
 
             return data;
@@ -51,7 +51,7 @@ const Report = () => {
     const { data: todayFollowLeads = [] } = useQuery({
         queryKey: ['todayFollowLeads'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
             const data = await res.json();
             return data;
         }
@@ -60,7 +60,7 @@ const Report = () => {
     const { data: onlines = [] } = useQuery({
         queryKey: ['onlines'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?onlineInterested=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?onlineInterested=true`);
             const data = await res.json();
             return data;
         }
@@ -69,7 +69,7 @@ const Report = () => {
     const { data: offlines = [] } = useQuery({
         queryKey: ['offlines'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?offlineInterested=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?offlineInterested=true`);
             const data = await res.json();
             return data;
         }
@@ -79,7 +79,7 @@ const Report = () => {
         queryKey: ['seminarInteresteds', 'filterData'],
         queryFn: async () => {
             const res = await
-                fetch(`http://localhost:5000/leads?seminarInterested=true`, {
+                fetch(`https://demo-usc-crm-server.vercel.app/leads?seminarInterested=true`, {
                     headers: {
                         authorization: `bearer ${localStorage.getItem('accessToken')}`
                     }
@@ -92,7 +92,7 @@ const Report = () => {
     const { data: seminarAttends = [] } = useQuery({
         queryKey: ['seminarAttends'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?seminarAttend=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?seminarAttend=true`);
             const data = await res.json();
             return data;
         }
@@ -101,7 +101,7 @@ const Report = () => {
     const { data: noReceives = [] } = useQuery({
         queryKey: ['noReceives'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?noReceive=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?noReceive=true`);
             const data = await res.json();
             return data;
         }

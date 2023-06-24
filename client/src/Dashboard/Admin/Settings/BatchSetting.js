@@ -14,7 +14,7 @@ const BatchSetting = () => {
     const { data: batchsName = [], refetch } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
             const data = await res.json();
             return data;
         }
@@ -23,7 +23,7 @@ const BatchSetting = () => {
     const handleDelete = (leads) => {
         console.log(leads);
 
-        fetch(`http://localhost:5000/delete-batch/${leads}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/delete-batch/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -45,7 +45,7 @@ const BatchSetting = () => {
             name: batchName
         }
 
-        fetch(`http://localhost:5000/batch`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/batch`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

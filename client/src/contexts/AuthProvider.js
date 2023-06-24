@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
+import { useQuery } from "@tanstack/react-query";
 
 export const AuthContext = createContext()
 
@@ -8,11 +9,25 @@ const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState({});
     console.log(user);
+    const [filterData, setFilterData] = useState([])
+    console.log(filterData)
+
+    const { data: loansData = [], refetch } = useQuery({
+        queryKey: ['loansData'],
+        queryFn: async () => {
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan?loanReceiveStatus=true`);
+            const data = await res.json();
+            setFilterData(data)
+            return data;
+        }
+    });
+
+    console.log(loansData)
 
     useEffect(() => {
         try {
             if (!user?._id) {
-                axios.get("http://localhost:5000/logged-user", {
+                axios.get("https://demo-usc-crm-server.vercel.app/logged-user", {
                     headers: {
                         'content-type': 'application/json',
                         authorization: localStorage.getItem('access_token')
@@ -38,7 +53,7 @@ const AuthProvider = ({ children }) => {
         const password = e.target.password.value;
 
 
-        axios.post('http://localhost:5000/login', {
+        axios.post('https://demo-usc-crm-server.vercel.app/login', {
             email, password
         })
             .then(res => {
@@ -64,7 +79,7 @@ const AuthProvider = ({ children }) => {
         const user = { name: name, email: email, role: role, password: password };
 
 
-        fetch(`http://localhost:5000/users`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/users`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -91,6 +106,7 @@ const AuthProvider = ({ children }) => {
         signup,
         login,
         logout,
+        loansData
     }
     return (
         <AuthContext.Provider value={authInfo}>

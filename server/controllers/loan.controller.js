@@ -122,4 +122,5 @@ const updateLoanProPayById = async (req, res) => {
     }
 }
 
+
 module.exports = { addLoan, getLoan, deleteUserById, updateLoanPayById, updateLoanProPayById }

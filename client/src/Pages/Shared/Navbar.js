@@ -14,20 +14,20 @@ const Navbar = () => {
         queryKey: ['todayFollowLeads'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 setTodayFollowup(data)
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 let lData = data.filter(lead => lead.head.name === user.name)
                 setTodayFollowup(lData)
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 let lData = data.filter(lead => lead.user.name === user.name)
                 setTodayFollowup(lData)

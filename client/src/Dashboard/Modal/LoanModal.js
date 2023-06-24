@@ -1,42 +1,46 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
     console.log(updateData)
 
-    // const [loanReceive, setLoanReceive] = useState()
+    const navigate = useNavigate();
 
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        const payAmmount = e.target.payAmmount.value;
+        const loanReceipt = e.target.loanReceipt.value;
+        const discription = e.target.discription.value;
 
-        const loan = e.target.loanDue.value;
+        const personalData = {
+            payAmmount,
+            loanReceipt,
+            discription,
+            loanId: updateData._id
+        }
+        console.log(payAmmount);
 
-        // if (update.loanAmount < loan) {
-        //     console.log("Total loan amount to update Loan amount bigger than")
-        // }
-        // else if (update.loanDue < loan) {
-        //     console.log("Loan amount to update Loan amount bigger than")
-        // }
-        // else {
-        const loanReceive = {
-            loanDue: updateData.loanDue === -1 ? updateData.loanAmount - loan : updateData.loanDue - loan
-        };
-        console.log(loanReceive)
-        // }
-
-
-
-
-        axios.patch(`http://localhost:5000/update-loan-pay/${updateData._id}`, loanReceive)
-            .then((data) => {
-                // console.log(data);
-                // setFilterData(data)
-                toast.success('Loan Updates Success')
+        fetch(`https://demo-usc-crm-server.vercel.app/loan/pay`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                authorization: localStorage.getItem('access_token')
+            },
+            body: JSON.stringify(personalData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message === "Loan Pay Successfully") {
+                    navigate('/dashboard/loan/pay-receive-loan')
+                }
+                toast.success(`Database Data ${data.message}`)
+                console.log(data);
                 setUpdateData(null)
-            });
+            })
 
-    }
+    };
 
     const handleCloseBtn = () => {
         setUpdateData(null)
@@ -53,14 +57,35 @@ const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
                             <input type="text" className="input w-full input-bordered " disabled value={updateData.loanReceipt} />
                             <input type="text" disabled value={updateData.loanReceive} className="input w-full input-bordered" />
                             <input type="email" disabled value={updateData.loanAmount} className="input w-full input-bordered" />
+                            <input type="text" disabled value={updateData.loanPurpose} className="input w-full input-bordered" />
+                        </div>
+
+                        <div className="form-control w-full">
+                            <label className="label">
+                                <span className="label-text">Pay Amount</span>
+                            </label>
+                            <input name="payAmmount" type="text" className="input w-full input-bordered" />
+                        </div>
+
+                        <div className="form-control w-full">
+                            <label className="label">
+                                <span className="label-text">Loan Receipt No</span>
+                            </label>
+                            <input type="text"
+                                name="loanReceipt"
+                                placeholder='Loan Receipt No Here...'
+                                className="input input-sm input-bordered w-full" />
                         </div>
 
                         <div className='flex flex-row gap-2'>
-                            <input type="text" disabled value={updateData.loanPurpose} className="input w-full input-bordered" />
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text">Discription</span>
+                                </label>
+                                <textarea name="discription" type="text" placeholder="Discription Here....." className="textarea textarea-bordered textarea-lg w-full" />
+                            </div>
 
-                            <input name="loanDue" type="text" className="input w-full input-bordered" />
                         </div>
-
 
                         <br />
                         <input className='btn btn-accent w-full' type='submit' value="Submit" />

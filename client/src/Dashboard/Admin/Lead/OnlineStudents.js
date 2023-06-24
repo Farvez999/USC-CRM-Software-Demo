@@ -24,7 +24,7 @@ const OnlineStudents = () => {
     const { data: totalOnline = [], refetch } = useQuery({
         queryKey: ['totalOnline',],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?onlineInterested=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?onlineInterested=true`);
             const data = await res.json();
             setFilterData(data)
             return data;
@@ -36,7 +36,7 @@ const OnlineStudents = () => {
     const handleDelete = (online) => {
         // console.log(online);
 
-        fetch(`http://localhost:5000/delete/${online}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/delete/${online}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -56,7 +56,7 @@ const OnlineStudents = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
             const data = await res.json();
             return data;
         }
@@ -65,7 +65,7 @@ const OnlineStudents = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
             const data = await res.json();
             return data;
         }
@@ -74,7 +74,7 @@ const OnlineStudents = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
             const data = await res.json();
             return data;
         }
@@ -83,7 +83,7 @@ const OnlineStudents = () => {
     const { data: userName = [] } = useQuery({
         queryKey: ['userName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/users`);
             const data = await res.json();
             return data;
         }

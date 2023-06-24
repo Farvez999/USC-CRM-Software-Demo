@@ -77,7 +77,7 @@ const PaymentModal = ({ admission, setAdmission }) => {
 
         console.log(user)
 
-        axios.patch(`http://localhost:5000/update-admission-pay/${admission._id}`, user)
+        axios.patch(`https://demo-usc-crm-server.vercel.app/update-admission-pay/${admission._id}`, user)
             .then((data) => {
                 // console.log(data);
                 toast.success('Lead Updates Success')
@@ -93,7 +93,7 @@ const PaymentModal = ({ admission, setAdmission }) => {
     const { data: paygetwaysName = [] } = useQuery({
         queryKey: ['paygetwaysName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/pay-getway`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/pay-getway`);
             const data = await res.json();
             return data;
         }

@@ -27,7 +27,7 @@ const SeminarInterested = () => {
         queryFn: async () => {
             if (user._id) {
                 const res = await
-                    fetch(`http://localhost:5000/leads/?seminarInterested=true&user.name=${user.name}`, {
+                    fetch(`https://demo-usc-crm-server.vercel.app/leads/?seminarInterested=true&user.name=${user.name}`, {
                         headers: {
                             authorization: `bearer ${localStorage.getItem('accessToken')}`
                         }
@@ -50,7 +50,7 @@ const SeminarInterested = () => {
 
     // const handleUpdate = (event) => {
     //     event.preventDefault();
-    //     fetch(`http://localhost:5000/update/${sLead._id}`, {
+    //     fetch(`https://demo-usc-crm-server.vercel.app/update/${sLead._id}`, {
     //         method: 'PATCH', // or 'PUT'
     //         headers: {
     //             'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ const SeminarInterested = () => {
             seminarInterested: false
         }
 
-        fetch(`http://localhost:5000/update/${seminarInterested._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${seminarInterested._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -107,7 +107,7 @@ const SeminarInterested = () => {
             seminarInterested: false
         }
 
-        fetch(`http://localhost:5000/update/${offline._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${offline._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -129,7 +129,7 @@ const SeminarInterested = () => {
             seminarInterested: false
         }
 
-        fetch(`http://localhost:5000/update/${seminarInterested._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${seminarInterested._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -151,7 +151,7 @@ const SeminarInterested = () => {
             seminarInterested: false
         }
 
-        fetch(`http://localhost:5000/update/${seminarInterested._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${seminarInterested._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -173,7 +173,7 @@ const SeminarInterested = () => {
         }
 
 
-        fetch(`http://localhost:5000/update/${seminarInterested._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${seminarInterested._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -196,7 +196,7 @@ const SeminarInterested = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
             const data = await res.json();
             return data;
         }
@@ -205,7 +205,7 @@ const SeminarInterested = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
             const data = await res.json();
             return data;
         }
@@ -214,7 +214,7 @@ const SeminarInterested = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
             const data = await res.json();
             return data;
         }
