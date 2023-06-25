@@ -1,49 +1,50 @@
-
-import React, { Children, useContext } from 'react';
+import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
-const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
+const LoanRevModel = ({ updateData, setUpdateData, setFilterData }) => {
     console.log(updateData)
 
-    const { payLoans } = useContext(AuthContext)
+    const { revLoans } = useContext(AuthContext)
 
-    const matchingItems = payLoans?.loans?.filter((item) => item.loanId._id === updateData._id);
+    const matchingItems = revLoans?.loans?.filter((item) => item?.loanId?._id === updateData?._id);
 
-    const amounts = matchingItems?.map(item => parseInt(item.payAmmount));
+    const amounts = matchingItems?.map(item => parseInt(item.revAmmount));
     const payDue = amounts?.reduce((total, amount) => total + amount, 0);
 
+    console.log(payDue)
+
     const totalDue = updateData.loanAmount - payDue
+    console.log(totalDue)
 
     const handleChange = (event) => {
 
         let pAmount = event.target.value
         if (pAmount > totalDue) {
-            alert('Please Change your payment Amount! Payment ammount is larger in due amount!')
+            alert('Please Change your Receive Amount! Receive ammount is larger in due amount!')
             event.target.value = ""
         }
 
     }
 
-
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const payAmmount = e.target.payAmmount.value;
+        const revAmmount = e.target.revAmmount.value;
         const loanReceipt = e.target.loanReceipt.value;
         const discription = e.target.discription.value;
 
         const personalData = {
-            payAmmount,
+            revAmmount,
             loanReceipt,
             discription,
             loanId: updateData._id
         }
-        console.log(payAmmount);
+        console.log(revAmmount);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/loan/pay`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/loan/rev`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -54,7 +55,7 @@ const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
             .then(res => res.json())
             .then(data => {
                 if (data.message === "Loan Pay Successfully") {
-                    navigate('/dashboard/loan/pay-receive-loan')
+                    navigate('/dashboard/loan/rev-payable-loan')
                 }
                 toast.success(`Database Data ${data.message}`)
                 console.log(data);
@@ -66,22 +67,21 @@ const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
     const handleCloseBtn = () => {
         setUpdateData(null)
     }
+
     return (
         <>
-            <input type="checkbox" id="loanModal" className="modal-toggle" />
+            <input type="checkbox" id="loanRecModal" className="modal-toggle" />
             <div className="modal  mt-4">
                 <div className="modal-box relative">
-                    <label htmlFor="loanModal" onClick={handleCloseBtn} className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label htmlFor="loanRecModal" onClick={handleCloseBtn} className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-lg font-bold">Update Info</h3>
                     <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-2 mt-6'>
                         <div className='flex flex-row gap-2'>
                             <input type="text" className="input w-full input-bordered " disabled value={updateData.loanReceipt} />
-                            <input type="text" disabled value={updateData.loanReceive} className="input w-full input-bordered" />
+                            <input type="text" disabled value={updateData.loanProvide} className="input w-full input-bordered" />
 
                             <input type="text" disabled value={updateData.loanPurpose} className="input w-full input-bordered" />
-
                         </div>
-
 
                         <div className='flex flex-row gap-2'>
                             <div>
@@ -100,9 +100,9 @@ const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
 
                         <div className="form-control w-full">
                             <label className="label">
-                                <span className="label-text">Pay Amount</span>
+                                <span className="label-text">Receive Amount</span>
                             </label>
-                            <input onChange={handleChange} name="payAmmount" type="text" className="input input-sm w-full input-bordered" />
+                            <input onChange={handleChange} name="revAmmount" type="text" className="input input-sm w-full input-bordered" />
                         </div>
 
                         <div className="form-control w-full">
@@ -135,4 +135,4 @@ const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
     );
 };
 
-export default LoanModal;
+export default LoanRevModel;

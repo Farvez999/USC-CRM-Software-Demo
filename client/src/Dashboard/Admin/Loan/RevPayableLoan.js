@@ -1,39 +1,40 @@
-import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
 
-const PayReceiveLoan = () => {
+const RevPayableLoan = () => {
 
     const value = localStorage.getItem('myValue');
 
-    const { loansData } = useContext(AuthContext);
+    const { loansPayData } = useContext(AuthContext);
 
-    const { data: payLoan = [], refetch } = useQuery({
-        queryKey: ['payLoan'],
+    const { data: revLoan = [], refetch } = useQuery({
+        queryKey: ['revLoan'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan/pay`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan/rev`);
             const data = await res.json();
             return data;
         }
     });
 
-    const totalLoan = loansData?.loans?.filter((item) => item._id === value);
+    console.log(revLoan)
+
+    const totalLoan = loansPayData?.loans?.filter((item) => item._id === value);
     const loanAmount = totalLoan?.map(item => parseInt(item.loanAmount));
 
 
-    const matchingItems = payLoan?.loans?.filter((item) => item.loanId._id === value);
+    const matchingItems = revLoan?.loans?.filter((item) => item?.loanId?._id === value);
     console.log(matchingItems)
-    const amounts = matchingItems?.map(item => parseInt(item.payAmmount));
-    const payAmmount = amounts?.reduce((total, amount) => total + amount, 0);
+    const amounts = matchingItems?.map(item => parseInt(item.revAmmount));
+    const revAmmount = amounts?.reduce((total, amount) => total + amount, 0);
 
 
-    const tt = loanAmount - payAmmount;
-
+    const tt = loanAmount - revAmmount;
 
     return (
         <div>
-            <h1 className='text-2xl font-bold my-2'>Loan Pay Details</h1>
-            <h2 className='text-1xl font-bold my-2'>Loan Amount: {loanAmount} - Loan Pay: {payAmmount} = Loan Due: {tt}</h2>
+            <h1 className='text-2xl font-bold my-2'>Loan Receive Details: {value}</h1>
+            <h2 className='text-1xl font-bold my-2'>Loan Amount: {loanAmount} - Loan Receive: {revAmmount} = Loan Due: {tt}</h2>
 
             <table className="table w-full">
                 <thead className='text-xs sticky top-0 bg-slate-300' style={{ width: "1200px" }}>
@@ -42,9 +43,9 @@ const PayReceiveLoan = () => {
                         <th className='p-1 border-2'>Date</th>
                         <th className='p-1 border-2'>Loan Receipt No</th>
                         <th className='p-1 border-2'>Loan Purpose</th>
-                        <th className='p-1 border-2'>Loan Receiver Name</th>
+                        <th className='p-1 border-2'>Loan Payable Name</th>
                         <th className='p-1 border-2'>Description</th>
-                        <th className='p-1 border-2'>Pay Amount</th>
+                        <th className='p-1 border-2'>Receive Amount</th>
                     </tr>
                 </thead>
 
@@ -57,9 +58,9 @@ const PayReceiveLoan = () => {
                                 <td className='p-1 border-2'>{item?.createdAt.slice(0, -14)}</td>
                                 <td className='p-1 border-2'>{item?.loanReceipt}</td>
                                 <td className='p-1 border-2'>{item?.loanId?.loanPurpose}</td>
-                                <td className='p-1 border-2'>{item?.loanId?.loanReceive}</td>
+                                <td className='p-1 border-2'>{item?.loanId?.loanProvide}</td>
                                 <td className='p-1 border-2'>{item?.discription}</td>
-                                <td className='p-1 border-2'>{item?.payAmmount}</td>
+                                <td className='p-1 border-2'>{item?.revAmmount}</td>
                             </tr>
                         ))
                     ) : (
@@ -77,4 +78,4 @@ const PayReceiveLoan = () => {
     );
 };
 
-export default PayReceiveLoan;
+export default RevPayableLoan;

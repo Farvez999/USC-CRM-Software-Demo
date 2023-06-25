@@ -68,6 +68,7 @@ import CollectionHead from "../Dashboard/Admin/Collection/CollectionHead";
 import LoanHead from "../Dashboard/Admin/Loan/LoanHead";
 import PaymentTypeSetting from "../Dashboard/Admin/Settings/PaymentTypeSetting";
 import PayReceiveLoan from "../Dashboard/Admin/Loan/PayReceiveLoan";
+import RevPayableLoan from "../Dashboard/Admin/Loan/RevPayableLoan";
 
 const router = createBrowserRouter([
     {
@@ -277,6 +278,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/loan/pay-receive-loan',
                 element: <PayReceiveLoan></PayReceiveLoan>
+            },
+            {
+                path: '/dashboard/loan/rev-payable-loan',
+                element: <RevPayableLoan></RevPayableLoan>
             },
             // ________________Head Route
 

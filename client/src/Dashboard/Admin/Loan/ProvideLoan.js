@@ -20,24 +20,23 @@ const ProvideLoan = () => {
 
     const addLoanProvide = (e) => {
         e.preventDefault();
+        const date = e.target.date.value;
         const loanReceipt = e.target.loanReceipt.value;
         const loanPurpose = e.target.loanPurpose.value;
         const loanProvide = e.target.loanProvide.value;
         const loanAmount = e.target.loanAmount.value;
-        const loanDue = e.target.loanDue.value;
         const discription = e.target.discription.value;
 
         const personalData = {
+            date,
             loanReceipt,
             loanPurpose,
             loanProvide,
             loanAmount,
-            loanDue: -1,
-            loanProvideDue: -1,
             discription,
             loanProvideStatus: true
         }
-        console.log(loanReceipt, loanPurpose, loanProvide, loanAmount, loanDue, discription,);
+        console.log(loanReceipt, loanPurpose, loanProvide, loanAmount, discription,);
 
         fetch(`https://demo-usc-crm-server.vercel.app/loan`, {
             method: 'POST',
@@ -63,7 +62,7 @@ const ProvideLoan = () => {
         <div className='mt-2 w-12/12 mx-auto'>
 
             <fieldset class="border border-solid border-gray-500 p-3 mx-10">
-                <legend class="text-2xl">Loan Provide</legend>
+                <legend class="text-2xl">Loan Payable Entry</legend>
 
                 <div div >
                     <div className='my-3 mx-2'>
@@ -71,6 +70,14 @@ const ProvideLoan = () => {
                             <div>
 
                                 <div className='flex flex-row gap-2'>
+
+                                    <div className="form-control mx-2">
+                                        <label className="label">
+                                            <span className="label-text">Date</span>
+                                        </label>
+                                        <input name="date" type="date" className="input input-sm w-full input-bordered" />
+                                    </div>
+
                                     <div className="form-control w-full">
                                         <label className="label">
                                             <span className="label-text">Loan Receipt No</span>
@@ -101,7 +108,7 @@ const ProvideLoan = () => {
 
                                     <div className="form-control w-full">
                                         <label className="label">
-                                            <span className="label-text">Loan Provide</span>
+                                            <span className="label-text">Loan Payable Name</span>
                                         </label>
                                         <input type="text"
                                             name="loanProvide"
@@ -119,7 +126,7 @@ const ProvideLoan = () => {
                                             className="input input-sm input-bordered w-full" />
                                     </div>
 
-                                    <div className="form-control w-full">
+                                    {/* <div className="form-control w-full">
                                         <label className="label">
                                             <span className="label-text">Loan Due</span>
                                         </label>
@@ -127,7 +134,7 @@ const ProvideLoan = () => {
                                             name="loanDue"
                                             placeholder='Enter Loan Due'
                                             className="input input-sm input-bordered w-full" />
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 <div className='flex flex-row gap-2'>

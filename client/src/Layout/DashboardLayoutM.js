@@ -271,7 +271,7 @@ const DashboardLayoutM = () => {
 
                                         <ul className="menu text-left">
                                             <li>
-                                                <details open>
+                                                <details>
                                                     <summary>Course Report</summary>
                                                     <ul>
                                                         <li>
@@ -291,7 +291,7 @@ const DashboardLayoutM = () => {
                                                 </details>
                                             </li>
                                             <li>
-                                                <details open>
+                                                <details>
                                                     <summary>Collection</summary>
                                                     <ul>
                                                         <li>
@@ -313,7 +313,7 @@ const DashboardLayoutM = () => {
                                                 </details>
                                             </li>
                                             <li>
-                                                <details open>
+                                                <details>
                                                     <summary>Collection Report</summary>
                                                     <ul>
                                                         <li>
@@ -340,7 +340,7 @@ const DashboardLayoutM = () => {
                                                 </details>
                                             </li>
                                             <li>
-                                                <details open>
+                                                <details>
                                                     <summary>Expense</summary>
                                                     <ul>
                                                         <li>
@@ -360,7 +360,7 @@ const DashboardLayoutM = () => {
                                                 </details>
                                             </li>
                                             <li>
-                                                <details open>
+                                                <details>
                                                     <summary>Expense Report</summary>
                                                     <ul>
                                                         <li>
@@ -380,7 +380,7 @@ const DashboardLayoutM = () => {
                                                 </details>
                                             </li>
                                             <li>
-                                                <details open>
+                                                <details>
                                                     <summary>Loan</summary>
                                                     <ul>
                                                         <li>
@@ -391,22 +391,22 @@ const DashboardLayoutM = () => {
                                                         <li>
                                                             <Link to={`/dashboard/loan/provide`}>
                                                                 <img width="16" height="16" src="https://img.icons8.com/color/48/pay-date.png" alt="pay-date" />
-                                                                <span className='text-xs'>Provide Loan</span></Link>
+                                                                <span className='text-xs'>Loan Payable</span></Link>
                                                         </li>
                                                         <li>
                                                             <Link to={`/dashboard/loan/all-provide`}>
                                                                 <img width="16" height="16" src="https://img.icons8.com/officel/16/mobile-payment.png" alt="mobile-payment" />
-                                                                <span className='text-xs'>All Provide</span></Link>
+                                                                <span className='text-xs'>All Payable</span></Link>
                                                         </li>
                                                         <li>
                                                             <Link to={`/dashboard/loan/receive`}>
                                                                 <img width="16" height="16" src="https://img.icons8.com/arcade/64/health-graph.png" alt="health-graph" />
-                                                                <span className='text-xs'>Receive Loan</span></Link>
+                                                                <span className='text-xs'>Loan Receiveable</span></Link>
                                                         </li>
                                                         <li>
                                                             <Link to={`/dashboard/loan/all-receive`}>
                                                                 <img width="16" height="16" src="https://img.icons8.com/color-glass/48/download-graph-report.png" alt="download-graph-report" />
-                                                                <span className='text-xs'>All Receive</span></Link>
+                                                                <span className='text-xs'>All Receiveable</span></Link>
                                                         </li>
                                                     </ul>
                                                 </details>
@@ -417,7 +417,7 @@ const DashboardLayoutM = () => {
 
                                         <ul className="pt-4 pb-2 space-y-1 text-sm menu text-left">
                                             <li>
-                                                <details open>
+                                                <details>
                                                     <summary>Settings</summary>
                                                     <ul>
                                                         <li>

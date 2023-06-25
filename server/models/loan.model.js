@@ -1,6 +1,10 @@
 const { default: mongoose } = require('mongoose');
 
 const loanSchema = mongoose.Schema({
+    date: {
+        type: Date,
+        required: [true, "Date is required"],
+    },
     loanReceipt: {
         type: String,
         required: [true, "Loan Receipt is required"],
@@ -28,14 +32,10 @@ const loanSchema = mongoose.Schema({
         type: Number,
         required: [true, "Loan Amount is required"],
     },
-    loanDue: {
-        type: Number,
-        required: [true, "Loan Due is required"],
-    },
-    loanProvideDue: {
-        type: Number,
-        required: [true, "Loan Provide Due is required"],
-    },
+    // loanProvideDue: {
+    //     type: Number,
+    //     required: [true, "Loan Provide Due is required"],
+    // },
     loanProvideStatus: {
         type: String,
     },

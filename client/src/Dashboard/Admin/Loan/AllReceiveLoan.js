@@ -45,7 +45,6 @@ const AllReceiveLoan = () => {
     const handleClick = (online) => {
         console.log(online)
         const value = online._id;
-        // setAmmoutId(value)
         localStorage.setItem('myValue', value);
     };
 
@@ -88,7 +87,7 @@ const AllReceiveLoan = () => {
 
                                         <tr key={online._id}>
                                             <th className='p-1 border-2'>{i + 1}</th>
-                                            <td className='p-1 border-2'>{online?.createdAt.slice(0, -14)}</td>
+                                            <td className='p-1 border-2'>{online?.date?.slice(0, -14) || online?.createdAt?.slice(0, -14)}</td>
                                             <td className='p-1 border-2'>{online?.loanReceipt}</td>
                                             <td className='p-1 border-2'>{online?.loanPurpose}</td>
                                             <td className='p-1 border-2'>{online?.loanReceive}</td>

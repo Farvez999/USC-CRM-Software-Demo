@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
     const [filterData, setFilterData] = useState([])
     console.log(filterData)
 
-    const { data: loansData = [], refetch } = useQuery({
+    const { data: loansData = [] } = useQuery({
         queryKey: ['loansData'],
         queryFn: async () => {
             const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan?loanReceiveStatus=true`);
@@ -22,7 +22,32 @@ const AuthProvider = ({ children }) => {
         }
     });
 
-    console.log(loansData)
+    const { data: loansPayData = [] } = useQuery({
+        queryKey: ['loansPayData'],
+        queryFn: async () => {
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan?loanProvideStatus=true`);
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    const { data: payLoans = [] } = useQuery({
+        queryKey: ['payLoans'],
+        queryFn: async () => {
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan/pay`);
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    const { data: revLoans = [] } = useQuery({
+        queryKey: ['revLoans'],
+        queryFn: async () => {
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan/rev`);
+            const data = await res.json();
+            return data;
+        }
+    });
 
     useEffect(() => {
         try {
@@ -106,7 +131,10 @@ const AuthProvider = ({ children }) => {
         signup,
         login,
         logout,
-        loansData
+        loansData,
+        loansPayData,
+        payLoans,
+        revLoans
     }
     return (
         <AuthContext.Provider value={authInfo}>

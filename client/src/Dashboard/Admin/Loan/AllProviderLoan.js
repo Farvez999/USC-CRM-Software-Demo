@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import LoanRecModal from '../../Modal/LoanRecModal';
+import LoanRevModel from '../../Modal/LoanRevModel';
+import { Link } from 'react-router-dom';
 
 const AllProviderLoan = () => {
 
@@ -38,6 +39,12 @@ const AllProviderLoan = () => {
         setUpdateData(admission)
     }
 
+    const handleClick = (online) => {
+        console.log(online)
+        const value = online._id;
+        localStorage.setItem('myValue', value);
+    };
+
 
     return (
         <div>
@@ -55,8 +62,9 @@ const AllProviderLoan = () => {
                                     <th className='p-1 border-2'>Loan Provider</th>
                                     <th className='p-1 border-2'>Description</th>
                                     <th className='p-1 border-2'>Amount</th>
-                                    <th className='p-1 border-2'>Due</th>
-                                    <th className='p-1 border-2'>Action</th>
+                                    <th className='p-1 border-2'>Pay Loan</th>
+                                    <th className='p-1 border-2'>Details</th>
+                                    <th className='p-1 border-2'>Delete</th>
                                 </tr>
                             </thead>
 
@@ -66,16 +74,21 @@ const AllProviderLoan = () => {
                                     loans?.loans?.map((online, i) =>
                                         <tr key={online._id}>
                                             <th className='p-1 border-2'>{i + 1}</th>
-                                            <td className='p-1 border-2'>{online?.createdAt.slice(0, -14)}</td>
+                                            <td className='p-1 border-2'>{online?.date?.slice(0, -14) || online?.createdAt?.slice(0, -14)}</td>
                                             <td className='p-1 border-2'>{online?.loanReceipt}</td>
                                             <td className='p-1 border-2'>{online?.loanPurpose}</td>
                                             <td className='p-1 border-2'>{online?.loanProvide}</td>
                                             <td className='p-1 border-2'>{online?.discription}</td>
                                             <td className='p-1 border-2'>{online?.loanAmount}</td>
-                                            <td className='p-1 border-2'>{online?.loanProvideDue === -1 ? online?.loanProvideDue + 1 : online?.loanProvideDue === 0 ? 'paid' : online?.loanProvideDue}</td>
+                                            <td className='p-1 border-2'>
+                                                <label onClick={() => handleUpdate(online)} htmlFor="loanRecModal" className="btn btn-xs btn-success ml-2">Loan Receive</label>
+                                            </td>
+                                            <td className='p-1 border-2'>
+                                                <p className='btn btn-xs btn-warning' onClick={() => handleClick(online)}> <Link to='/dashboard/loan/rev-payable-loan'>Details</Link> </p>
+                                            </td>
                                             <td className='p-1 border-2'>
                                                 <p className='btn btn-xs btn-denger' onClick={() => handleDelete(online)} >Delete</p>
-                                                <label onClick={() => handleUpdate(online)} htmlFor="loanRecModal" className="btn btn-xs btn-success ml-2">Loan Receive</label>
+
                                             </td>
                                         </tr>
                                     )
@@ -89,11 +102,11 @@ const AllProviderLoan = () => {
             </div>
             {
                 updateData &&
-                <LoanRecModal
+                <LoanRevModel
                     updateData={updateData}
                     setUpdateData={setUpdateData}
                 >
-                </LoanRecModal>
+                </LoanRevModel>
             }
         </div>
     );

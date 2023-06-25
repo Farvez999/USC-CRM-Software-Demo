@@ -1,6 +1,6 @@
-const { getsAllService, loanPayAddService } = require('../services/loan.history.service')
+const { getsAllService, loanPayAddService } = require('../services/loan.p.history.service')
 
-const addPayLoan = async (req, res) => {
+const addRevLoan = async (req, res) => {
     try {
         console.log(req.user);
         if (req.user.role !== 'admin') {
@@ -22,7 +22,7 @@ const addPayLoan = async (req, res) => {
     }
 }
 
-const getPayLoan = async (req, res) => {
+const getRevLoan = async (req, res) => {
     try {
         const query = req.query;
         const loans = await getsAllService(query);
@@ -38,4 +38,4 @@ const getPayLoan = async (req, res) => {
     }
 }
 
-module.exports = { addPayLoan, getPayLoan }
+module.exports = { addRevLoan, getRevLoan }

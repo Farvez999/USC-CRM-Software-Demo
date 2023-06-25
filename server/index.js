@@ -35,7 +35,8 @@ app.use('/', require('./routes/collection.routes'))
 app.use('/', require('./routes/collection.head.routes'))
 app.use('/', require('./routes/loan.routes'))
 app.use('/', require('./routes/loan.head.routes'))
-app.use('/', require('./routes/loan.history.routes'))
+app.use('/', require('./routes/loan.r.history.routes'))
+app.use('/', require('./routes/loan.p.history.routes'))
 
 
 app.get("/", (req, res) => {
