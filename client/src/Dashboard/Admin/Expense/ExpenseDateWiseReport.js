@@ -164,7 +164,7 @@ const ExpenseDateWiseReport = () => {
                             </thead>
                             <tbody className='text-xs'>
                                 {
-                                    filterData.length > 0 &&
+                                    filterData?.length > 0 &&
                                     filterData?.map((admission, i) => (
                                         <>
                                             <tr >

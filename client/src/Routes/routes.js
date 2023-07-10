@@ -69,6 +69,7 @@ import LoanHead from "../Dashboard/Admin/Loan/LoanHead";
 import PaymentTypeSetting from "../Dashboard/Admin/Settings/PaymentTypeSetting";
 import PayReceiveLoan from "../Dashboard/Admin/Loan/PayReceiveLoan";
 import RevPayableLoan from "../Dashboard/Admin/Loan/RevPayableLoan";
+import CashIn from "../Dashboard/Admin/CashIn/CashIn";
 
 const router = createBrowserRouter([
     {
@@ -282,6 +283,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/loan/rev-payable-loan',
                 element: <RevPayableLoan></RevPayableLoan>
+            },
+            {
+                path: '/dashboard/cash/cash-report',
+                element: <CashIn></CashIn>
             },
             // ________________Head Route
 

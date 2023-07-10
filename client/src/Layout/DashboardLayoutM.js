@@ -379,6 +379,28 @@ const DashboardLayoutM = () => {
                                                     </ul>
                                                 </details>
                                             </li>
+
+                                            <li>
+                                                <details>
+                                                    <summary>Cash Report</summary>
+                                                    <ul>
+                                                        <li>
+                                                            <Link to={`/dashboard/cash/cash-report`}>
+                                                                <img width="16" height="16" src="https://img.icons8.com/fluency/48/pay-date.png" alt="pay-date" />
+                                                                <span className='text-xs'>Date Wise Report</span></Link>
+                                                        </li>
+                                                        {/* <li>
+                                                            <Link to={`/dashboard/expense/boucher-report`}>
+                                                                <img width="16" height="16" src="https://img.icons8.com/stickers/100/batch-assign.png" alt="batch-assign" />
+                                                                <span className='text-xs'>Batch Wise Report</span></Link>
+                                                        </li>
+                                                        <li><Link to={`/dashboard/expense/purpose`}>
+                                                            <img width="16" height="16" src="https://img.icons8.com/color-glass/48/profit-report.png" alt="profit-report" />
+                                                            <span className='text-xs'>Purpose Wise Report</span></Link></li> */}
+                                                    </ul>
+                                                </details>
+                                            </li>
+
                                             <li>
                                                 <details>
                                                     <summary>Loan</summary>

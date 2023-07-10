@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactToPrint from 'react-to-print';
 
-const CollectionDateWiseReport = () => {
+const CashIn = () => {
 
     const [filterData, setFilterData] = useState([])
     const [collections, setCollectionData] = useState([])
     const [collectionsCourse, setCourseCollectionData] = useState([])
+    const [filterCollectionsCourse, setFilterCourseCollectionData] = useState([])
+    console.log(filterCollectionsCourse)
     const [extraCollectionTotal, setExtraCollectionTotal] = useState([])
     const [courseCollectionTotal, setCourseCollectionTotal] = useState([])
 
@@ -47,20 +49,21 @@ const CollectionDateWiseReport = () => {
     }
 
     const handleCollectionDateSearch = () => {
-        var resultExpenseData = collections?.collection?.filter(a => (a.createdAt) >= startDate && (a.createdAt) <= endDate);
-        setFilterData(resultExpenseData)
+        var resultCollectionData = collections?.collection?.filter(a => (a.createdAt) >= startDate && (a.createdAt) <= endDate);
+        setFilterData(resultCollectionData)
         setShow(true)
-        console.log(resultExpenseData)
+        console.log(resultCollectionData)
 
         var totalAmount = 0;
-        for (var i = 0; i < resultExpenseData.length; i++) {
-            totalAmount += resultExpenseData[i].amount
+        for (var i = 0; i < resultCollectionData?.length; i++) {
+            totalAmount += resultCollectionData[i].amount
         }
         setExtraCollectionTotal(totalAmount)
 
         //Course Collection Data
         var resultProductDataFrist = collectionsCourse.filter(a => (a.fristInstallmentDate) >= startDate && (a.fristInstallmentDate) <= endDate);
         console.log(resultProductDataFrist)
+        setFilterCourseCollectionData(collectionsCourse)
         setShow(true)
 
         var resultProductDataTwo = collectionsCourse.filter(a => (a.secondInstallmentDate) >= startDate && (a.secondInstallmentDate) <= endDate);
@@ -98,7 +101,6 @@ const CollectionDateWiseReport = () => {
 
     };
     // -------------Collection Date to Date wise Filter End--------------------
-
 
     return (
         <div className='mx-2 my-6'>
@@ -146,8 +148,65 @@ const CollectionDateWiseReport = () => {
                 {show &&
                     <div className='text-center p-2'>
                         <h1 className='font-bold text-3xl'>Universe It Institute</h1>
+                        <h3>{startDate} to {endDate} Course Collection {courseCollectionTotal} BDT</h3>
+                    </div>}
+                <div className="overflow-auto">
+                    <form>
+                        <table className="table w-full">
+
+                            <thead className='sticky top-0 bg-slate-300' style={{ width: "1200px" }}>
+                                <tr className='text-xs'>
+                                    <th className='p-1 border-2'>#</th>
+                                    <th className='p-1 border-2'>Date</th>
+                                    <th className='p-1 border-2'>Student Name</th>
+                                    <th className='p-1 border-2'>Phone</th>
+                                    <th className='p-1 border-2'>Course Name</th>
+                                    <th className='p-1 border-2'>Batch Name</th>
+                                    <th className='p-1 border-2'>Head Name</th>
+                                    <th className='p-1 border-2'>Amount</th>
+                                    <th className='p-1 border-2'>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody className='text-xs'>
+                                {
+                                    filterCollectionsCourse?.length > 0 &&
+                                    filterCollectionsCourse?.map((admission, i) => (
+                                        <>
+                                            <tr >
+                                                <th className='p-1 border-2'>{i + 1}</th>
+                                                <td className='p-1 border-2'>{admission?.createdAt.slice(0, -14)}</td>
+                                                <td className='p-1 border-2'>{admission?.name}</td>
+                                                <td className='p-1 border-2'>{admission?.course?.name}</td>
+                                                <td className='p-1 border-2'>{admission?.phone}</td>
+                                                <td className='p-1 border-2'>{admission?.batch?.name}</td>
+                                                <td className='p-1 border-2'>{admission?.head?.name}</td>
+                                                <td className='p-1 border-2'>{admission?.fristInstallment + admission?.secondInstallment + admission?.thirdInstallment}</td>
+                                            </tr>
+                                        </>
+                                    )
+                                    )
+                                }
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div className='mt-2 mx-1 flex justify-end'>
+                    <p className='p-1 border-2'> Total Course Collection : {courseCollectionTotal} BDT</p>
+                    {/* <p className='p-1 border-2'> Total Extra Collection : {extraCollectionTotal} BDT</p>
+                    <p className='p-1 border-2'>== Total Collection : {courseCollectionTotal + extraCollectionTotal} BDT</p> */}
+                </div>
+            </div>
+
+            <div ref={componentRef}>
+                {show &&
+                    <div className='text-center p-2'>
+                        {/* <h1 className='font-bold text-3xl'>Universe It Institute</h1> */}
                         <h3>{startDate} to {endDate} Extra Collection {extraCollectionTotal} BDT</h3>
                     </div>}
+
+
+
                 <div className="overflow-auto">
                     <form>
                         <table className="table w-full">
@@ -180,8 +239,8 @@ const CollectionDateWiseReport = () => {
                                                 <td className='p-1 border-2'>{admission?.receiveFrom}</td>
                                                 <td className='p-1 border-2'>{admission?.amount}</td>
                                                 {/* <td className='p-1 border-2'>
-                                                <p className='btn btn-xs btn-denger' onClick={() => handleDelete(admission)} >Delete</p>
-                                            </td> */}
+                                            <p className='btn btn-xs btn-denger' onClick={() => handleDelete(admission)} >Delete</p>
+                                        </td> */}
                                             </tr>
                                         </>
                                     )
@@ -202,4 +261,4 @@ const CollectionDateWiseReport = () => {
     );
 };
 
-export default CollectionDateWiseReport;
+export default CashIn;
