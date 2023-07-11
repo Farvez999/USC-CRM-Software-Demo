@@ -18,7 +18,7 @@ const AddAdmission = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -32,7 +32,7 @@ const AddAdmission = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
+            const res = await fetch(`http://localhost:5000/batch`);
             const data = await res.json();
             return data;
         }
@@ -45,7 +45,7 @@ const AddAdmission = () => {
     const { data: usersName = [] } = useQuery({
         queryKey: ['usersName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/users`);
+            const res = await fetch(`http://localhost:5000/users`);
             const data = await res.json();
             return data;
         }
@@ -60,7 +60,7 @@ const AddAdmission = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/heads`);
+            const res = await fetch(`http://localhost:5000/heads`);
             const data = await res.json();
             return data;
         }
@@ -129,7 +129,7 @@ const AddAdmission = () => {
         }
 
         console.log(name, email, phone, fristInstallment, secondInstallment, thirdInstallment, nextInstallmentDate, fristPaymentAccounts, totalInstallment, courseName, batchName, employeeName, headName,);
-        fetch(`https://demo-usc-crm-server.vercel.app/add-admissions`, {
+        fetch(`http://localhost:5000/add-admissions`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

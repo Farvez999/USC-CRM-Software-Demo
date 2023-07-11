@@ -24,7 +24,7 @@ const HeadPayDetails = () => {
     const { data: admissions = [], refetch } = useQuery({
         queryKey: ['admissions'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true`);
+            const res = await fetch(`http://localhost:5000/leads?admission=true&admissionStatus=true`);
             const data = await res.json();
             let lData = data.filter(lead => lead.head.name === user.name)
             setFilterData(lData)
@@ -38,7 +38,7 @@ const HeadPayDetails = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -47,7 +47,7 @@ const HeadPayDetails = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
+            const res = await fetch(`http://localhost:5000/batch`);
             const data = await res.json();
             return data;
         }
@@ -56,7 +56,7 @@ const HeadPayDetails = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
+            const res = await fetch(`http://localhost:5000/head`);
             const data = await res.json();
             return data;
         }

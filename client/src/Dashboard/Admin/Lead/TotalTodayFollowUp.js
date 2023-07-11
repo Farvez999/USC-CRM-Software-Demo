@@ -25,7 +25,7 @@ const TotalTodayFollowUp = () => {
     const { data: etotalTodayFUp = [], refetch } = useQuery({
         queryKey: ['etotalTodayFUp',],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
+            const res = await fetch(`http://localhost:5000/todayLead/${date}`);
             const data = await res.json();
             setFilterData(data)
             return data;
@@ -38,7 +38,7 @@ const TotalTodayFollowUp = () => {
     const handleDelete = (ttodayf) => {
         // console.log(ttodayf);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete/${ttodayf}`, {
+        fetch(`http://localhost:5000/delete/${ttodayf}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -58,7 +58,7 @@ const TotalTodayFollowUp = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -67,7 +67,7 @@ const TotalTodayFollowUp = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
+            const res = await fetch(`http://localhost:5000/batch`);
             const data = await res.json();
             return data;
         }
@@ -76,7 +76,7 @@ const TotalTodayFollowUp = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
+            const res = await fetch(`http://localhost:5000/head`);
             const data = await res.json();
             return data;
         }
@@ -85,7 +85,7 @@ const TotalTodayFollowUp = () => {
     const { data: userName = [] } = useQuery({
         queryKey: ['userName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/users`);
+            const res = await fetch(`http://localhost:5000/users`);
             const data = await res.json();
             return data;
         }

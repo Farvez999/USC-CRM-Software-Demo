@@ -13,7 +13,7 @@ const ExpenseHead = () => {
     const { data: expenseHeadName = [], refetch } = useQuery({
         queryKey: ['expenseHeadName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/expense-head`);
+            const res = await fetch(`http://localhost:5000/expense-head`);
             const data = await res.json();
             return data;
         }
@@ -24,7 +24,7 @@ const ExpenseHead = () => {
             purpose: expenseHead
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/expense-head`, {
+        fetch(`http://localhost:5000/expense-head`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -44,7 +44,7 @@ const ExpenseHead = () => {
     const handleDelete = (leads) => {
         console.log(leads);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete-expense-head/${leads}`, {
+        fetch(`http://localhost:5000/delete-expense-head/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

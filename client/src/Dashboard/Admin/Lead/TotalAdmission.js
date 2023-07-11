@@ -24,7 +24,7 @@ const TotalAdmission = () => {
     const { data: totalAdmission = [], refetch } = useQuery({
         queryKey: ['totalAdmission',],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true`);
+            const res = await fetch(`http://localhost:5000/leads?admission=true`);
             const data = await res.json();
             setFilterData(data)
             return data;
@@ -37,7 +37,7 @@ const TotalAdmission = () => {
     const handleDelete = (addmissions) => {
         // console.log(addmissions);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete/${addmissions}`, {
+        fetch(`http://localhost:5000/delete/${addmissions}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -57,7 +57,7 @@ const TotalAdmission = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -66,7 +66,7 @@ const TotalAdmission = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
+            const res = await fetch(`http://localhost:5000/batch`);
             const data = await res.json();
             return data;
         }
@@ -75,7 +75,7 @@ const TotalAdmission = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
+            const res = await fetch(`http://localhost:5000/head`);
             const data = await res.json();
             return data;
         }
@@ -84,7 +84,7 @@ const TotalAdmission = () => {
     const { data: userName = [] } = useQuery({
         queryKey: ['userName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/users`);
+            const res = await fetch(`http://localhost:5000/users`);
             const data = await res.json();
             return data;
         }

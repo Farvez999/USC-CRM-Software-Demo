@@ -9,7 +9,7 @@ const Expense = () => {
     const { data: expenses = [], refetch } = useQuery({
         queryKey: ['expenses'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/expense`);
+            const res = await fetch(`http://localhost:5000/expense`);
             const data = await res.json();
             return data;
         }
@@ -18,7 +18,7 @@ const Expense = () => {
     const handleDelete = (leads) => {
         console.log(leads._id);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete-expense/${leads._id}`, {
+        fetch(`http://localhost:5000/delete-expense/${leads._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -43,7 +43,7 @@ const Expense = () => {
     const { data: extraCollections = [] } = useQuery({
         queryKey: ['extraCollections'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/collection`);
+            const res = await fetch(`http://localhost:5000/collection`);
             const data = await res.json();
             return data;
         }
@@ -59,7 +59,7 @@ const Expense = () => {
 
     //Course Collection Api Load
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
+        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setCollectionData(data)

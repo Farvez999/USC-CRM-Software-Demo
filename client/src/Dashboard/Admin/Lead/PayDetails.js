@@ -41,7 +41,7 @@ const PayDetails = () => {
     // const { data: admissions = [], refetch } = useQuery({
     //     queryKey: ['admissions'],
     //     queryFn: async () => {
-    //         const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true`);
+    //         const res = await fetch(`http://localhost:5000/leads?admission=true&admissionStatus=true`);
 
     //         const data = await res.json();
     //         // let lData = data.filter(lead => lead.admissionStatus === true)
@@ -54,7 +54,7 @@ const PayDetails = () => {
     // });
 
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
+        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             // 4. Setting *dogImage* to the image url that we received from the response above
             .then(data => {
@@ -69,7 +69,7 @@ const PayDetails = () => {
     const { data: usersName = [] } = useQuery({
         queryKey: ['usersName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/users`);
+            const res = await fetch(`http://localhost:5000/users`);
             const data = await res.json();
             return data;
         }
@@ -78,7 +78,7 @@ const PayDetails = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -87,7 +87,7 @@ const PayDetails = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
+            const res = await fetch(`http://localhost:5000/batch`);
             const data = await res.json();
             return data;
         }
@@ -98,7 +98,7 @@ const PayDetails = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
+            const res = await fetch(`http://localhost:5000/head`);
             const data = await res.json();
             return data;
         }
@@ -217,7 +217,7 @@ const PayDetails = () => {
             closePayment: true
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
+        fetch(`http://localhost:5000/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -237,7 +237,7 @@ const PayDetails = () => {
             closePayment: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
+        fetch(`http://localhost:5000/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',

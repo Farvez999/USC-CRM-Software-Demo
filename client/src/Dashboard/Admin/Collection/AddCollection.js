@@ -10,7 +10,7 @@ const AddCollection = () => {
     const { data: expenseHeadName = [], refetch } = useQuery({
         queryKey: ['expenseHeadName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/collection-head`);
+            const res = await fetch(`http://localhost:5000/collection-head`);
             const data = await res.json();
             return data;
         }
@@ -39,7 +39,7 @@ const AddCollection = () => {
         }
         console.log(date, moneyReceipt, purpose, payType, amount, receiveBy, receiveFrom, discription,);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/collection`, {
+        fetch(`http://localhost:5000/collection`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -64,7 +64,7 @@ const AddCollection = () => {
     const { data: payGetwayName = [] } = useQuery({
         queryKey: ['payGetwayName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/pay-getway`);
+            const res = await fetch(`http://localhost:5000/pay-getway`);
             const data = await res.json();
             return data;
         }
