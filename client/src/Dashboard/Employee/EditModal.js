@@ -33,7 +33,7 @@ const EditModal = ({ singleLead, setSLead, refetch }) => {
 
         console.log(user)
 
-        axios.patch(`http://localhost:5000/update/${singleLead._id}`, user)
+        axios.patch(`https://demo-usc-crm-server.vercel.app/update/${singleLead._id}`, user)
             .then((data) => {
                 console.log(data);
                 toast.success('Lead Updates Success')

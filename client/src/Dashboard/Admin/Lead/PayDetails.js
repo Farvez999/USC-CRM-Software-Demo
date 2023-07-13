@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { FaFileDownload } from 'react-icons/fa';
@@ -21,42 +20,15 @@ const PayDetails = () => {
 
     const [admission, setAdmission] = useState()
 
-
-    const [closePaymentData, setClosePayment] = useState()
-    console.log(admissions)
-
-
-    const userRef = useRef();
-    const courseRef = useRef();
-    const batchRef = useRef();
-    const headRef = useRef();
-
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
-    // console.log(startDate, endDate)
 
     const printRef = useRef();
 
 
-    // const { data: admissions = [], refetch } = useQuery({
-    //     queryKey: ['admissions'],
-    //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/leads?admission=true&admissionStatus=true`);
-
-    //         const data = await res.json();
-    //         // let lData = data.filter(lead => lead.admissionStatus === true)
-
-    //         // setFilterData(lData)
-    //         setFilterData(data)
-
-    //         return data;
-    //     }
-    // });
-
     useEffect(() => {
-        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
+        fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
-            // 4. Setting *dogImage* to the image url that we received from the response above
             .then(data => {
                 setFilterData(data)
                 setAdmissionsData(data)
@@ -66,49 +38,46 @@ const PayDetails = () => {
 
     // -----------------Filter Start--------------------
 
-    const { data: usersName = [] } = useQuery({
-        queryKey: ['usersName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const [selectedValue, setSelectedValue] = useState([]);
+    console.log(selectedValue)
 
-    const { data: coursesName = [] } = useQuery({
-        queryKey: ['coursesName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueCourse = [...new Set(admissions?.map(user => user?.course?.name))];
 
-    const { data: batchsName = [] } = useQuery({
-        queryKey: ['batchsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueBatch = [...new Set(selectedValue?.map(user => user?.batch?.name))];
 
-    console.log(batchsName.users)
+    const uniqueHead = [...new Set(selectedValue?.map(user => user?.head?.name))];
 
-    const { data: headsName = [] } = useQuery({
-        queryKey: ['headsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueUser = [...new Set(selectedValue?.map(user => user?.user?.name))];
 
 
-    const handleSearch = () => {
-        const fData = admissions?.filter(si => si.user.name === userRef.current.value || si.course.name === courseRef.current.value || si.batch.name === batchRef.current.value || si.head.name === headRef.current.value)
+    function handleCourseChange(event) {
+        const couseSelectedValue = event.target.value;
+        const fData = admissions?.filter(si =>
+            (si.course.name) === couseSelectedValue)
         setFilterData(fData)
-    };
+        setSelectedValue(fData);
+    }
+
+    function handleBatchChange(event) {
+        const selectedBatchValue = event.target.value;
+        const fData = admissions?.filter(si =>
+            (si.batch.name) === selectedBatchValue)
+        setFilterData(fData)
+    }
+
+    function handleHeadChange(event) {
+        const selectedHeadValue = event.target.value;
+        const fData = admissions?.filter(si =>
+            (si.head.name) === selectedHeadValue)
+        setFilterData(fData)
+    }
+
+    function handleUserChange(event) {
+        const selectedUserValue = event.target.value;
+        const fData = admissions?.filter(si =>
+            (si.user.name) === selectedUserValue)
+        setFilterData(fData)
+    }
 
     // -----------------Filter End--------------------
 
@@ -126,45 +95,6 @@ const PayDetails = () => {
     }
 
     // -------------Date wise Filter End--------------------
-
-    // -------------Due Date wise Filter Start--------------------
-    // function formatedDate(date) {
-    //     return new Date(date).toISOString().slice(0, -14);
-    // }
-
-    const handleDueChange = event => {
-        const value = event.target.value;
-        // console.log(value);
-        // const fiData = admissions.filter(si => formatedDate(si.nextInstallmentDate) === value)
-        // setFilterData(fiData)
-        const fiData = admissions.filter(si => (si.nextInstallmentDate) === value)
-        setFilterData(fiData)
-
-    }
-
-    // -------------Due Date wise Filter End--------------------
-
-
-    // -------------Date to Date wise Filter Start--------------------
-    const handleStartInputChange = event => {
-        const value = event.target.value;
-        setStartDate(value)
-        // console.log(value);
-    }
-
-    const handleEndInputChange = event => {
-        const value = event.target.value;
-        setEndDate(value)
-        // console.log(value);
-    }
-
-    const handleDateSearch = () => {
-        var resultProductData = admissions.filter(a => a.updatedAt > startDate && a.updatedAt < endDate);
-        // console.log(resultProductData);
-        setFilterData(resultProductData)
-
-    };
-    // -------------Date to Date wise Filter End--------------------
 
     // -------------Due Date to Date wise Filter Start--------------------
     const handleDueStartInputChange = event => {
@@ -213,11 +143,16 @@ const PayDetails = () => {
 
 
     const handleClosePayment = (admission) => {
+        const confirmDelete = window.confirm('Are you sure you want to close this item?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const closePayment = {
             closePayment: true
         }
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -227,17 +162,36 @@ const PayDetails = () => {
         })
             .then(res => res.json())
             .then(data => {
-                toast.success('Close Payment Added')
-                // refetch()
+                toast.success(`Close successfully`);
+                fetch('https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true')
+                    .then(res => res.json())
+                    .then(updatedData => {
+                        setFilterData(updatedData)
+                    })
+                    .catch(error => {
+                        console.error('Update request failed:', error);
+                        toast.error('An error occurred while updating the API.');
+                    });
             })
+            .catch(error => {
+                console.error('Delete request failed:', error);
+                toast.error('An error occurred while deleting the item.');
+            });
     }
 
     const handleOpenPayment = (admission) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to open this item?');
+        if (!confirmDelete) {
+            return;
+        }
+
+
         const closePayment = {
             closePayment: false
         }
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -247,9 +201,21 @@ const PayDetails = () => {
         })
             .then(res => res.json())
             .then(data => {
-                toast.success('Open Payment Added')
-                // refetch()
+                toast.success(`Open successfully`);
+                fetch('https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true')
+                    .then(res => res.json())
+                    .then(updatedData => {
+                        setFilterData(updatedData)
+                    })
+                    .catch(error => {
+                        console.error('Update request failed:', error);
+                        toast.error('An error occurred while updating the API.');
+                    });
             })
+            .catch(error => {
+                console.error('Delete request failed:', error);
+                toast.error('An error occurred while deleting the item.');
+            });
     }
 
 
@@ -311,7 +277,7 @@ const PayDetails = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" fill="currentColor" className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600">
                             <path d="M32 30.031h-32l16-28.061z"></path>
                         </svg>
-                        <a rel="noopener noreferrer" href="#" className="flex items-center px-1 capitalize hover:underline">{user.name}'s Admissions Payment : {admissions.length}</a>
+                        <a rel="noopener noreferrer" href="#" className="flex items-center px-1 capitalize hover:underline">{user.name}'s Admissions Payment</a>
                     </li>
                 </ol>
             </nav>
@@ -425,47 +391,17 @@ const PayDetails = () => {
 
 
                 <div className='flex flex-wrap items-center my-1'>
-
-                    <div className="form-control mx-2">
-                        <label className="label">
-                            <span className="label-text">User Name</span>
-                        </label>
-                        <select
-                            ref={userRef}
-                            className="select select-sm w-full border-gray-400"
-                        >
-                            <option >Course Name</option>
-                            {
-                                usersName?.users?.map((user) =>
-                                    user.role !== 'admin' &&
-                                    <option
-                                        key={user._id}
-                                        value={user.name}>
-                                        {user.name}
-                                    </option>
-                                )
-                            }
-                        </select>
-                    </div>
-
                     <div className="form-control mx-2">
                         <label className="label">
                             <span className="label-text">Course Name</span>
                         </label>
-                        <select
-                            ref={courseRef}
-                            className="select select-sm w-full border-gray-400"
-                        >
-                            <option >Course Name</option>
-                            {
-                                coursesName?.users?.map((user) =>
-                                    <option
-                                        key={user._id}
-                                        value={user.name}>
-                                        {user.name}
-                                    </option>
-                                )
-                            }
+                        <select onChange={handleCourseChange} className="select select-sm w-full border-gray-400">
+                            <option>Course Name</option>
+                            {uniqueCourse.map(value => (
+                                <option key={value._id} value={value}>
+                                    {value}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
@@ -473,19 +409,14 @@ const PayDetails = () => {
                         <label className="label">
                             <span className="label-text">Batch Name</span>
                         </label>
-                        <input list="data" ref={batchRef} className='input input-bordered input-sm' placeholder="Batch Name"></input>
-                        <datalist id='data'>
-                            {
-                                batchsName?.users?.map((user) =>
-                                    // user.role !== 'admin' &&
-                                    <option
-                                        key={user._id}
-                                        value={user.name}>
-                                        {user.name}
-                                    </option>
-                                )
-                            }
-                        </datalist>
+                        <select onChange={handleBatchChange} className="select select-sm w-full border-gray-400">
+                            <option>Batch Name</option>
+                            {uniqueBatch.map(value => (
+                                <option key={value._id} value={value}>
+                                    {value}
+                                </option>
+                            ))}
+                        </select>
 
                     </div>
 
@@ -493,27 +424,28 @@ const PayDetails = () => {
                         <label className="label">
                             <span className="label-text">Head Name</span>
                         </label>
-                        <select className="select select-sm w-full border-gray-400" required
-                            ref={headRef}>
+                        <select onChange={handleHeadChange} className="select select-sm w-full border-gray-400">
                             <option >Head Name</option>
-                            {
-                                headsName?.users?.map((user) =>
-                                    <option
-                                        key={user._id}
-                                        value={user.name}>
-                                        {user.name}
-                                    </option>
-                                )
-                            }
+                            {uniqueHead.map(value => (
+                                <option key={value._id} value={value}>
+                                    {value}
+                                </option>
+                            ))}
                         </select>
                     </div>
-                    <div className='mt-8'>
-                        <button
-                            onClick={handleSearch}
-                            className="btn btn-sm btn-primary text-white bg-green-500"
-                        >
-                            Filter
-                        </button>
+
+                    <div className="form-control mx-2">
+                        <label className="label">
+                            <span className="label-text">User Name</span>
+                        </label>
+                        <select onChange={handleUserChange} className="select select-sm w-full border-gray-400">
+                            <option >User Name</option>
+                            {uniqueUser.map(value => (
+                                <option key={value._id} value={value}>
+                                    {value}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className='mt-2 mx-2'>

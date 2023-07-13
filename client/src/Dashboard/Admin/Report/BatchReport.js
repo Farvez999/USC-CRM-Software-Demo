@@ -19,7 +19,7 @@ const PayReport = () => {
     const batchRef = useRef();
 
     useEffect(() => {
-        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
+        fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setAdmissionsData(data)
@@ -40,7 +40,7 @@ const PayReport = () => {
     const { data: batchsName = [], refetch } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
             const data = await res.json();
             return data;
         }

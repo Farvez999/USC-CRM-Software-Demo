@@ -8,109 +8,86 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 const TotalLead = () => {
 
     const { user } = useContext(AuthContext)
-    const [totalleads, setCollectionData] = useState([])
+    const [totalleads, setTotalLeads] = useState([])
     const [filterData, setFilterData] = useState([])
     const [search, setSearch] = useState("");
 
-    const courseRef = useRef();
-    console.log(courseRef?.current?.value)
-    const batchRef = useRef();
-    console.log(batchRef?.current?.value)
-    const headRef = useRef();
-    console.log(headRef?.current?.value)
-    const userRef = useRef();
-    console.log(userRef?.current?.value)
     const tableRef = useRef(null);
 
 
     useEffect(() => {
-        fetch("http://localhost:5000/leads")
+        fetch("https://demo-usc-crm-server.vercel.app/leads")
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
-                setCollectionData(data)
+                setTotalLeads(data)
             })
     }, [])
 
 
-    // const { data: totalleads = [], refetch } = useQuery({
-    //     queryKey: ['totalleads',],
-    //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/leads`);
-    //         const data = await res.json();
-    //         setFilterData(data)
-    //         return data;
-
-    //     }
-    // });
-
-
     // -----------------Filter Start--------------------
+
+    const [selectedValue, setSelectedValue] = useState([]);
+    console.log(selectedValue)
+
+    const uniqueCourse = [...new Set(totalleads?.map(user => user?.course?.name))];
+
+    const uniqueBatch = [...new Set(selectedValue?.map(user => user?.batch?.name))];
+
+    const uniqueHead = [...new Set(selectedValue?.map(user => user?.head?.name))];
+
+    const uniqueUser = [...new Set(selectedValue?.map(user => user?.user?.name))];
+
+
+    function handleCourseChange(event) {
+        const couseSelectedValue = event.target.value;
+        const fData = totalleads?.filter(si =>
+            (si.course.name) === couseSelectedValue)
+        setFilterData(fData)
+        setSelectedValue(fData);
+    }
+
+    function handleBatchChange(event) {
+        const selectedBatchValue = event.target.value;
+        const fData = totalleads?.filter(si =>
+            (si.batch.name) === selectedBatchValue)
+        setFilterData(fData)
+    }
+
+    function handleHeadChange(event) {
+        const selectedHeadValue = event.target.value;
+        const fData = totalleads?.filter(si =>
+            (si.head.name) === selectedHeadValue)
+        setFilterData(fData)
+    }
+
+    function handleUserChange(event) {
+        const selectedUserValue = event.target.value;
+        const fData = totalleads?.filter(si =>
+            (si.user.name) === selectedUserValue)
+        setFilterData(fData)
+    }
+
 
     const { data: coursesName = [], refetch } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
             const data = await res.json();
             return data;
         }
     });
 
-    const { data: batchsName = [] } = useQuery({
-        queryKey: ['batchsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
-            const data = await res.json();
-            return data;
-        }
-    });
 
-    const { data: headsName = [] } = useQuery({
-        queryKey: ['headsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
-            const data = await res.json();
-            return data;
-        }
-    });
-
-    const { data: userName = [] } = useQuery({
-        queryKey: ['userName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`);
-            const data = await res.json();
-            return data;
-        }
-    });
-
-    const handleDelete = (leads) => {
-        console.log(leads);
-
-        fetch(`http://localhost:5000/delete/${leads}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: `bearer ${localStorage.getItem('accessToken')}`
-            }
-        })
-            .then(res => {
-                return res.json()
-            })
-            .then(data => {
-                toast.success(`Leads ${user.name} deleted successfully`)
-                refetch()
-            })
-    }
-
-
-    const handleSearch = () => {
-        const fData = totalleads?.filter(si =>
-            (si.course.name) === courseRef.current.value ||
-            (si.head.name) === headRef.current.value ||
-            (si.batch.name) === batchRef.current.value &&
-            (si.user.name) === userRef.current.value)
-        setFilterData(fData)
-        console.log(fData)
-    };
+    // const handleSearch = () => {
+    //     const fData = totalleads?.filter(si =>
+    //         (si.course.name) === courseRef.current.value ||
+    //         (si.head.name) === headRef.current.value ||
+    //         (si.batch.name) === batchRef.current.value &&
+    //         (si.user.name) === userRef.current.value)
+    //     setFilterData(fData)
+    //     console.log(fData)
+    // };
 
     // -----------------Filter End--------------------
 
@@ -130,6 +107,37 @@ const TotalLead = () => {
     // -------------Date wise Filter End--------------------
 
 
+    const handleDelete = (leads) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this item?');
+        if (!confirmDelete) {
+            return;
+        }
+
+        fetch(`https://demo-usc-crm-server.vercel.app/delete/${leads}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                toast.success(`Leads ${user.name} deleted successfully`);
+                // Update the API and refetch the data
+                fetch('https://demo-usc-crm-server.vercel.app/leads')
+                    .then(res => res.json())
+                    .then(updatedData => {
+                        setFilterData(updatedData)
+                    })
+                    .catch(error => {
+                        console.error('Update request failed:', error);
+                        toast.error('An error occurred while updating the API.');
+                    });
+            })
+            .catch(error => {
+                console.error('Delete request failed:', error);
+                toast.error('An error occurred while deleting the item.');
+            });
+    }
 
     return (
         <div className='mx-2 my-2'>
@@ -171,58 +179,42 @@ const TotalLead = () => {
                     <label className="label">
                         <span className="label-text">Course Name</span>
                     </label>
-                    <select
-                        ref={courseRef}
-                        className="select select-sm w-full border-gray-400"
-                    >
-                        <option >Course Name</option>
-                        {
-                            coursesName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                    <select onChange={handleCourseChange} className="select select-sm w-full border-gray-400">
+                        <option>Course Name</option>
+                        {uniqueCourse.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
-                <div className="form-control mx-2">
+
+                <div className="form-control">
                     <label className="label">
                         <span className="label-text">Batch Name</span>
                     </label>
-                    <input list="data" ref={batchRef} className='input input-bordered input-sm' placeholder="Batch Name"></input>
-                    <datalist id='data'>
-                        {
-                            batchsName?.users?.map((user) =>
-                                // user.role !== 'admin' &&
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
-                    </datalist>
+                    <select onChange={handleBatchChange} className="select select-sm w-full border-gray-400">
+                        <option>Batch Name</option>
+                        {uniqueBatch.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="form-control mx-2">
                     <label className="label">
                         <span className="label-text">Head Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={headRef}>
+                    <select onChange={handleHeadChange} className="select select-sm w-full border-gray-400" required>
                         <option >Head Name</option>
-                        {
-                            headsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueHead.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -230,30 +222,24 @@ const TotalLead = () => {
                     <label className="label">
                         <span className="label-text">User Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={userRef}>
+                    <select onChange={handleUserChange} className="select select-sm w-full border-gray-400" required>
                         <option >User Name</option>
-
-                        {
-                            userName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueUser.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
-                <div className='mt-8'>
+                {/* <div className='mt-8'>
                     <button
                         onClick={handleSearch}
                         className="btn btn-sm btn-primary text-white bg-green-500"
                     >
                         Filter
                     </button>
-                </div>
+                </div> */}
 
 
                 <div className='mt-10 mx-4'>
@@ -302,10 +288,10 @@ const TotalLead = () => {
                                             <td className='p-1 border-2'>{leads?.course?.name}</td>
                                             <td className='p-1 border-2'>{leads?.batch?.name}</td>
                                             <td className='p-1 border-2'>{leads?.user?.name}</td>
-                                            <td className='p-1 border-2'>{leads?.head.name}</td>
+                                            <td className='p-1 border-2'>{leads?.head?.name}</td>
                                             <td className='p-1 border-2'>{leads?.name}</td>
                                             <td className='p-1 border-2'>{leads?.phone}</td>
-                                            <td className='p-1 border-2'>{leads?.email}</td>
+                                            <td className='p-1 border-2'>{leads?.email ? leads?.email : 'Email is not submit'}</td>
                                             <td className='p-1 border-2'>
                                                 <p className='btn btn-xs btn-denger' onClick={() => handleDelete(leads._id)} >Delete</p>
                                             </td>

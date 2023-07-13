@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import { toast } from 'react-hot-toast';
@@ -8,93 +8,64 @@ import { FaFileDownload } from 'react-icons/fa';
 
 const OfflineStudents = () => {
     const { user } = useContext(AuthContext)
+    const [totalOffline, setTotalOffline] = useState([])
     const [filterData, setFilterData] = useState([])
     const [search, setSearch] = useState("");
 
-    const courseRef = useRef();
-    const batchRef = useRef();
-    const headRef = useRef();
-    const userRef = useRef();
-
     const tableRef = useRef(null);
 
-
-
-    const { data: totalOffline = [], refetch } = useQuery({
-        queryKey: ['totalOffline',],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?offlineInterested=true`);
-
-            const data = await res.json();
-            setFilterData(data)
-            return data;
-
-        }
-    });
-
-
-    const handleDelete = (offline) => {
-        // console.log(offline);
-
-
-        fetch(`http://localhost:5000/delete/${offline}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: `bearer ${localStorage.getItem('accessToken')}`
-            }
-        })
-            .then(res => {
-                return res.json()
-            })
+    useEffect(() => {
+        fetch("https://demo-usc-crm-server.vercel.app/leads?offlineInterested=true")
+            .then(response => response.json())
             .then(data => {
-                toast.success(`Leads ${user.name} deleted successfully`)
-                refetch()
+                setFilterData(data)
+                setTotalOffline(data)
             })
-    }
+    }, [])
+
 
     // -----------------Filter Start--------------------
 
-    const { data: coursesName = [] } = useQuery({
-        queryKey: ['coursesName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const [selectedValue, setSelectedValue] = useState([]);
+    console.log(selectedValue)
 
-    const { data: batchsName = [] } = useQuery({
-        queryKey: ['batchsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueCourse = [...new Set(totalOffline?.map(user => user?.course?.name))];
 
-    const { data: headsName = [] } = useQuery({
-        queryKey: ['headsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueBatch = [...new Set(selectedValue?.map(user => user?.batch?.name))];
 
-    const { data: userName = [] } = useQuery({
-        queryKey: ['userName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueHead = [...new Set(selectedValue?.map(user => user?.head?.name))];
+
+    const uniqueUser = [...new Set(selectedValue?.map(user => user?.user?.name))];
 
 
-    const handleSearch = () => {
-        const fData = totalOffline?.filter(si => si.course.name === courseRef.current.value || si.batch.name === batchRef.current.value || si.head.name === headRef.current.value || si.user.name === userRef.current.value)
+    function handleCourseChange(event) {
+        const couseSelectedValue = event.target.value;
+        const fData = totalOffline?.filter(si =>
+            (si.course.name) === couseSelectedValue)
         setFilterData(fData)
-    };
+        setSelectedValue(fData);
+    }
+
+    function handleBatchChange(event) {
+        const selectedBatchValue = event.target.value;
+        const fData = totalOffline?.filter(si =>
+            (si.batch.name) === selectedBatchValue)
+        setFilterData(fData)
+    }
+
+    function handleHeadChange(event) {
+        const selectedHeadValue = event.target.value;
+        const fData = totalOffline?.filter(si =>
+            (si.head.name) === selectedHeadValue)
+        setFilterData(fData)
+    }
+
+    function handleUserChange(event) {
+        const selectedUserValue = event.target.value;
+        const fData = totalOffline?.filter(si =>
+            (si.user.name) === selectedUserValue)
+        setFilterData(fData)
+    }
 
     // -----------------Filter End--------------------
 
@@ -112,6 +83,38 @@ const OfflineStudents = () => {
         console.log(fiData);
     }
     // -------------Date wise Filter End--------------------
+
+    const handleDelete = (offline) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this item?');
+        if (!confirmDelete) {
+            return;
+        }
+
+        fetch(`https://demo-usc-crm-server.vercel.app/delete/${offline}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                toast.success(`Leads ${user.name} deleted successfully`);
+                fetch('https://demo-usc-crm-server.vercel.app/leads?offlineInterested=true')
+                    .then(res => res.json())
+                    .then(updatedData => {
+                        setFilterData(updatedData)
+                    })
+                    .catch(error => {
+                        console.error('Update request failed:', error);
+                        toast.error('An error occurred while updating the API.');
+                    });
+            })
+            .catch(error => {
+                console.error('Delete request failed:', error);
+                toast.error('An error occurred while deleting the item.');
+            });
+    }
+
 
     return (
         <div className='mx-2 my-6'>
@@ -153,20 +156,13 @@ const OfflineStudents = () => {
                     <label className="label">
                         <span className="label-text">Course Name</span>
                     </label>
-                    <select
-                        ref={courseRef}
-                        className="select select-sm w-full border-gray-400"
-                    >
-                        <option >Course Name</option>
-                        {
-                            coursesName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                    <select onChange={handleCourseChange} className="select select-sm w-full border-gray-400">
+                        <option>Course Name</option>
+                        {uniqueCourse.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -174,18 +170,13 @@ const OfflineStudents = () => {
                     <label className="label">
                         <span className="label-text">Batch Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={batchRef}>
+                    <select onChange={handleBatchChange} className="select select-sm w-full border-gray-400">
                         <option>Batch Name</option>
-                        {
-                            batchsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueBatch.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -193,18 +184,13 @@ const OfflineStudents = () => {
                     <label className="label">
                         <span className="label-text">Head Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={headRef}>
+                    <select onChange={handleHeadChange} className="select select-sm w-full border-gray-400">
                         <option >Head Name</option>
-                        {
-                            headsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueHead.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -212,31 +198,15 @@ const OfflineStudents = () => {
                     <label className="label">
                         <span className="label-text">User Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={userRef}>
+                    <select onChange={handleUserChange} className="select select-sm w-full border-gray-400">
                         <option >User Name</option>
-
-                        {
-                            userName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueUser.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
-
-                <div className='mt-8'>
-                    <button
-                        onClick={handleSearch}
-                        className="btn btn-sm btn-primary text-white bg-green-500"
-                    >
-                        Filter
-                    </button>
-                </div>
-
 
                 <div className='mt-10 mx-4'>
                     <input type="text" className="input input-bordered input-sm w-full max-w-xs mb-3" onChange={(e) => setSearch(e.target.value)} placeholder='Search By Name, Phone, Email'></input>

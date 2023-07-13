@@ -13,7 +13,7 @@ const AllReceiveLoan = () => {
     const { data: loans = [], refetch } = useQuery({
         queryKey: ['loans'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan?loanReceiveStatus=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan?loanReceiveStatus=true`);
             const data = await res.json();
             setFilterData(data)
             return data;
@@ -23,7 +23,7 @@ const AllReceiveLoan = () => {
     const handleDelete = (leads) => {
         console.log(leads._id);
 
-        fetch(`http://localhost:5000/delete-loan/${leads._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/delete-loan/${leads._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -52,7 +52,7 @@ const AllReceiveLoan = () => {
     const { data: payLoan = [] } = useQuery({
         queryKey: ['payLoan'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan/pay`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan/pay`);
             const data = await res.json();
             return data;
         }

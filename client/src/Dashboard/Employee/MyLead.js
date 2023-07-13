@@ -27,7 +27,7 @@ const MyLead = () => {
         queryKey: ['allleads', user],
         queryFn: async () => {
             if (user._id) {
-                const res = await fetch(`http://localhost:5000/leads/${user._id}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads/${user._id}`);
                 const data = await res.json();
 
                 let lData = data.filter(lead => lead.admission !== true && lead.close !== true && lead.onlineInterested !== true && lead.offlineInterested !== true && lead.seminarInterested !== true && lead.noReceive !== true)
@@ -51,7 +51,7 @@ const MyLead = () => {
     // const handleUpdate = (event) => {
     //     event.preventDefault();
 
-    //     fetch(`http://localhost:5000/update/${sLead._id}`, {
+    //     fetch(`https://demo-usc-crm-server.vercel.app/update/${sLead._id}`, {
     //         method: 'PATCH', // or 'PUT'
     //         headers: {
     //             "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const MyLead = () => {
             fristInstallmentDate: "",
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -109,7 +109,7 @@ const MyLead = () => {
             close: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -130,7 +130,7 @@ const MyLead = () => {
             onlineInterested: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -151,7 +151,7 @@ const MyLead = () => {
             offlineInterested: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -170,7 +170,7 @@ const MyLead = () => {
             seminarInterested: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -190,7 +190,7 @@ const MyLead = () => {
             noReceive: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -212,7 +212,7 @@ const MyLead = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
             const data = await res.json();
             return data;
         }
@@ -221,7 +221,7 @@ const MyLead = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
             const data = await res.json();
             return data;
         }
@@ -230,7 +230,7 @@ const MyLead = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
             const data = await res.json();
             return data;
         }

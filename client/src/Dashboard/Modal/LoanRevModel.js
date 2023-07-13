@@ -44,7 +44,7 @@ const LoanRevModel = ({ updateData, setUpdateData, setFilterData }) => {
         }
         console.log(revAmmount);
 
-        fetch(`http://localhost:5000/loan/rev`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/loan/rev`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

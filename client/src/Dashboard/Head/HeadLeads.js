@@ -22,7 +22,7 @@ const HeadLeads = () => {
     const { data: totalClose = [], refetch } = useQuery({
         queryKey: ['totalClose'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads/?head.name=${user.name}`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads/?head.name=${user.name}`);
             const data = await res.json();
             setFilterData(data)
 
@@ -35,7 +35,7 @@ const HeadLeads = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
             const data = await res.json();
             return data;
         }
@@ -44,7 +44,7 @@ const HeadLeads = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
             const data = await res.json();
             return data;
         }
@@ -53,7 +53,7 @@ const HeadLeads = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
             const data = await res.json();
             return data;
         }
@@ -62,7 +62,7 @@ const HeadLeads = () => {
     const { data: userName = [] } = useQuery({
         queryKey: ['userName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/users`);
             const data = await res.json();
             return data;
         }

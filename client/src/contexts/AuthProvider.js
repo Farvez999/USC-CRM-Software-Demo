@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
     const { data: loansData = [] } = useQuery({
         queryKey: ['loansData'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan?loanReceiveStatus=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan?loanReceiveStatus=true`);
             const data = await res.json();
             setFilterData(data)
             return data;
@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
     const { data: loansPayData = [] } = useQuery({
         queryKey: ['loansPayData'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan?loanProvideStatus=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan?loanProvideStatus=true`);
             const data = await res.json();
             return data;
         }
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
     const { data: payLoans = [] } = useQuery({
         queryKey: ['payLoans'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan/pay`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan/pay`);
             const data = await res.json();
             return data;
         }
@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
     const { data: revLoans = [] } = useQuery({
         queryKey: ['revLoans'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan/rev`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan/rev`);
             const data = await res.json();
             return data;
         }
@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         try {
             if (!user?._id) {
-                axios.get("http://localhost:5000/logged-user", {
+                axios.get("https://demo-usc-crm-server.vercel.app/logged-user", {
                     headers: {
                         'content-type': 'application/json',
                         authorization: localStorage.getItem('access_token')
@@ -78,7 +78,7 @@ const AuthProvider = ({ children }) => {
         const password = e.target.password.value;
 
 
-        axios.post('http://localhost:5000/login', {
+        axios.post('https://demo-usc-crm-server.vercel.app/login', {
             email, password
         })
             .then(res => {
@@ -104,7 +104,7 @@ const AuthProvider = ({ children }) => {
         const user = { name: name, email: email, role: role, password: password };
 
 
-        fetch(`http://localhost:5000/users`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/users`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

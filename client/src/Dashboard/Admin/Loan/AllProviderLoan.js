@@ -11,7 +11,7 @@ const AllProviderLoan = () => {
     const { data: loans = [], refetch } = useQuery({
         queryKey: ['loans'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan?loanProvideStatus=true`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/loan?loanProvideStatus=true`);
             const data = await res.json();
             return data;
         }
@@ -20,7 +20,7 @@ const AllProviderLoan = () => {
     const handleDelete = (leads) => {
         console.log(leads._id);
 
-        fetch(`http://localhost:5000/delete-loan/${leads._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/delete-loan/${leads._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

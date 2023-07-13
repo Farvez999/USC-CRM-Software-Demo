@@ -452,15 +452,15 @@ const DashboardLayoutM = () => {
                                                                 <img width="16" height="16" src="https://img.icons8.com/officel/16/mobile-payment.png" alt="mobile-payment" />
                                                                 <span className='text-xs'>Batch Name</span></Link>
                                                         </li>
-                                                        <li>
+                                                        {/* <li>
                                                             <Link to={`/dashboard/settings/head`}>
                                                                 <img width="16" height="16" src="https://img.icons8.com/arcade/64/health-graph.png" alt="health-graph" />
                                                                 <span className='text-xs'>Head Name</span></Link>
-                                                        </li>
+                                                        </li> */}
                                                         <li>
                                                             <Link to={`/dashboard/setting/user`}>
                                                                 <img width="16" height="16" src="https://img.icons8.com/color-glass/48/download-graph-report.png" alt="download-graph-report" />
-                                                                <span className='text-xs'>User Name</span></Link>
+                                                                <span className='text-xs'>User & Head</span></Link>
                                                         </li>
                                                         <li>
                                                             <Link to={`/dashboard/setting/payment-type`}>

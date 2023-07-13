@@ -14,20 +14,20 @@ const Navbar = () => {
         queryKey: ['todayFollowLeads'],
         queryFn: async () => {
             if (user.role === 'admin') {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 setTodayFollowup(data)
                 return data;
             }
             else if (user.role === 'head') {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 let lData = data.filter(lead => lead.head.name === user.name)
                 setTodayFollowup(lData)
                 return data;
             }
             else {
-                const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+                const res = await fetch(`https://demo-usc-crm-server.vercel.app/todayLead/${date}`);
                 const data = await res.json();
                 let lData = data.filter(lead => lead.user.name === user.name)
                 setTodayFollowup(lData)
@@ -45,11 +45,6 @@ const Navbar = () => {
     // }
 
     const menuItem = <>
-        {/* <li className='font-semibold'><Link to='/'>Home</Link></li> */}
-        {/* <li className='font-semibold'><Link to='/blog'>Blog</Link></li> */}
-        {/* <li className='font-semibold'><Link to='/appoinment'>Appoinment</Link></li>
-        <li className='font-semibold'><Link to='/reviews'>Reviews</Link></li>
-        <li className='font-semibold'><Link to='/contactUs'>Contact Us</Link></li> */}
         {
             user?._id ?
                 <>
@@ -58,7 +53,7 @@ const Navbar = () => {
                         Inbox
                         <div className="badge badge-secondary">+99</div>
                     </button> */}
-                    <li className='font-semibold'><Link to='/dashboard/today-followUp'>Today Follow Up<p className="badge badge-secondary badge-sm">{todayFollowup.length}</p></Link></li>
+                    <li className='font-semibold'><Link to='/dashboard/today-followUps'>Today Follow Up<p className="badge badge-secondary badge-sm">{todayFollowup.length}</p></Link></li>
                     <li className='font-semibold'><button onClick={logout}><MdLogout></MdLogout></button></li>
                     {/* <div className="avatar placeholder">
                         <div className="bg-neutral-focus text-neutral-content rounded-full w-12">

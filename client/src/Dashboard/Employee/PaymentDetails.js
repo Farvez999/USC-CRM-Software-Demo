@@ -27,7 +27,7 @@ const PaymentDetails = () => {
     const { data: admissions = [], refetch } = useQuery({
         queryKey: ['admissions'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?admission=true&admissionStatus=true&user.name=${user.name}`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`);
             const data = await res.json();
             // let lData = data.filter(lead => lead.admissionStatus === true)
 
@@ -44,7 +44,7 @@ const PaymentDetails = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
             const data = await res.json();
             return data;
         }
@@ -53,7 +53,7 @@ const PaymentDetails = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
             const data = await res.json();
             return data;
         }
@@ -62,7 +62,7 @@ const PaymentDetails = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
             const data = await res.json();
             return data;
         }
@@ -121,7 +121,7 @@ const PaymentDetails = () => {
             closePayment: true
         }
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -141,7 +141,7 @@ const PaymentDetails = () => {
             closePayment: false
         }
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
