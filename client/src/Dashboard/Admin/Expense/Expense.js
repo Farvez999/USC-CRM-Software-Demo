@@ -16,7 +16,11 @@ const Expense = () => {
     });
 
     const handleDelete = (leads) => {
-        console.log(leads._id);
+        const confirmDelete = window.confirm('Are you sure you want to delete this item?');
+        if (!confirmDelete) {
+            return;
+        }
+
 
         fetch(`https://demo-usc-crm-server.vercel.app/delete-expense/${leads._id}`, {
             method: 'DELETE',

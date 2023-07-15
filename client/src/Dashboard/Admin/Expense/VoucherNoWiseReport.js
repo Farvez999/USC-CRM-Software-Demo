@@ -46,7 +46,22 @@ const VoucherNoWiseReport = () => {
                     <label className="label">
                         <span className="label-text">Voucher No</span>
                     </label>
-                    <input list="data" ref={voucherNoRef} className='input input-bordered input-sm' placeholder="Voucher No here...."></input>
+                    <select
+                        ref={voucherNoRef}
+                        className="select select-sm w-full border-gray-400"
+                    >
+                        <option >Voucher No</option>
+                        {
+                            expenses?.expenses?.map((user) =>
+                                <option
+                                    key={user._id}
+                                    value={user.voucherNo}>
+                                    {user.voucherNo}
+                                </option>
+                            )
+                        }
+                    </select>
+                    {/* <input list="data" ref={voucherNoRef} className='input input-bordered input-sm' placeholder="Voucher No here...."></input>
                     <datalist id='data'>
                         {
                             expenses?.expenses?.map((user) =>
@@ -57,7 +72,7 @@ const VoucherNoWiseReport = () => {
                                 </option>
                             )
                         }
-                    </datalist>
+                    </datalist> */}
 
                 </div>
 

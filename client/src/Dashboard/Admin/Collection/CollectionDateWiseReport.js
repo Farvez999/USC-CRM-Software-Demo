@@ -69,9 +69,6 @@ const CollectionDateWiseReport = () => {
         var resultProductDataThird = collectionsCourse.filter(a => (a.thirdInstallmentDate) >= startDate && (a.thirdInstallmentDate) <= endDate);
         console.log(resultProductDataThird)
 
-        // const aa = [...resultProductDataFrist, ...resultProductDataTwo, ...resultProductDataThird]
-        // setFilterData(aa)
-
 
         var totalOne = 0;
         for (var tsOne = 0; tsOne < resultProductDataFrist.length; tsOne++) {

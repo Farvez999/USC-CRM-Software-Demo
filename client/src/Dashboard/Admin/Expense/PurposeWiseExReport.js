@@ -19,6 +19,10 @@ const PurposeWiseExReport = () => {
             })
     }, [])
 
+    const uniqueExpensesData = [...new Set(expenses?.expenses?.map(user => user.purpose))];
+    console.log(uniqueExpensesData)
+
+
     // -------------Collection Date to Date wise Filter Start--------------------
 
     const handleCollectionDateSearch = () => {
@@ -41,7 +45,29 @@ const PurposeWiseExReport = () => {
                     <label className="label">
                         <span className="label-text">Purpose Name</span>
                     </label>
-                    <input list="data" ref={voucherNoRef} className='input input-bordered input-sm' placeholder="Purpose Name here...."></input>
+                    <select
+                        ref={voucherNoRef}
+                        className="select select-sm w-full border-gray-400"
+                    >
+                        <option >Purpose Name</option>
+                        {uniqueExpensesData.map((purpose, index) => (
+                            <option
+                                key={index}
+                                value={purpose}>
+                                {purpose}
+                            </option>
+                        ))}
+                        {/* {
+                            expenses?.expenses?.map((user) =>
+                                <option
+                                    key={user._id}
+                                    value={user.purpose}>
+                                    {user.purpose}
+                                </option>
+                            )
+                        } */}
+                    </select>
+                    {/* <input list="data" ref={voucherNoRef} className='input input-bordered input-sm' placeholder="Purpose Name here...."></input>
                     <datalist id='data'>
                         {
                             expenses?.expenses?.map((user) =>
@@ -52,7 +78,7 @@ const PurposeWiseExReport = () => {
                                 </option>
                             )
                         }
-                    </datalist>
+                    </datalist> */}
 
                 </div>
 

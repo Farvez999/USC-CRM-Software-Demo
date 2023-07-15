@@ -41,14 +41,11 @@ import Profile from "../Pages/Profile";
 import PaymentDetails from "../Dashboard/Employee/PaymentDetails";
 import PayDetails from "../Dashboard/Admin/Lead/PayDetails";
 import HeadPayDetails from "../Dashboard/Head/HeadPayDetails";
-import PayReport from "../Dashboard/Admin/Report/BatchReport";
 import AddAdmission from "../Dashboard/Admin/Lead/AddAdmission";
 import DashboardLayoutM from "../Layout/DashboardLayoutM";
 import BatchSetting from "../Dashboard/Admin/Settings/BatchSetting";
 import CourseSetting from "../Dashboard/Admin/Settings/CourseSetting";
 import HeadSetting from "../Dashboard/Admin/Settings/HeadSetting";
-import CollectionReport from "../Dashboard/Admin/Report/CollectionReport";
-import PayGetAccountsReport from "../Dashboard/Admin/Report/PayGetAccountsReport";
 import ExpenseHead from "../Dashboard/Admin/Expense/ExpenseHead";
 import Expense from "../Dashboard/Admin/Expense/Expense";
 import AddExpense from "../Dashboard/Admin/Expense/AddExpense";
@@ -70,6 +67,9 @@ import PaymentTypeSetting from "../Dashboard/Admin/Settings/PaymentTypeSetting";
 import PayReceiveLoan from "../Dashboard/Admin/Loan/PayReceiveLoan";
 import RevPayableLoan from "../Dashboard/Admin/Loan/RevPayableLoan";
 import CashIn from "../Dashboard/Admin/CashIn/CashIn";
+import CollectionReport from "../Dashboard/Admin/CourseReport/CollectionReport";
+import PayGetAccountsReport from "../Dashboard/Admin/CourseReport/PayGetAccountsReport";
+import PayReport from "../Dashboard/Admin/CourseReport/BatchReport";
 
 const router = createBrowserRouter([
     {

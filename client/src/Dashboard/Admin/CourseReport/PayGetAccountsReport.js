@@ -1,11 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import ReactToPrint, { PrintContextConsumer } from 'react-to-print';
-import PayReport from './BatchReport';
-import { AuthContext } from '../../../contexts/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
+import React, { useEffect, useRef, useState } from 'react';
+import ReactToPrint from 'react-to-print';
 
-const CollectionReport = () => {
-
-    const { user } = useContext(AuthContext)
+const PayGetAccountsReport = () => {
     const [filterData, setFilterData] = useState([])
     const [admissions, setAdmissionsData] = useState([])
     const [total, setTotal] = useState([])
@@ -13,7 +10,11 @@ const CollectionReport = () => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
 
+    const componentRef = useRef();
+
     const [show, setShow] = useState(false);
+
+    const payGetwayRef = useRef();
 
     useEffect(() => {
         fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
@@ -23,41 +24,43 @@ const CollectionReport = () => {
             })
     }, [])
 
-    const componentRef = useRef();
-
     // -------------Collection Date to Date wise Filter Start--------------------
     const handleCollectionStartInputChange = event => {
         const value = event.target.value;
         setStartDate(value)
-        // console.log(typeof (value));
     }
 
     const handleCollectionEndInputChange = event => {
         const value = event.target.value;
         setEndDate(value)
-        // console.log(value);
     }
 
+    const { data: payGetwaysName = [], refetch } = useQuery({
+        queryKey: ['payGetwaysName'],
+        queryFn: async () => {
+            const res = await fetch(`https://demo-usc-crm-server.vercel.app/pay-getway`);
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    // console.log(payGetwaysName)
+
     const handleCollectionDateSearch = () => {
-        var resultProductDataFrist = admissions.filter(a => (a.fristInstallmentDate) >= startDate && (a.fristInstallmentDate) <= endDate);
-        // setFilterData(resultProductDataFrist)
+
+        const fData = admissions?.filter(si => (si.fristPaymentAccounts || si.secondPaymentAccounts || si.thirdPaymentAccounts) === payGetwayRef.current.value)
+        setFilterData(fData)
+        console.log(fData)
+
+        var resultProductDataFrist = fData.filter(a => (a.fristInstallmentDate) >= startDate && (a.fristInstallmentDate) <= endDate);
         console.log(resultProductDataFrist)
         setShow(true)
 
-
-
-        resultProductDataFrist.forEach(element => {
-            const all = []
-            all.push({ "data": element, "status": "frist" });
-            // return all;
-            console.log(all)
-        });
-
-        var resultProductDataTwo = admissions.filter(a => (a.secondInstallmentDate) >= startDate && (a.secondInstallmentDate) <= endDate);
+        var resultProductDataTwo = fData.filter(a => (a.secondInstallmentDate) >= startDate && (a.secondInstallmentDate) <= endDate);
         // setFilterData(resultProductDataTwo)
         console.log(resultProductDataTwo)
 
-        var resultProductDataThird = admissions.filter(a => (a.thirdInstallmentDate) >= startDate && (a.thirdInstallmentDate) <= endDate);
+        var resultProductDataThird = fData.filter(a => (a.thirdInstallmentDate) >= startDate && (a.thirdInstallmentDate) <= endDate);
         // setFilterData(resultProductDataThird)
         console.log(resultProductDataThird)
 
@@ -91,26 +94,54 @@ const CollectionReport = () => {
     };
     // -------------Collection Date to Date wise Filter End--------------------
 
+
+
     return (
         <div className='mx-2 my-6'>
             <div className='flex flex-row justify-around'>
-                <h2 className='text-2xl font-bold'>Date Wise Collection Report!</h2>
+                <h2 className='text-2xl font-bold'>Payment Getway Wise Report!</h2>
 
             </div>
 
-            {/* <div className='mt-8 mx-2'>
 
-
-                <button
-                    onClick={() => setShow(!show)}
-                    className="btn btn-sm btn-primary text-white bg-green-500"
-                >
-                    Show
-                </button>
-            </div> */}
 
             {/* ------Collection Start Date and End Date------ */}
             <div className='flex flex-row justify-center mt-2'>
+                <div className="form-control mx-2">
+                    <label className="label">
+                        <span className="label-text">Payment Getway Name</span>
+                    </label>
+                    {/* <input list="data" ref={payGetwayRef} className='input input-bordered input-sm' placeholder="Batch Name"></input>
+                    <datalist id='data'>
+                        {
+                            payGetwaysName?.users?.map((user) =>
+                                // user.role !== 'admin' &&
+                                <option
+                                    key={user._id}
+                                    value={user.name}>
+                                    {user.name}
+                                </option>
+                            )
+                        }
+                    </datalist> */}
+                    <select
+                        ref={payGetwayRef}
+                        className="select select-sm w-full border-gray-400"
+                    >
+                        <option >Batch Name</option>
+                        {
+                            payGetwaysName?.users?.map((user) =>
+                                <option
+                                    key={user._id}
+                                    value={user.name}>
+                                    {user.name}
+                                </option>
+                            )
+                        }
+                    </select>
+
+                </div>
+
                 <div className="form-control mx-2">
                     <label className="label">
                         <span className="label-text">Collection Start Date</span>
@@ -130,7 +161,7 @@ const CollectionReport = () => {
                         onClick={handleCollectionDateSearch}
                         className="btn btn-sm btn-primary text-white bg-green-500"
                     >
-                        Collection Date Filter
+                        Filter
                     </button>
                 </div>
 
@@ -274,4 +305,4 @@ const CollectionReport = () => {
     );
 };
 
-export default CollectionReport;
+export default PayGetAccountsReport;

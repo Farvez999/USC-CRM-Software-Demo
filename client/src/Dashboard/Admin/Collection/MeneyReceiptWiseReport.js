@@ -44,7 +44,22 @@ const MeneyReceiptWiseReport = () => {
                     <label className="label">
                         <span className="label-text">Money Receipt No</span>
                     </label>
-                    <input list="data" ref={moneyReceiptRef} className='input input-bordered input-sm' placeholder="Money Receipt No here...."></input>
+                    <select
+                        ref={moneyReceiptRef}
+                        className="select select-sm w-full border-gray-400"
+                    >
+                        <option >Money Receipt No</option>
+                        {
+                            collections?.collection?.map((user) =>
+                                <option
+                                    key={user._id}
+                                    value={user.moneyReceipt}>
+                                    {user.moneyReceipt}
+                                </option>
+                            )
+                        }
+                    </select>
+                    {/* <input list="data" ref={moneyReceiptRef} className='input input-bordered input-sm' placeholder="Money Receipt No here...."></input>
                     <datalist id='data'>
                         {
                             collections?.collection?.map((user) =>
@@ -55,7 +70,7 @@ const MeneyReceiptWiseReport = () => {
                                 </option>
                             )
                         }
-                    </datalist>
+                    </datalist> */}
 
                 </div>
 

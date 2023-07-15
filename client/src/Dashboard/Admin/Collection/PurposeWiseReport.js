@@ -21,8 +21,6 @@ const PurposeWiseReport = () => {
     // -------------Collection Date to Date wise Filter Start--------------------
 
     const handleCollectionDateSearch = () => {
-
-        console.log("first")
         const fData = collections?.collection?.filter(si => (si?.purpose) === moneyReceiptRef.current.value)
         setFilterData(fData)
         setShow(true)
@@ -34,7 +32,7 @@ const PurposeWiseReport = () => {
     return (
         <div className='mx-2 my-6'>
             <div className='flex flex-row justify-around'>
-                <h2 className='text-2xl font-bold'>Purpose Wise Collection Report!</h2>
+                <h2 className='text-2xl font-bold'>Head Wise Collection Report!</h2>
 
             </div>
 
@@ -43,7 +41,22 @@ const PurposeWiseReport = () => {
                     <label className="label">
                         <span className="label-text">Purpose Name</span>
                     </label>
-                    <input list="data" ref={moneyReceiptRef} className='input input-bordered input-sm' placeholder="Purpose Name here...."></input>
+                    <select
+                        ref={moneyReceiptRef}
+                        className="select select-sm w-full border-gray-400"
+                    >
+                        <option >Purpose Name</option>
+                        {
+                            collections?.collection?.map((user) =>
+                                <option
+                                    key={user._id}
+                                    value={user.purpose}>
+                                    {user.purpose}
+                                </option>
+                            )
+                        }
+                    </select>
+                    {/* <input list="data" ref={moneyReceiptRef} className='input input-bordered input-sm' placeholder="Purpose Name here...."></input>
                     <datalist id='data'>
                         {
                             collections?.collection?.map((user) =>
@@ -54,7 +67,7 @@ const PurposeWiseReport = () => {
                                 </option>
                             )
                         }
-                    </datalist>
+                    </datalist> */}
 
                 </div>
 

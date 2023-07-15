@@ -329,7 +329,7 @@ const DashboardLayoutM = () => {
                                                         <li>
                                                             <Link to={`/dashboard/collection/purpose`}>
                                                                 <img width="16" height="16" src="https://img.icons8.com/arcade/64/health-graph.png" alt="health-graph" />
-                                                                <span className='text-xs'>Purpose Wise Report</span></Link>
+                                                                <span className='text-xs'>Head Wise Report</span></Link>
                                                         </li>
                                                         <li>
                                                             <Link to={`/dashboard/report/payGetway`}>
@@ -371,11 +371,11 @@ const DashboardLayoutM = () => {
                                                         <li>
                                                             <Link to={`/dashboard/expense/boucher-report`}>
                                                                 <img width="16" height="16" src="https://img.icons8.com/stickers/100/batch-assign.png" alt="batch-assign" />
-                                                                <span className='text-xs'>Batch Wise Report</span></Link>
+                                                                <span className='text-xs'>Voucher No Wise Report</span></Link>
                                                         </li>
                                                         <li><Link to={`/dashboard/expense/purpose`}>
                                                             <img width="16" height="16" src="https://img.icons8.com/color-glass/48/profit-report.png" alt="profit-report" />
-                                                            <span className='text-xs'>Purpose Wise Report</span></Link></li>
+                                                            <span className='text-xs'>Head Wise Report</span></Link></li>
                                                     </ul>
                                                 </details>
                                             </li>

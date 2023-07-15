@@ -46,6 +46,7 @@ const PayReport = () => {
         }
     });
 
+
     const handleCollectionDateSearch = () => {
 
         const fData = admissions?.filter(si => si.batch.name === batchRef.current.value)
@@ -114,7 +115,7 @@ const PayReport = () => {
                     <label className="label">
                         <span className="label-text">Batch Name</span>
                     </label>
-                    <input list="data" ref={batchRef} className='input input-bordered input-sm' placeholder="Batch Name"></input>
+                    {/* <input list="data" ref={batchRef} className='input input-bordered input-sm' placeholder="Batch Name"></input>
                     <datalist id='data'>
                         {
                             batchsName?.users?.map((user) =>
@@ -126,7 +127,23 @@ const PayReport = () => {
                                 </option>
                             )
                         }
-                    </datalist>
+                    </datalist> */}
+
+                    <select
+                        ref={batchRef}
+                        className="select select-sm w-full border-gray-400"
+                    >
+                        <option >Batch Name</option>
+                        {
+                            batchsName?.users?.map((user) =>
+                                <option
+                                    key={user._id}
+                                    value={user.name}>
+                                    {user.name}
+                                </option>
+                            )
+                        }
+                    </select>
 
                 </div>
 
@@ -149,7 +166,7 @@ const PayReport = () => {
                         onClick={handleCollectionDateSearch}
                         className="btn btn-sm btn-primary text-white bg-green-500"
                     >
-                        Collection Date Filter
+                        Filter
                     </button>
                 </div>
 
@@ -176,11 +193,11 @@ const PayReport = () => {
                             <thead className='sticky top-0 bg-slate-300' style={{ width: "1200px" }}>
                                 <tr className='text-xs'>
                                     <th className='p-1 border-2'>#</th>
-                                    {/* <th className='p-1 border-2'>Date</th> */}
+                                    <th className='p-1 border-2'>Date</th>
                                     <th className='p-1 border-2'>C.N</th>
                                     <th className='p-1 border-2'>B.N</th>
                                     <th className='p-1 border-2'>U.N</th>
-                                    {/* <th className='p-1 border-2'>H.N</th> */}
+                                    <th className='p-1 border-2'>H.N</th>
                                     <th className='p-1 border-2'>Name</th>
                                     <th className='p-1 border-2'>Phone</th>
                                     {/* <th className='p-1 border-2'>Email</th> */}
@@ -202,11 +219,11 @@ const PayReport = () => {
                                         <>
                                             <tr >
                                                 <th className='p-1 border-2'>{i + 1}</th>
-                                                {/* <td className='p-1 border-2'>{admission?.updatedAt.slice(0, -14)}</td> */}
+                                                <td className='p-1 border-2'>{admission?.updatedAt.slice(0, -14)}</td>
                                                 <td className='p-1 border-2'>{admission?.course.name}</td>
                                                 <td className='p-1 border-2'>{admission?.batch.name}</td>
                                                 <td className='p-1 border-2'>{admission.user.name}</td>
-                                                {/* <td className='p-1 border-2'>{admission.head.name}</td> */}
+                                                <td className='p-1 border-2'>{admission.head.name}</td>
                                                 <td className='p-1 border-2'>{admission.name}</td>
                                                 <td className='p-1 border-2'>{admission?.phone?.split('p:', 2)}</td>
                                                 {/* <td className='p-1 border-2'>{admission?.email?.split('@', 1)}</td> */}

@@ -21,7 +21,10 @@ const BatchSetting = () => {
     });
 
     const handleDelete = (leads) => {
-        console.log(leads);
+        const confirmDelete = window.confirm('Are you sure you want to delete this item?');
+        if (!confirmDelete) {
+            return;
+        }
 
         fetch(`https://demo-usc-crm-server.vercel.app/delete-batch/${leads}`, {
             method: 'DELETE',
