@@ -13,7 +13,7 @@ const CollectionReport = () => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
+        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setAdmissionsData(data)

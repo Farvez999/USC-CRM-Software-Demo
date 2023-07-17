@@ -1,8 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../contexts/AuthProvider';
-import PaymentDetails from './PaymentDetails';
 import PaymentModal from './PaymentModal';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { FaFileDownload } from 'react-icons/fa';
@@ -13,40 +11,65 @@ const MyAdmission = () => {
     const { user } = useContext(AuthContext)
     const [search, setSearch] = useState("");
     const [filterData, setFilterData] = useState([])
-    console.log(filterData);
 
     const [admission, setAdmission] = useState()
-    const courseRef = useRef();
-    const batchRef = useRef();
-    const headRef = useRef();
+
+    const [admissions, setAdmissions] = useState([])
+    const [uniquefilterData, setUniqueFilterData] = useState([])
+
     const tableRef = useRef(null);
 
-    const { data: admissions = [], refetch } = useQuery({
-        queryKey: ['admissions'],
-        queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?admission=true&user.name=${user.name}`);
-            const data = await res.json();
+    // const { data: admissions = [], refetch } = useQuery({
+    //     queryKey: ['admissions'],
+    //     queryFn: async () => {
+    //         const res = await fetch(`http://localhost:5000/leads?admission=true&user.name=${user.name}`);
+    //         const data = await res.json();
+    //         setFilterData(data)
+    //         return data;
+    //     }
+    // });
 
-            // console.log(data)
-            // let lData = data.filter(lead => lead.onlineInterested !== true && lead.offlineInterested !== true && lead.seminarInterested !== true)
+    const refetchUpdateData = async () => {
+        const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads/${user._id}`);
+        const data = await res.json();
 
-            setFilterData(data)
+        let afterFilter = []
+        filterData.forEach(sData => {
+            const ssData = data.filter(d => d?._id === sData?._id)
+            afterFilter = [...afterFilter, ...ssData]
+        })
+        console.log(afterFilter)
+        console.log(filterData)
+        setFilterData(afterFilter)
+    }
 
-            return data;
-        }
-    });
+    useEffect(() => {
+        fetch(`http://localhost:5000/leads?admission=true&user.name=${user.name}`)
+            .then(response => response.json())
+            .then(data => {
+                setFilterData(data)
+                setUniqueFilterData(data)
+                setAdmissions(data)
+                return data;
 
-    console.log(admissions)
+            })
 
+    }, [user.name])
 
     const handleOnline = (admission) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Online Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
 
         const onlineInterested = {
             onlineInterested: true,
             admission: false,
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
+        fetch(`http://localhost:5000/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -57,11 +80,18 @@ const MyAdmission = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Online Course Interested')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== admission._id)
+                setFilterData(lData)
             })
     }
 
     const handleOffline = (admission) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Offline Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const offlineInterested = {
             offlineInterested: true,
             admission: false,
@@ -69,7 +99,7 @@ const MyAdmission = () => {
         }
 
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
+        fetch(`http://localhost:5000/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -80,11 +110,18 @@ const MyAdmission = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Offline Admissions Interested')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== admission._id)
+                setFilterData(lData)
             })
     }
 
     const handleSeminarInter = (admission) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Seminar Interest this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const seminarInterested = {
             seminarInterested: true,
             admission: false,
@@ -92,7 +129,7 @@ const MyAdmission = () => {
             onlineInterested: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
+        fetch(`http://localhost:5000/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -103,7 +140,8 @@ const MyAdmission = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Seminar Interested Added')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== admission._id)
+                setFilterData(lData)
             })
     }
 
@@ -113,39 +151,71 @@ const MyAdmission = () => {
 
     // -----------------Filter Start--------------------
 
-    const { data: coursesName = [] } = useQuery({
-        queryKey: ['coursesName'],
-        queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const [selectedValue, setSelectedValue] = useState([]);
+    console.log(selectedValue)
 
-    const { data: batchsName = [] } = useQuery({
-        queryKey: ['batchsName'],
-        queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
-    const { data: headsName = [] } = useQuery({
-        queryKey: ['headsName'],
-        queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueBatch = [...new Set(selectedValue?.map(user => user?.batch?.name))];
+
+    const uniqueHead = [...new Set(selectedValue?.map(user => user?.head?.name))];
 
 
-    const handleSearch = () => {
-        const fData = admissions?.filter(si => si.course.name === courseRef.current.value || si.batch.name === batchRef.current.value || si.head.name === headRef.current.value)
+    function handleCourseChange(event) {
+        const couseSelectedValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.course.name) === couseSelectedValue)
         setFilterData(fData)
+        setSelectedValue(fData);
+    }
 
-    };
+    function handleBatchChange(event) {
+        const selectedBatchValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.batch.name) === selectedBatchValue)
+        setFilterData(fData)
+    }
+
+    function handleHeadChange(event) {
+        const selectedHeadValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.head.name) === selectedHeadValue)
+        setFilterData(fData)
+    }
+
+    // const { data: coursesName = [] } = useQuery({
+    //     queryKey: ['coursesName'],
+    //     queryFn: async () => {
+    //         const res = await fetch(`http://localhost:5000/course`);
+    //         const data = await res.json();
+    //         return data;
+    //     }
+    // });
+
+    // const { data: batchsName = [] } = useQuery({
+    //     queryKey: ['batchsName'],
+    //     queryFn: async () => {
+    //         const res = await fetch(`http://localhost:5000/batch`);
+    //         const data = await res.json();
+    //         return data;
+    //     }
+    // });
+
+    // const { data: headsName = [] } = useQuery({
+    //     queryKey: ['headsName'],
+    //     queryFn: async () => {
+    //         const res = await fetch(`http://localhost:5000/head`);
+    //         const data = await res.json();
+    //         return data;
+    //     }
+    // });
+
+
+    // const handleSearch = () => {
+    //     const fData = admissions?.filter(si => si.course.name === courseRef.current.value || si.batch.name === batchRef.current.value || si.head.name === headRef.current.value)
+    //     setFilterData(fData)
+
+    // };
 
     // -----------------Filter End--------------------
 
@@ -179,20 +249,13 @@ const MyAdmission = () => {
                     <label className="label">
                         <span className="label-text">Course Name</span>
                     </label>
-                    <select
-                        ref={courseRef}
-                        className="select select-sm w-full border-gray-400"
-                    >
-                        <option >Course Name</option>
-                        {
-                            coursesName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                    <select onChange={handleCourseChange} className="select select-sm w-full border-gray-400">
+                        <option>Course Name</option>
+                        {uniqueCourse.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -200,18 +263,13 @@ const MyAdmission = () => {
                     <label className="label">
                         <span className="label-text">Batch Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={batchRef}>
+                    <select onChange={handleBatchChange} className="select select-sm w-full border-gray-400">
                         <option>Batch Name</option>
-                        {
-                            batchsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueBatch.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -219,28 +277,23 @@ const MyAdmission = () => {
                     <label className="label">
                         <span className="label-text">Head Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={headRef}>
+                    <select onChange={handleHeadChange} className="select select-sm w-full border-gray-400">
                         <option >Head Name</option>
-                        {
-                            headsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueHead.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
-                <div className='mt-8'>
+                {/* <div className='mt-8'>
                     <button
                         onClick={handleSearch}
                         className="btn btn-sm btn-primary text-white bg-green-500"
                     >
                         Filter
                     </button>
-                </div>
+                </div> */}
 
 
                 <div className='mt-10 mx-4'>

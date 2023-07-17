@@ -14,7 +14,7 @@ const PaymentTypeSetting = () => {
     const { data: payGetwaysName = [], refetch } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/pay-getway`);
+            const res = await fetch(`http://localhost:5000/pay-getway`);
             const data = await res.json();
             return data;
         }
@@ -26,7 +26,7 @@ const PaymentTypeSetting = () => {
             return;
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete-pay-getway/${leads}`, {
+        fetch(`http://localhost:5000/delete-pay-getway/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -48,7 +48,7 @@ const PaymentTypeSetting = () => {
             name: payGetwayName
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/pay-getway`, {
+        fetch(`http://localhost:5000/pay-getway`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

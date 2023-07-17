@@ -14,7 +14,7 @@ const VoucherNoWiseReport = () => {
 
 
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/expense")
+        fetch("http://localhost:5000/expense")
             .then(response => response.json())
             .then(data => {
                 setExpenseData(data)

@@ -16,7 +16,7 @@ const TotalLead = () => {
 
 
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads")
+        fetch("http://localhost:5000/leads")
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -72,7 +72,7 @@ const TotalLead = () => {
     const { data: coursesName = [], refetch } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -113,7 +113,7 @@ const TotalLead = () => {
             return;
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete/${leads}`, {
+        fetch(`http://localhost:5000/delete/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -123,7 +123,7 @@ const TotalLead = () => {
             .then(data => {
                 toast.success(`Leads ${user.name} deleted successfully`);
                 // Update the API and refetch the data
-                fetch('https://demo-usc-crm-server.vercel.app/leads')
+                fetch('http://localhost:5000/leads')
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)

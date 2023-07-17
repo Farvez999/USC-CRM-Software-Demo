@@ -14,7 +14,7 @@ const TotalNoReceive = () => {
     const tableRef = useRef(null);
 
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads?noReceive=true")
+        fetch("http://localhost:5000/leads?noReceive=true")
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -89,7 +89,7 @@ const TotalNoReceive = () => {
             return;
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete/${noreceive}`, {
+        fetch(`http://localhost:5000/delete/${noreceive}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -98,7 +98,7 @@ const TotalNoReceive = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Leads ${user.name} deleted successfully`);
-                fetch('https://demo-usc-crm-server.vercel.app/leads?noReceive=true')
+                fetch('http://localhost:5000/leads?noReceive=true')
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)

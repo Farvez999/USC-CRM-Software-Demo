@@ -16,7 +16,7 @@ const TotalClose = () => {
 
 
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads?close=true")
+        fetch("http://localhost:5000/leads?close=true")
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -93,7 +93,7 @@ const TotalClose = () => {
             return;
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete/${close}`, {
+        fetch(`http://localhost:5000/delete/${close}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -102,7 +102,7 @@ const TotalClose = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Leads ${user.name} deleted successfully`);
-                fetch('https://demo-usc-crm-server.vercel.app/leads?close=true')
+                fetch('http://localhost:5000/leads?close=true')
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)

@@ -17,7 +17,7 @@ const NoReceive = () => {
     const { data: noReceives = [], refetch } = useQuery({
         queryKey: ['noReceives'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?noReceive=true&user.name=${user.name}`);
+            const res = await fetch(`http://localhost:5000/leads?noReceive=true&user.name=${user.name}`);
             const data = await res.json();
             setFilterData(data)
             return data;
@@ -34,7 +34,7 @@ const NoReceive = () => {
 
     // const handleUpdate = (event) => {
     //     event.preventDefault();
-    //     fetch(`https://demo-usc-crm-server.vercel.app/update/${sLead._id}`, {
+    //     fetch(`http://localhost:5000/update/${sLead._id}`, {
     //         method: 'PATCH', // or 'PUT'
     //         headers: {
     //             'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const NoReceive = () => {
             fristInstallmentDate: "",
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${noReceive._id}`, {
+        fetch(`http://localhost:5000/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -91,7 +91,7 @@ const NoReceive = () => {
             noReceive: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${noReceive._id}`, {
+        fetch(`http://localhost:5000/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -113,7 +113,7 @@ const NoReceive = () => {
             noReceive: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${noReceive._id}`, {
+        fetch(`http://localhost:5000/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -135,7 +135,7 @@ const NoReceive = () => {
         }
 
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${noReceive._id}`, {
+        fetch(`http://localhost:5000/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -157,7 +157,7 @@ const NoReceive = () => {
             noReceive: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${noReceive._id}`, {
+        fetch(`http://localhost:5000/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -179,7 +179,7 @@ const NoReceive = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -188,7 +188,7 @@ const NoReceive = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
+            const res = await fetch(`http://localhost:5000/batch`);
             const data = await res.json();
             return data;
         }
@@ -197,7 +197,7 @@ const NoReceive = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
+            const res = await fetch(`http://localhost:5000/head`);
             const data = await res.json();
             return data;
         }

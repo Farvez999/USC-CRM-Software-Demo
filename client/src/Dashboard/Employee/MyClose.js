@@ -22,7 +22,7 @@ const MyClose = () => {
     const { data: closes = [], refetch } = useQuery({
         queryKey: ['closes'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads?close=true&user.name=${user.name}`);
+            const res = await fetch(`http://localhost:5000/leads?close=true&user.name=${user.name}`);
             const data = await res.json();
 
             // let lData = data.filter(lead => lead.admission !== true && lead.onlineInterested !== true && lead.offlineInterested !== true && lead.seminarInterested !== true)
@@ -42,7 +42,7 @@ const MyClose = () => {
 
     // const handleUpdate = (event) => {
     //     event.preventDefault();
-    //     fetch(`https://demo-usc-crm-server.vercel.app/update/${sLead._id}`, {
+    //     fetch(`http://localhost:5000/update/${sLead._id}`, {
     //         method: 'PATCH', // or 'PUT'
     //         headers: {
     //             'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ const MyClose = () => {
             close: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${close._id}`, {
+        fetch(`http://localhost:5000/update/${close._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -101,7 +101,7 @@ const MyClose = () => {
             close: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${close._id}`, {
+        fetch(`http://localhost:5000/update/${close._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -125,7 +125,7 @@ const MyClose = () => {
             close: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${close._id}`, {
+        fetch(`http://localhost:5000/update/${close._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -149,7 +149,7 @@ const MyClose = () => {
             close: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${close._id}`, {
+        fetch(`http://localhost:5000/update/${close._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -170,7 +170,7 @@ const MyClose = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -179,7 +179,7 @@ const MyClose = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
+            const res = await fetch(`http://localhost:5000/batch`);
             const data = await res.json();
             return data;
         }
@@ -188,7 +188,7 @@ const MyClose = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/head`);
+            const res = await fetch(`http://localhost:5000/head`);
             const data = await res.json();
             return data;
         }

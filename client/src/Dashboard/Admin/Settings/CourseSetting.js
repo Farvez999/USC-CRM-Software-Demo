@@ -12,7 +12,7 @@ const CourseSetting = () => {
     const { data: coursesName = [], refetch } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -23,7 +23,7 @@ const CourseSetting = () => {
             name: courseName
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/course`, {
+        fetch(`http://localhost:5000/course`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -46,7 +46,7 @@ const CourseSetting = () => {
             return;
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/delete-course/${leads}`, {
+        fetch(`http://localhost:5000/delete-course/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

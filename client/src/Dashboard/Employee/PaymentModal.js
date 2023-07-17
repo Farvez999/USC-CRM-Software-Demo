@@ -77,7 +77,7 @@ const PaymentModal = ({ admission, setAdmission }) => {
 
         console.log(user)
 
-        axios.patch(`https://demo-usc-crm-server.vercel.app/update-admission-pay/${admission._id}`, user)
+        axios.patch(`http://localhost:5000/update-admission-pay/${admission._id}`, user)
             .then((data) => {
                 // console.log(data);
                 toast.success('Lead Updates Success')
@@ -93,7 +93,7 @@ const PaymentModal = ({ admission, setAdmission }) => {
     const { data: paygetwaysName = [] } = useQuery({
         queryKey: ['paygetwaysName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/pay-getway`);
+            const res = await fetch(`http://localhost:5000/pay-getway`);
             const data = await res.json();
             return data;
         }
@@ -111,14 +111,14 @@ const PaymentModal = ({ admission, setAdmission }) => {
                     <h3 className="text-lg font-bold">Update Info</h3>
                     <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-2 mt-6'>
                         <div className='flex flex-row gap-2'>
-                            <input type="text" disabled value={admission.name} className="input w-full input-bordered " />
+                            <input type="text" disabled value={admission?.name} className="input w-full input-bordered " />
 
-                            <input name="name" type="text" defaultValue={admission.phone} disabled placeholder="Your Name" className="input w-full input-bordered" />
-                            <input name="email" type="email" defaultValue={admission.email} disabled placeholder="Email Address" className="input w-full input-bordered" />
+                            <input name="name" type="text" defaultValue={admission?.phone} disabled placeholder="Your Name" className="input w-full input-bordered" />
+                            <input name="email" type="email" defaultValue={admission?.email ? admission?.email : 'Email not Found'} disabled placeholder="Email Address" className="input w-full input-bordered p-1" />
                         </div>
 
                         <div className='flex flex-row gap-2'>
-                            <input name="batch" type="text" defaultValue={admission.batch.name} placeholder="Email Address" className="input w-full input-bordered" />
+                            <input name="batch" type="text" defaultValue={admission?.batch?.name} placeholder="Change Batch Name" className="input w-full input-bordered" />
 
                             <input name="preBatch" type="text" defaultValue={admission.batch.name} disabled placeholder="Email Address" className="input w-full input-bordered" />
                         </div>
@@ -184,9 +184,10 @@ const PaymentModal = ({ admission, setAdmission }) => {
                                 <select
                                     name="fristPaymentAccounts"
                                     ref={fristPaymentAccountsRef}
+                                    defaultValue={admission.fristPaymentAccounts} disabled={admission.fristPaymentAccounts !== "Payment Accounts" ? true : false}
                                     className="select select-sm w-full border-gray-400"
                                 >
-                                    <option disabled selected>Payment Account</option>
+                                    <option disabled selected>Pay Accounts</option>
                                     {
                                         paygetwaysName?.users?.map((user) =>
                                             <option
@@ -241,11 +242,12 @@ const PaymentModal = ({ admission, setAdmission }) => {
                                     <span className="label-text">Pay Accounts</span>
                                 </label>
                                 <select
-                                    defaultValue={admission.secondPaymentAccounts} disabled={admission.secondPaymentAccounts !== "Payment Accounts" ? true : false}
+                                    defaultValue={admission.secondPaymentAccounts}
                                     ref={secondPaymentAccountsRef}
+                                    disabled={admission.secondPaymentAccounts !== "Payment Account" ? true : false}
                                     className="select select-sm w-full border-gray-400"
                                 >
-                                    <option disabled selected>Payment Account</option>
+                                    <option disabled selected>Pay Accounts</option>
                                     {
                                         paygetwaysName?.users?.map((user) =>
                                             <option
@@ -261,7 +263,9 @@ const PaymentModal = ({ admission, setAdmission }) => {
                                 <label className="label">
                                     <span className="label-text">Install. T ID</span>
                                 </label>
-                                <input name="secondInstallmentTID" type="text" placeholder="Transaction ID" defaultValue={admission.secondInstallmentTID} disabled={admission.secondInstallmentTID !== "0" ? true : false} className="input input-sm w-full input-bordered" />
+                                <input name="secondInstallmentTID" type="text" placeholder="Transaction ID" defaultValue={admission?.secondInstallmentTID}
+                                    disabled={admission.secondInstallmentTID !== "" ? true : false}
+                                    className="input input-sm w-full input-bordered" />
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">
@@ -300,11 +304,12 @@ const PaymentModal = ({ admission, setAdmission }) => {
                                     <span className="label-text">Pay Accounts</span>
                                 </label>
                                 <select
-                                    defaultValue={admission.thirdPaymentAccounts} disabled={admission.thirdPaymentAccounts !== "Payment Accounts" ? true : false}
+                                    defaultValue={admission.thirdPaymentAccounts}
+                                    disabled={admission.thirdPaymentAccounts !== "Payment Account" ? true : false}
                                     ref={thirdPaymentAccountsRef}
                                     className="select select-sm w-full border-gray-400"
                                 >
-                                    <option disabled selected>Payment Account</option>
+                                    <option disabled selected>Pay Account</option>
                                     {
                                         paygetwaysName?.users?.map((user) =>
                                             <option
@@ -321,7 +326,7 @@ const PaymentModal = ({ admission, setAdmission }) => {
                                 <label className="label">
                                     <span className="label-text">Install. T ID</span>
                                 </label>
-                                <input name="thirdInstallmentTID" type="text" placeholder="Transaction ID" defaultValue={admission.thirdInstallmentTID} disabled={admission.thirdInstallmentTID !== "0" ? true : false} className="input input-sm w-full input-bordered" />
+                                <input name="thirdInstallmentTID" type="text" placeholder="Transaction ID" defaultValue={admission.thirdInstallmentTID} disabled={admission.thirdInstallmentTID !== "" ? true : false} className="input input-sm w-full input-bordered" />
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">

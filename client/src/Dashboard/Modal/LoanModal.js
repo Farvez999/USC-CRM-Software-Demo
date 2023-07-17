@@ -43,7 +43,7 @@ const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
         }
         console.log(payAmmount);
 
-        fetch(`https://demo-usc-crm-server.vercel.app/loan/pay`, {
+        fetch(`http://localhost:5000/loan/pay`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

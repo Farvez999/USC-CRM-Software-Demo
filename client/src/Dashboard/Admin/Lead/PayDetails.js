@@ -27,7 +27,7 @@ const PayDetails = () => {
 
 
     useEffect(() => {
-        fetch("https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true")
+        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -152,7 +152,7 @@ const PayDetails = () => {
             closePayment: true
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
+        fetch(`http://localhost:5000/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -163,7 +163,7 @@ const PayDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Close successfully`);
-                fetch('https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true')
+                fetch('http://localhost:5000/leads?admission=true&admissionStatus=true')
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)
@@ -191,7 +191,7 @@ const PayDetails = () => {
             closePayment: false
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/update/${admission._id}`, {
+        fetch(`http://localhost:5000/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -202,7 +202,7 @@ const PayDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Open successfully`);
-                fetch('https://demo-usc-crm-server.vercel.app/leads?admission=true&admissionStatus=true')
+                fetch('http://localhost:5000/leads?admission=true&admissionStatus=true')
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)

@@ -42,7 +42,6 @@ const LeadUpload = () => {
     const fileType = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     const handleFile = (e) => {
         let selectedFile = e.target.files[0];
-        // console.log(selectedFile);
         if (selectedFile) {
             // console.log(selectedFile.type);
             if (selectedFile && fileType.includes(selectedFile.type)) {
@@ -88,7 +87,7 @@ const LeadUpload = () => {
         queryKey: ['coursesName'],
         queryFn: async () => {
 
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/course`);
+            const res = await fetch(`http://localhost:5000/course`);
             const data = await res.json();
             return data;
         }
@@ -102,7 +101,7 @@ const LeadUpload = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/batch`);
+            const res = await fetch(`http://localhost:5000/batch`);
             const data = await res.json();
             return data;
         }
@@ -115,7 +114,7 @@ const LeadUpload = () => {
     const { data: usersName = [] } = useQuery({
         queryKey: ['usersName'],
         queryFn: async () => {
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/users`);
+            const res = await fetch(`http://localhost:5000/users`);
             const data = await res.json();
             return data;
         }
@@ -132,7 +131,7 @@ const LeadUpload = () => {
         queryKey: ['headsName'],
         queryFn: async () => {
 
-            const res = await fetch(`https://demo-usc-crm-server.vercel.app/heads`);
+            const res = await fetch(`http://localhost:5000/heads`);
             const data = await res.json();
             return data;
         }
@@ -151,7 +150,7 @@ const LeadUpload = () => {
             headName,
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/add-leads`, {
+        fetch(`http://localhost:5000/add-leads`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -180,7 +179,7 @@ const LeadUpload = () => {
             headName
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/add-online-leads`, {
+        fetch(`http://localhost:5000/add-online-leads`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -209,7 +208,7 @@ const LeadUpload = () => {
             headName
         }
 
-        fetch(`https://demo-usc-crm-server.vercel.app/add-offline-leads`, {
+        fetch(`http://localhost:5000/add-offline-leads`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

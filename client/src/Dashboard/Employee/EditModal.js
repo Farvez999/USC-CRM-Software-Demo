@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { toast } from 'react-hot-toast';
 
-const EditModal = ({ singleLead, setSLead, refetch }) => {
+const EditModal = ({ singleLead, setSLead, refetchUpdateData }) => {
     console.log(singleLead);
 
     const handleSubmit = e => {
@@ -33,12 +33,12 @@ const EditModal = ({ singleLead, setSLead, refetch }) => {
 
         console.log(user)
 
-        axios.patch(`https://demo-usc-crm-server.vercel.app/update/${singleLead._id}`, user)
+        axios.patch(`http://localhost:5000/update/${singleLead._id}`, user)
             .then((data) => {
                 console.log(data);
                 toast.success('Lead Updates Success')
                 setSLead(null)
-                refetch()
+                refetchUpdateData()
             });
 
     }
