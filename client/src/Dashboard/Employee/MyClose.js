@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import EditModal from './EditModal';
 import { AuthContext } from '../../contexts/AuthProvider';
@@ -11,26 +11,52 @@ const MyClose = () => {
     const { user } = useContext(AuthContext)
     const [search, setSearch] = useState("");
     const [filterData, setFilterData] = useState([]);
+    const [closes, setCloses] = useState([])
+    const [uniquefilterData, setUniqueFilterData] = useState([])
 
     const [sLead, setSLead] = useState()
 
-    const courseRef = useRef();
-    const batchRef = useRef();
-    const headRef = useRef();
     const tableRef = useRef(null);
 
-    const { data: closes = [], refetch } = useQuery({
-        queryKey: ['closes'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?close=true&user.name=${user.name}`);
-            const data = await res.json();
+    // const { data: closes = [], refetch } = useQuery({
+    //     queryKey: ['closes'],
+    //     queryFn: async () => {
+    //         const res = await fetch(`http://localhost:5000/leads?close=true&user.name=${user.name}`);
+    //         const data = await res.json();
 
-            // let lData = data.filter(lead => lead.admission !== true && lead.onlineInterested !== true && lead.offlineInterested !== true && lead.seminarInterested !== true)
-            setFilterData(data)
+    //         // let lData = data.filter(lead => lead.admission !== true && lead.onlineInterested !== true && lead.offlineInterested !== true && lead.seminarInterested !== true)
+    //         setFilterData(data)
 
-            return data;
-        }
-    });
+    //         return data;
+    //     }
+    // });
+
+    const refetchUpdateData = async () => {
+        const res = await fetch(`http://localhost:5000/leads?close=true&user.name=${user.name}`);
+        const data = await res.json();
+
+        let afterFilter = []
+        filterData.forEach(sData => {
+            const ssData = data.filter(d => d?._id === sData?._id)
+            afterFilter = [...afterFilter, ...ssData]
+        })
+        console.log(afterFilter)
+        console.log(filterData)
+        setFilterData(afterFilter)
+    }
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/leads?close=true&user.name=${user.name}`)
+            .then(response => response.json())
+            .then(data => {
+                setFilterData(data)
+                setUniqueFilterData(data)
+                setCloses(data)
+                return data;
+
+            })
+
+    }, [user.name])
 
 
     // -------------Edit Start -------------
@@ -40,27 +66,14 @@ const MyClose = () => {
 
     const [leadsUpdate, setLeadsUpdate] = useState()
 
-    // const handleUpdate = (event) => {
-    //     event.preventDefault();
-    //     fetch(`http://localhost:5000/update/${sLead._id}`, {
-    //         method: 'PATCH', // or 'PUT'
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(leadsUpdate),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //             toast.success('Lead Updates Success')
-    //             refetch()
-    //             // setLeadsUpdate(null)
-    //             setSLead(null)
-    //         });
-    // }
     // -------------Edit End -------------
 
     const handleAdmission = (close) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
 
         const admissionData = {
             admission: true,
@@ -87,12 +100,18 @@ const MyClose = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Admisstion Data added successfully')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== close._id)
+                setFilterData(lData)
             })
 
     }
 
     const handleOnline = (close) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Online Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
         const onlineInterested = {
             onlineInterested: true,
             admission: false,
@@ -112,11 +131,17 @@ const MyClose = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Online Course Interested')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== close._id)
+                setFilterData(lData)
             })
     }
 
     const handleOffline = (close) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Offline Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
         const offlineInterested = {
             offlineInterested: true,
             onlineInterested: false,
@@ -136,11 +161,17 @@ const MyClose = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Offline Course Interested')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== close._id)
+                setFilterData(lData)
             })
     }
 
     const handleSeminarInterested = (close) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Seminar Interest this Student?');
+        if (!confirmDelete) {
+            return;
+        }
         const seminarInterested = {
             seminarInterested: true,
             offlineInterested: false,
@@ -160,46 +191,45 @@ const MyClose = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Seminar Interested Added')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== close._id)
+                setFilterData(lData)
             })
     }
 
 
     // -----------------Filter Start--------------------
 
-    const { data: coursesName = [] } = useQuery({
-        queryKey: ['coursesName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const [selectedValue, setSelectedValue] = useState([]);
+    console.log(selectedValue)
 
-    const { data: batchsName = [] } = useQuery({
-        queryKey: ['batchsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
-    const { data: headsName = [] } = useQuery({
-        queryKey: ['headsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueBatch = [...new Set(selectedValue?.map(user => user?.batch?.name))];
+
+    const uniqueHead = [...new Set(selectedValue?.map(user => user?.head?.name))];
 
 
-    const handleSearch = () => {
-        const fData = closes?.filter(si => si.course.name === courseRef.current.value || si.batch.name === batchRef.current.value || si.head.name === headRef.current.value)
+    function handleCourseChange(event) {
+        const couseSelectedValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.course.name) === couseSelectedValue)
         setFilterData(fData)
+        setSelectedValue(fData);
+    }
 
-    };
+    function handleBatchChange(event) {
+        const selectedBatchValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.batch.name) === selectedBatchValue)
+        setFilterData(fData)
+    }
+
+    function handleHeadChange(event) {
+        const selectedHeadValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.head.name) === selectedHeadValue)
+        setFilterData(fData)
+    }
 
     // -----------------Filter End--------------------
 
@@ -235,20 +265,13 @@ const MyClose = () => {
                     <label className="label">
                         <span className="label-text">Course Name</span>
                     </label>
-                    <select
-                        ref={courseRef}
-                        className="select select-sm w-full border-gray-400"
-                    >
-                        <option >Course Name</option>
-                        {
-                            coursesName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                    <select onChange={handleCourseChange} className="select select-sm w-full border-gray-400">
+                        <option>Course Name</option>
+                        {uniqueCourse.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -256,18 +279,13 @@ const MyClose = () => {
                     <label className="label">
                         <span className="label-text">Batch Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={batchRef}>
+                    <select onChange={handleBatchChange} className="select select-sm w-full border-gray-400">
                         <option>Batch Name</option>
-                        {
-                            batchsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueBatch.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -275,28 +293,23 @@ const MyClose = () => {
                     <label className="label">
                         <span className="label-text">Head Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={headRef}>
+                    <select onChange={handleHeadChange} className="select select-sm w-full border-gray-400">
                         <option >Head Name</option>
-                        {
-                            headsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueHead.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
-                <div className='mt-8'>
+                {/* <div className='mt-8'>
                     <button
                         onClick={handleSearch}
                         className="btn btn-sm btn-primary text-white bg-green-500"
                     >
                         Filter
                     </button>
-                </div>
+                </div> */}
 
 
                 <div className='mt-10 mx-4'>
@@ -330,6 +343,13 @@ const MyClose = () => {
                                 <th className='p-1 border-2'>Name</th>
                                 <th className='p-1 border-2'>Phone</th>
                                 <th className='p-1 border-2'>Email</th>
+                                <th className='p-1 border-2'>1st F up</th>
+                                <th className='p-1 border-2'>2nd F up</th>
+                                <th className='p-1 border-2'>3rd F up</th>
+                                <th className='p-1 border-2'>Next F D</th>
+                                <th className='p-1 border-2'>Remark</th>
+                                <th className='p-1 border-2'>Remark 2</th>
+                                <th className='p-1 border-2'>Ad Status</th>
                                 <th className='p-1 border-2'>Action</th>
                                 <th className='p-1 border-2'>Interested</th>
                             </tr>
@@ -352,6 +372,13 @@ const MyClose = () => {
                                             <td className='p-1 border-2'>{close?.name}</td>
                                             <td className='p-1 border-2'>{close?.phone?.split('p:', 2)}</td>
                                             <td className='p-1 border-2'>{close?.email?.split('@', 1)}</td>
+                                            <td className='p-1 border-2'>{close?.firstFollow}</td>
+                                            <td className='p-1 border-2'>{close?.secondFollow}</td>
+                                            <td className='p-1 border-2'>{close?.thirdtFollow}</td>
+                                            <td className='p-1 border-2'>{close?.nextFollow}</td>
+                                            <td className='p-1 border-2'>{close?.remark}</td>
+                                            <td className='p-1 border-2'>{close?.remarkTwo}</td>
+                                            <td className='p-1 border-2'>{close?.admissionStatus}</td>
                                             <td className='p-1 border-2'>
                                                 <label onClick={() => handleEdidData(close)} htmlFor="editModal" className="btn btn-xs btn-secondary mt-2">Edit</label>
                                                 <p className='btn btn-xs btn-primary my-2' onClick={() => handleAdmission(close)} >Add</p>
@@ -380,7 +407,7 @@ const MyClose = () => {
                 <EditModal
                     singleLead={sLead}
                     setSLead={setSLead}
-                    refetch={refetch}
+                    refetchUpdateData={refetchUpdateData}
                 >
                 </EditModal>
             }

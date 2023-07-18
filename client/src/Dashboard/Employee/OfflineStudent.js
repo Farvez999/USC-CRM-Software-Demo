@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import EditModal from './EditModal';
 import { AuthContext } from '../../contexts/AuthProvider';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { FaFileDownload } from 'react-icons/fa';
 
 const OfflineStudent = () => {
     const [search, setSearch] = useState("");
@@ -11,19 +13,52 @@ const OfflineStudent = () => {
     const [sLead, setSLead] = useState()
 
     const [filterData, setFilterData] = useState([])
+    const [offlines, setOfflines] = useState([])
+    const [uniquefilterData, setUniqueFilterData] = useState([])
+
+    const tableRef = useRef(null);
+
     const courseRef = useRef();
     const batchRef = useRef();
     const headRef = useRef();
 
-    const { data: offlines = [], refetch } = useQuery({
-        queryKey: ['offlines'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?offlineInterested=true&user.name=${user.name}`);
-            const data = await res.json();
-            setFilterData(data)
-            return data;
-        }
-    });
+    // const { data: offlines = [], refetch } = useQuery({
+    //     queryKey: ['offlines'],
+    //     queryFn: async () => {
+    //         const res = await fetch(`http://localhost:5000/leads?offlineInterested=true&user.name=${user.name}`);
+    //         const data = await res.json();
+    //         setFilterData(data)
+    //         return data;
+    //     }
+    // });
+
+    const refetchUpdateData = async () => {
+        const res = await fetch(`http://localhost:5000/leads?offlineInterested=true&user.name=${user.name}`);
+        const data = await res.json();
+
+        let afterFilter = []
+        filterData.forEach(sData => {
+            const ssData = data.filter(d => d?._id === sData?._id)
+            afterFilter = [...afterFilter, ...ssData]
+        })
+        console.log(afterFilter)
+        console.log(filterData)
+        setFilterData(afterFilter)
+    }
+
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/leads?offlineInterested=true&user.name=${user.name}`)
+            .then(response => response.json())
+            .then(data => {
+                setFilterData(data)
+                setUniqueFilterData(data)
+                setOfflines(data)
+                return data;
+
+            })
+
+    }, [user.name])
 
 
     // -------------Edit Start -------------
@@ -33,29 +68,16 @@ const OfflineStudent = () => {
 
     const [leadsUpdate, setLeadsUpdate] = useState()
 
-    // const handleUpdate = (event) => {
-    //     event.preventDefault();
-
-    //     fetch(`http://localhost:5000/update/${sLead._id}`, {
-    //         method: 'PATCH', // or 'PUT'
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(leadsUpdate),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //             toast.success('Lead Updates Success')
-    //             refetch()
-    //             // setLeadsUpdate(null)
-    //             setSLead(null)
-    //         });
-    // }
     // -------------Edit End -------------
 
 
     const handleOnline = (offline) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Online Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const onlineInterested = {
             onlineInterested: true,
             offlineInterested: false,
@@ -72,12 +94,18 @@ const OfflineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Online Course Interested')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== offline._id)
+                setFilterData(lData)
             })
     }
 
 
     const handleAdmission = (offline) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
 
         const admissionData = {
             admissionFee: 0,
@@ -103,7 +131,8 @@ const OfflineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Admisstion Data added successfully')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== offline._id)
+                setFilterData(lData)
             })
 
     }
@@ -111,6 +140,12 @@ const OfflineStudent = () => {
 
 
     const handleClose = (offline) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Offline Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const closeData = {
             close: true,
             offlineInterested: false
@@ -128,17 +163,24 @@ const OfflineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Lead Close successfully')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== offline._id)
+                setFilterData(lData)
             })
     }
 
 
-    const handleSeminarInterested = (online) => {
+    const handleSeminarInterested = (offline) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Seminar Interest this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const seminarInterested = {
             seminarInterested: true
         }
 
-        fetch(`http://localhost:5000/update/${online._id}`, {
+        fetch(`http://localhost:5000/update/${offline._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -149,16 +191,23 @@ const OfflineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Seminar Interested Added')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== offline._id)
+                setFilterData(lData)
             })
     }
 
-    const handleNoRecice = (online) => {
+    const handleNoRecice = (offline) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to No Receive this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const noReceive = {
             noReceive: true
         }
 
-        fetch(`http://localhost:5000/update/${online._id}`, {
+        fetch(`http://localhost:5000/update/${offline._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -169,49 +218,44 @@ const OfflineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('No Recived Added')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== offline._id)
+                setFilterData(lData)
             })
     }
 
     // -----------------Filter Start--------------------
 
-    const { data: coursesName = [] } = useQuery({
-        queryKey: ['coursesName'],
-        queryFn: async () => {
+    const [selectedValue, setSelectedValue] = useState([]);
+    console.log(selectedValue)
 
-            const res = await fetch(`http://localhost:5000/course`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
-    const { data: batchsName = [] } = useQuery({
-        queryKey: ['batchsName'],
-        queryFn: async () => {
+    const uniqueBatch = [...new Set(selectedValue?.map(user => user?.batch?.name))];
 
-            const res = await fetch(`http://localhost:5000/batch`);
-            const data = await res.json();
-            return data;
-        }
-    });
-
-    const { data: headsName = [] } = useQuery({
-        queryKey: ['headsName'],
-        queryFn: async () => {
-
-            const res = await fetch(`http://localhost:5000/head`);
-
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueHead = [...new Set(selectedValue?.map(user => user?.head?.name))];
 
 
-    const handleSearch = () => {
-        const fData = offlines?.filter(si => si.course.name === courseRef.current.value || si.batch.name === batchRef.current.value || si.head.name === headRef.current.value)
+    function handleCourseChange(event) {
+        const couseSelectedValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.course.name) === couseSelectedValue)
         setFilterData(fData)
+        setSelectedValue(fData);
+    }
 
-    };
+    function handleBatchChange(event) {
+        const selectedBatchValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.batch.name) === selectedBatchValue)
+        setFilterData(fData)
+    }
+
+    function handleHeadChange(event) {
+        const selectedHeadValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.head.name) === selectedHeadValue)
+        setFilterData(fData)
+    }
 
     // -----------------Filter End--------------------
 
@@ -246,20 +290,13 @@ const OfflineStudent = () => {
                     <label className="label">
                         <span className="label-text">Course Name</span>
                     </label>
-                    <select
-                        ref={courseRef}
-                        className="select select-sm w-full border-gray-400"
-                    >
-                        <option >Course Name</option>
-                        {
-                            coursesName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                    <select onChange={handleCourseChange} className="select select-sm w-full border-gray-400">
+                        <option>Course Name</option>
+                        {uniqueCourse.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -267,18 +304,13 @@ const OfflineStudent = () => {
                     <label className="label">
                         <span className="label-text">Batch Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={batchRef}>
+                    <select onChange={handleBatchChange} className="select select-sm w-full border-gray-400">
                         <option>Batch Name</option>
-                        {
-                            batchsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueBatch.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -286,33 +318,31 @@ const OfflineStudent = () => {
                     <label className="label">
                         <span className="label-text">Head Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={headRef}>
+                    <select onChange={handleHeadChange} className="select select-sm w-full border-gray-400">
                         <option >Head Name</option>
-                        {
-                            headsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueHead.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
-                <div className='mt-8'>
-                    <button
-                        onClick={handleSearch}
-                        className="btn btn-sm btn-primary text-white bg-green-500"
-                    >
-                        Filter
-                    </button>
-                </div>
 
-                <div className='mt-8 ml-32'>
+
+                <div className='mt-8 mr-4'>
                     <input type="text" className="input input-bordered input-sm w-full max-w-xs mb-3" onChange={(e) => setSearch(e.target.value)} placeholder='Search By Name, Phone, Email'></input>
 
                 </div>
+
+                <DownloadTableExcel
+                    filename="users table"
+                    sheet="users"
+                    currentTableRef={tableRef.current}
+                >
+
+                    <button className='mt-6 btn btn-sm btn-outline'>Download<FaFileDownload className='inline-block'></FaFileDownload></button>
+
+                </DownloadTableExcel>
             </div>
 
 
@@ -392,7 +422,7 @@ const OfflineStudent = () => {
                 <EditModal
                     singleLead={sLead}
                     setSLead={setSLead}
-                    refetch={refetch}
+                    refetchUpdateData={refetchUpdateData}
                 >
                 </EditModal>
             }

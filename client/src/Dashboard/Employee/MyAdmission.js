@@ -29,19 +29,6 @@ const MyAdmission = () => {
     //     }
     // });
 
-    const refetchUpdateData = async () => {
-        const res = await fetch(`https://demo-usc-crm-server.vercel.app/leads/${user._id}`);
-        const data = await res.json();
-
-        let afterFilter = []
-        filterData.forEach(sData => {
-            const ssData = data.filter(d => d?._id === sData?._id)
-            afterFilter = [...afterFilter, ...ssData]
-        })
-        console.log(afterFilter)
-        console.log(filterData)
-        setFilterData(afterFilter)
-    }
 
     useEffect(() => {
         fetch(`http://localhost:5000/leads?admission=true&user.name=${user.name}`)

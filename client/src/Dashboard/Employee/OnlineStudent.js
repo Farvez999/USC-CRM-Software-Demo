@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../contexts/AuthProvider';
 import EditModal from './EditModal';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { FaFileDownload } from 'react-icons/fa';
 
 const OnlineStudent = () => {
 
@@ -12,23 +14,53 @@ const OnlineStudent = () => {
     const [sLead, setSLead] = useState()
 
     const [filterData, setFilterData] = useState([])
-    const courseRef = useRef();
-    const batchRef = useRef();
-    const headRef = useRef();
+
+    const [onlines, setOnlines] = useState([])
+    const [uniquefilterData, setUniqueFilterData] = useState([])
+
+    const tableRef = useRef(null);
 
 
+    const refetchUpdateData = async () => {
+        const res = await fetch(`http://localhost:5000/leads?onlineInterested=true&user.name=${user.name}`);
+        const data = await res.json();
 
-    const { data: onlines = [], refetch } = useQuery({
-        queryKey: ['onlines'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?onlineInterested=true&user.name=${user.name}`);
-            const data = await res.json();
+        let afterFilter = []
+        filterData.forEach(sData => {
+            const ssData = data.filter(d => d?._id === sData?._id)
+            afterFilter = [...afterFilter, ...ssData]
+        })
+        console.log(afterFilter)
+        console.log(filterData)
+        setFilterData(afterFilter)
+    }
 
-            // let lData = data.filter(lead => lead.admission !== true && lead.close !== true)
-            setFilterData(data)
-            return data;
-        }
-    });
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/leads?onlineInterested=true&user.name=${user.name}`)
+            .then(response => response.json())
+            .then(data => {
+                setFilterData(data)
+                setUniqueFilterData(data)
+                setOnlines(data)
+                return data;
+
+            })
+
+    }, [user.name])
+
+
+    // const { data: onlines = [], refetch } = useQuery({
+    //     queryKey: ['onlines'],
+    //     queryFn: async () => {
+    //         const res = await fetch(`http://localhost:5000/leads?onlineInterested=true&user.name=${user.name}`);
+    //         const data = await res.json();
+
+    //         // let lData = data.filter(lead => lead.admission !== true && lead.close !== true)
+    //         setFilterData(data)
+    //         return data;
+    //     }
+    // });
 
 
     // -------------Edit Start -------------
@@ -38,28 +70,15 @@ const OnlineStudent = () => {
 
     const [leadsUpdate, setLeadsUpdate] = useState()
 
-    // const handleUpdate = (event) => {
-    //     event.preventDefault();
-    //     fetch(`http://localhost:5000/update/${sLead._id}`, {
-    //         method: 'PATCH', // or 'PUT'
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(leadsUpdate),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //             toast.success('Lead Updates Success')
-    //             refetch()
-    //             // setLeadsUpdate(null)
-    //             setSLead(null)
-    //         });
-    // }
     // -------------Edit End -------------
 
 
     const handleAdmission = (online) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
 
         const admissionData = {
             admissionFee: 0,
@@ -85,7 +104,6 @@ const OnlineStudent = () => {
                 toast.success('Admisstion Data added successfully')
                 let lData = filterData.filter(lead => lead._id !== online._id)
                 setFilterData(lData)
-                refetch()
             })
 
     }
@@ -93,6 +111,12 @@ const OnlineStudent = () => {
 
 
     const handleClose = (online) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Close this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const closeData = {
             close: true,
             onlineInterested: false
@@ -109,12 +133,19 @@ const OnlineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Lead Close successfully')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== online._id)
+                setFilterData(lData)
             })
     }
 
 
     const handleOffline = (online) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Online Admission this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const offlineInterested = {
             offlineInterested: true,
             onlineInterested: false
@@ -131,10 +162,18 @@ const OnlineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Offline Course Interested')
+                let lData = filterData.filter(lead => lead._id !== online._id)
+                setFilterData(lData)
             })
     }
 
     const handleSeminarInterested = (online) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to Seminar Interest this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const seminarInterested = {
             seminarInterested: true
         }
@@ -150,11 +189,18 @@ const OnlineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Seminar Interested Added')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== online._id)
+                setFilterData(lData)
             })
     }
 
     const handleNoRecice = (online) => {
+
+        const confirmDelete = window.confirm('Are you sure you want to No Receive this Student?');
+        if (!confirmDelete) {
+            return;
+        }
+
         const noReceive = {
             noReceive: true
         }
@@ -170,46 +216,45 @@ const OnlineStudent = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('No Recived Added')
-                refetch()
+                let lData = filterData.filter(lead => lead._id !== online._id)
+                setFilterData(lData)
             })
     }
 
 
     // -----------------Filter Start--------------------
 
-    const { data: coursesName = [] } = useQuery({
-        queryKey: ['coursesName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const [selectedValue, setSelectedValue] = useState([]);
+    console.log(selectedValue)
 
-    const { data: batchsName = [] } = useQuery({
-        queryKey: ['batchsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
-    const { data: headsName = [] } = useQuery({
-        queryKey: ['headsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueBatch = [...new Set(selectedValue?.map(user => user?.batch?.name))];
+
+    const uniqueHead = [...new Set(selectedValue?.map(user => user?.head?.name))];
 
 
-    const handleSearch = () => {
-        const fData = onlines?.filter(si => si.course.name === courseRef.current.value || si.batch.name === batchRef.current.value || si.head.name === headRef.current.value)
+    function handleCourseChange(event) {
+        const couseSelectedValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.course.name) === couseSelectedValue)
         setFilterData(fData)
+        setSelectedValue(fData);
+    }
 
-    };
+    function handleBatchChange(event) {
+        const selectedBatchValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.batch.name) === selectedBatchValue)
+        setFilterData(fData)
+    }
+
+    function handleHeadChange(event) {
+        const selectedHeadValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.head.name) === selectedHeadValue)
+        setFilterData(fData)
+    }
 
     // -----------------Filter End--------------------
 
@@ -244,20 +289,13 @@ const OnlineStudent = () => {
                     <label className="label">
                         <span className="label-text">Course Name</span>
                     </label>
-                    <select
-                        ref={courseRef}
-                        className="select select-sm w-full border-gray-400"
-                    >
-                        <option >Course Name</option>
-                        {
-                            coursesName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                    <select onChange={handleCourseChange} className="select select-sm w-full border-gray-400">
+                        <option>Course Name</option>
+                        {uniqueCourse.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -265,18 +303,13 @@ const OnlineStudent = () => {
                     <label className="label">
                         <span className="label-text">Batch Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={batchRef}>
+                    <select onChange={handleBatchChange} className="select select-sm w-full border-gray-400">
                         <option>Batch Name</option>
-                        {
-                            batchsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueBatch.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -284,32 +317,29 @@ const OnlineStudent = () => {
                     <label className="label">
                         <span className="label-text">Head Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={headRef}>
+                    <select onChange={handleHeadChange} className="select select-sm w-full border-gray-400">
                         <option >Head Name</option>
-                        {
-                            headsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueHead.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
-                <div className='mt-8'>
-                    <button
-                        onClick={handleSearch}
-                        className="btn btn-sm btn-primary text-white bg-green-500"
-                    >
-                        Filter
-                    </button>
-                </div>
 
-                <div className='mt-8 ml-32'>
+                <div className='mt-8  mr-4'>
                     <input type="text" className="input input-bordered input-sm w-full max-w-xs mb-3" onChange={(e) => setSearch(e.target.value)} placeholder='Search By Name, Phone, Email'></input>
                 </div>
+
+                <DownloadTableExcel
+                    filename="users table"
+                    sheet="users"
+                    currentTableRef={tableRef.current}
+                >
+
+                    <button className='mt-6 btn btn-sm btn-outline'>Download<FaFileDownload className='inline-block'></FaFileDownload></button>
+
+                </DownloadTableExcel>
             </div>
 
 
@@ -391,7 +421,7 @@ const OnlineStudent = () => {
                 <EditModal
                     singleLead={sLead}
                     setSLead={setSLead}
-                    refetch={refetch}
+                    refetchUpdateData={refetchUpdateData}
                 >
                 </EditModal>
             }
