@@ -58,17 +58,6 @@ const DashboardLayoutM = () => {
                                 {
 
                                     user?.role === "user" && <>
-                                        {/* <li><Link to='/dashboard/my-lead'>My Lead</Link></li>
-                                        <li><Link to='/dashboard/my-admission'>My Admission</Link></li>
-                                        <li><Link to='/dashboard/my-close'>My Close</Link></li>
-                                        <li><Link to='/dashboard/online-student'>My Online</Link></li>
-                                        <li><Link to='/dashboard/offline-student'>My Offline</Link></li>
-                                        <li><Link to='/dashboard/seminar-interested'>Seminar Inter</Link></li>
-                                        <li><Link to='/dashboard/seminar-attend'>Seminar Attend</Link></li>
-                                        <li><Link to='/dashboard/no-receive'>No Receive</Link></li>
-                                        <li><Link to='/dashboard/today-followup'>Today Follow</Link></li>
-                                        <li><Link to='/dashboard/user-report'>Report</Link></li>
-                                        <li><Link to='/dashboard/payment-details'>Payment</Link></li> */}
                                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                                             <li className="rounded-sm">
                                                 <Link rel="noopener noreferrer" to={`/dashboard`} className="flex items-center p-2 space-x-3 rounded-md">

@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
-import { CgLogOut } from 'react-icons/cg';
 import { MdLogout } from 'react-icons/md';
 
 const Navbar = () => {
@@ -49,17 +48,22 @@ const Navbar = () => {
             user?._id ?
                 <>
                     <li className='font-semibold'><Link to='/dashboard'>Dashboard</Link></li>
-                    {/* <button className="btn gap-2">
-                        Inbox
-                        <div className="badge badge-secondary">+99</div>
-                    </button> */}
-                    <li className='font-semibold'><Link to='/dashboard/today-followUps'>Today Follow Up<p className="badge badge-secondary badge-sm">{todayFollowup.length}</p></Link></li>
+
+                    {
+                        user.role === 'admin' &&
+                        <li className='font-semibold'><Link to='/dashboard/today-followUps'>Today Follow Up<p className="badge badge-secondary badge-sm">{todayFollowup?.length}</p></Link></li>
+                    }
+                    {
+                        user.role === 'head' &&
+                        <li className='font-semibold'><Link to='/dashboard/today-followUps'>Today Follow Up<p className="badge badge-secondary badge-sm">{todayFollowup?.length}</p></Link></li>
+                    }
+                    {
+                        user.role === 'user' &&
+                        <li className='font-semibold'><Link to='/dashboard/today-followup'>Today Follow Up<p className="badge badge-secondary badge-sm">{todayFollowup?.length}</p></Link></li>
+                    }
+
                     <li className='font-semibold'><button onClick={logout}><MdLogout></MdLogout></button></li>
-                    {/* <div className="avatar placeholder">
-                        <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
-                            <Link to='/profile'><span>{user.name}</span></Link>
-                        </div>
-                    </div> */}
+
                 </>
                 :
                 <li className='font-semibold'><Link to='/login'>Login</Link></li>

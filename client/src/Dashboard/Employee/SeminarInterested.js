@@ -9,7 +9,6 @@ import { AuthContext } from '../../contexts/AuthProvider';
 const SeminarInterested = () => {
 
     const { user } = useContext(AuthContext)
-    console.log(user)
     const tableRef = useRef(null);
 
     const [search, setSearch] = useState("");

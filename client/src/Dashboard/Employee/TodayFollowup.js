@@ -30,6 +30,7 @@ const TodayFollowup = () => {
     });
 
     console.log(todayFollowLeads)
+    console.log(filterData)
 
     // useEffect(() => {
     //     let interval = setInterval(() => {
@@ -133,7 +134,7 @@ const TodayFollowup = () => {
 
     return (
         <div className='mx-2 my-6'>
-            <h3 className="text-3xl mb-3">{user.name}'s Today Followup Students : {todayFollowLeads.length}</h3>
+            <h3 className="text-3xl mb-3">{user.name}'s Today Followup Students : {filterData.length}</h3>
 
             <input type="text" className="input input-bordered input-sm w-full max-w-xs mb-3" onChange={(e) => setSearch(e.target.value)} placeholder='Search By Name, Phone, Email'></input>
 

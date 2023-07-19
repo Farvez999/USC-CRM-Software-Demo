@@ -9,7 +9,6 @@ import MyClose from "../Dashboard/Employee/MyClose";
 import MyLead from "../Dashboard/Employee/MyLead";
 import OnlineStudent from "../Dashboard/Employee/OnlineStudent";
 import OfflineStudent from "../Dashboard/Employee/OfflineStudent";
-import DashBoardLayout from "../Layout/DashBoardLayout";
 import Main from "../Layout/Main";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Login/Signup";
@@ -24,7 +23,6 @@ import OnlineSt from "../Dashboard/Head/OnlineSt";
 import OfflineSt from "../Dashboard/Head/OfflineSt";
 import UserSetting from "../Dashboard/Admin/Settings/UserSetting";
 import TotalLead from "../Dashboard/Admin/Lead/TotalLead";
-import ResponsiveDrawer from "../Layout/ResponsiveDrawer";
 import NoReceive from "../Dashboard/Employee/NoReceive";
 import SeminarAttend from "../Dashboard/Employee/SeminarAttend";
 import Report from "../Dashboard/Employee/Report";
@@ -104,16 +102,8 @@ const router = createBrowserRouter([
         ],
     },
     {
-        path: '/dashboard/farvez',
-        element: <PrivateRoutes><ResponsiveDrawer></ResponsiveDrawer></PrivateRoutes>,
-    },
-    {
         path: '/dashboard',
-        // element: <PrivateRoutes><DashBoardLayout></DashBoardLayout></PrivateRoutes>,
-        // element: <PrivateRoutes><ResponsiveDrawer></ResponsiveDrawer></PrivateRoutes>,
         element: <PrivateRoutes><DashboardLayoutM></DashboardLayoutM></PrivateRoutes>,
-        // element: <PrivateRoutes><DashBoardLayout></DashBoardLayout></PrivateRoutes>,
-        // errorElement: <DisplayError></DisplayError>,
         children: [
             {
                 path: '/dashboard',
