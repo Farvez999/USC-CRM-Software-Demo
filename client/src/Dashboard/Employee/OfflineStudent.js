@@ -25,7 +25,7 @@ const OfflineStudent = () => {
     // const { data: offlines = [], refetch } = useQuery({
     //     queryKey: ['offlines'],
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/leads?offlineInterested=true&user.name=${user.name}`);
+    //         const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?offlineInterested=true&user.name=${user.name}`);
     //         const data = await res.json();
     //         setFilterData(data)
     //         return data;
@@ -33,7 +33,7 @@ const OfflineStudent = () => {
     // });
 
     const refetchUpdateData = async () => {
-        const res = await fetch(`http://localhost:5000/leads?offlineInterested=true&user.name=${user.name}`);
+        const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?offlineInterested=true&user.name=${user.name}`);
         const data = await res.json();
 
         let afterFilter = []
@@ -48,7 +48,7 @@ const OfflineStudent = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/leads?offlineInterested=true&user.name=${user.name}`)
+        fetch(`https://demo-usc-crm-software.vercel.app/leads?offlineInterested=true&user.name=${user.name}`)
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -83,7 +83,7 @@ const OfflineStudent = () => {
             offlineInterested: false,
         }
 
-        fetch(`http://localhost:5000/update/${offline._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${offline._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -119,7 +119,7 @@ const OfflineStudent = () => {
         }
 
 
-        fetch(`http://localhost:5000/update/${offline._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${offline._id}`, {
 
             method: 'PATCH',
             headers: {
@@ -152,7 +152,7 @@ const OfflineStudent = () => {
         }
 
 
-        fetch(`http://localhost:5000/update/${offline._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${offline._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -180,7 +180,7 @@ const OfflineStudent = () => {
             seminarInterested: true
         }
 
-        fetch(`http://localhost:5000/update/${offline._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${offline._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -207,7 +207,7 @@ const OfflineStudent = () => {
             noReceive: true
         }
 
-        fetch(`http://localhost:5000/update/${offline._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${offline._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',

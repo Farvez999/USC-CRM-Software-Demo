@@ -9,7 +9,7 @@ const Expense = () => {
     const { data: expenses = [], refetch } = useQuery({
         queryKey: ['expenses'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/expense`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/expense`);
             const data = await res.json();
             return data;
         }
@@ -22,7 +22,7 @@ const Expense = () => {
         }
 
 
-        fetch(`http://localhost:5000/delete-expense/${leads._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/delete-expense/${leads._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -47,7 +47,7 @@ const Expense = () => {
     const { data: extraCollections = [] } = useQuery({
         queryKey: ['extraCollections'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/collection`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/collection`);
             const data = await res.json();
             return data;
         }
@@ -63,7 +63,7 @@ const Expense = () => {
 
     //Course Collection Api Load
     useEffect(() => {
-        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
+        fetch("https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setCollectionData(data)

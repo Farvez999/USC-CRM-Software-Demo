@@ -17,7 +17,7 @@ const TotalTodayFollowUp = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/todayLead/${date}`)
+        fetch(`https://demo-usc-crm-software.vercel.app/todayLead/${date}`)
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -93,7 +93,7 @@ const TotalTodayFollowUp = () => {
         }
 
 
-        fetch(`http://localhost:5000/delete/${ttodayf}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/delete/${ttodayf}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -102,7 +102,7 @@ const TotalTodayFollowUp = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Leads ${user.name} deleted successfully`);
-                fetch(`http://localhost:5000/todayLead/${date}`)
+                fetch(`https://demo-usc-crm-software.vercel.app/todayLead/${date}`)
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)

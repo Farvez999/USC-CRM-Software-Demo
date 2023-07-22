@@ -12,7 +12,7 @@ const MeneyReceiptWiseReport = () => {
 
 
     useEffect(() => {
-        fetch("http://localhost:5000/collection")
+        fetch("https://demo-usc-crm-software.vercel.app/collection")
             .then(response => response.json())
             .then(data => {
                 setCollectionData(data)

@@ -12,7 +12,7 @@ const PurposeWiseExReport = () => {
 
 
     useEffect(() => {
-        fetch("http://localhost:5000/expense")
+        fetch("https://demo-usc-crm-software.vercel.app/expense")
             .then(response => response.json())
             .then(data => {
                 setExpenseData(data)

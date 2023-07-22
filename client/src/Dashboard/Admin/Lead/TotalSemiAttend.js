@@ -15,7 +15,7 @@ const TotalSemiAttend = () => {
 
 
     useEffect(() => {
-        fetch("http://localhost:5000/leads?seminarAttend=true")
+        fetch("https://demo-usc-crm-software.vercel.app/leads?seminarAttend=true")
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -92,7 +92,7 @@ const TotalSemiAttend = () => {
             return;
         }
 
-        fetch(`http://localhost:5000/delete/${semiattend}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/delete/${semiattend}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -101,7 +101,7 @@ const TotalSemiAttend = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Leads ${user.name} deleted successfully`);
-                fetch('http://localhost:5000/leads?seminarAttend=true')
+                fetch('https://demo-usc-crm-software.vercel.app/leads?seminarAttend=true')
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)

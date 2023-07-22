@@ -11,7 +11,7 @@ const PayReceiveLoan = () => {
     const { data: payLoan = [], refetch } = useQuery({
         queryKey: ['payLoan'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan/pay`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/loan/pay`);
             const data = await res.json();
             return data;
         }

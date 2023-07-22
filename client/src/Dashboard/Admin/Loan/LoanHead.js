@@ -15,7 +15,7 @@ const LoanHead = () => {
     const { data: loanHeadName = [], refetch } = useQuery({
         queryKey: ['loanHeadName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/loan-head`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/loan-head`);
             const data = await res.json();
             return data;
         }
@@ -26,7 +26,7 @@ const LoanHead = () => {
             purpose: loanHead
         }
 
-        fetch(`http://localhost:5000/loan-head`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/loan-head`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -46,7 +46,7 @@ const LoanHead = () => {
     const handleDelete = (leads) => {
         console.log(leads);
 
-        fetch(`http://localhost:5000/delete-loan-head/${leads}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/delete-loan-head/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

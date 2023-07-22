@@ -17,7 +17,7 @@ const TotalAdmission = () => {
     const tableRef = useRef(null);
 
     useEffect(() => {
-        fetch("http://localhost:5000/leads?admission=true")
+        fetch("https://demo-usc-crm-software.vercel.app/leads?admission=true")
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -93,7 +93,7 @@ const TotalAdmission = () => {
             return;
         }
 
-        fetch(`http://localhost:5000/delete/${leads}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/delete/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -102,7 +102,7 @@ const TotalAdmission = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Leads ${user.name} deleted successfully`);
-                fetch('http://localhost:5000/leads?admission=true')
+                fetch('https://demo-usc-crm-software.vercel.app/leads?admission=true')
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)

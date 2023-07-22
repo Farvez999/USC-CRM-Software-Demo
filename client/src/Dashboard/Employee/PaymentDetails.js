@@ -16,64 +16,75 @@ const PaymentDetails = () => {
     const [filterData, setFilterData] = useState([])
 
     const [admission, setAdmission] = useState()
+    const [admissions, setAdmissions] = useState([])
+    const [uniquefilterData, setUniqueFilterData] = useState([])
 
-    const courseRef = useRef();
-    const batchRef = useRef();
-    const headRef = useRef();
 
     const [due, setDue] = useState()
     // console.log(due)
 
-    const { data: admissions = [], refetch } = useQuery({
-        queryKey: ['admissions'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?admission=true&admissionStatus=true&user.name=${user.name}`);
-            const data = await res.json();
-            // let lData = data.filter(lead => lead.admissionStatus === true)
+    const refetchUpdateData = async () => {
+        const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`);
+        const data = await res.json();
 
-            // setFilterData(lData)
-            setFilterData(data)
+        let afterFilter = []
+        filterData.forEach(sData => {
+            const ssData = data.filter(d => d?._id === sData?._id)
+            afterFilter = [...afterFilter, ...ssData]
+        })
+        console.log(afterFilter)
+        console.log(filterData)
+        setFilterData(afterFilter)
+    }
 
-            return data;
-        }
-    });
 
+    useEffect(() => {
+        fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`)
+            .then(response => response.json())
+            .then(data => {
+                setFilterData(data)
+                setUniqueFilterData(data)
+                setAdmissions(data)
+                return data;
+
+            })
+
+    }, [user.name])
 
     // -----------------Filter Start--------------------
 
-    const { data: coursesName = [] } = useQuery({
-        queryKey: ['coursesName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
-            const data = await res.json();
-            return data;
-        }
-    });
 
-    const { data: batchsName = [] } = useQuery({
-        queryKey: ['batchsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const [selectedValue, setSelectedValue] = useState([]);
+    console.log(selectedValue)
 
-    const { data: headsName = [] } = useQuery({
-        queryKey: ['headsName'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
-            const data = await res.json();
-            return data;
-        }
-    });
+    const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
+
+    const uniqueBatch = [...new Set(selectedValue?.map(user => user?.batch?.name))];
+
+    const uniqueHead = [...new Set(selectedValue?.map(user => user?.head?.name))];
 
 
-    const handleSearch = () => {
-        const fData = admissions?.filter(si => si.course.name === courseRef.current.value || si.batch.name === batchRef.current.value || si.head.name === headRef.current.value)
+    function handleCourseChange(event) {
+        const couseSelectedValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.course.name) === couseSelectedValue)
         setFilterData(fData)
+        setSelectedValue(fData);
+    }
 
-    };
+    function handleBatchChange(event) {
+        const selectedBatchValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.batch.name) === selectedBatchValue)
+        setFilterData(fData)
+    }
+
+    function handleHeadChange(event) {
+        const selectedHeadValue = event.target.value;
+        const fData = uniquefilterData?.filter(si =>
+            (si.head.name) === selectedHeadValue)
+        setFilterData(fData)
+    }
 
     // -----------------Filter End--------------------
 
@@ -121,7 +132,7 @@ const PaymentDetails = () => {
             closePayment: true
         }
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -132,8 +143,20 @@ const PaymentDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Close Payment Added')
-                refetch()
+                fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`)
+                    .then(res => res.json())
+                    .then(updatedData => {
+                        setFilterData(updatedData)
+                    })
+                    .catch(error => {
+                        console.error('Update request failed:', error);
+                        toast.error('An error occurred while updating the API.');
+                    });
             })
+            .catch(error => {
+                console.error('Delete request failed:', error);
+                toast.error('An error occurred while deleting the item.');
+            });
     }
 
     const handleOpenPayment = (admission) => {
@@ -141,7 +164,7 @@ const PaymentDetails = () => {
             closePayment: false
         }
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -152,8 +175,20 @@ const PaymentDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Open Payment Added')
-                refetch()
+                fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`)
+                    .then(res => res.json())
+                    .then(updatedData => {
+                        setFilterData(updatedData)
+                    })
+                    .catch(error => {
+                        console.error('Update request failed:', error);
+                        toast.error('An error occurred while updating the API.');
+                    });
             })
+            .catch(error => {
+                console.error('Delete request failed:', error);
+                toast.error('An error occurred while deleting the item.');
+            });
     }
     return (
         <div className='mx-2 my-6'>
@@ -179,20 +214,13 @@ const PaymentDetails = () => {
                     <label className="label">
                         <span className="label-text">Course Name</span>
                     </label>
-                    <select
-                        ref={courseRef}
-                        className="select select-sm w-full border-gray-400"
-                    >
-                        <option >Course Name</option>
-                        {
-                            coursesName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                    <select onChange={handleCourseChange} className="select select-sm w-full border-gray-400">
+                        <option>Course Name</option>
+                        {uniqueCourse.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -200,18 +228,13 @@ const PaymentDetails = () => {
                     <label className="label">
                         <span className="label-text">Batch Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={batchRef}>
+                    <select onChange={handleBatchChange} className="select select-sm w-full border-gray-400">
                         <option>Batch Name</option>
-                        {
-                            batchsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueBatch.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -219,27 +242,14 @@ const PaymentDetails = () => {
                     <label className="label">
                         <span className="label-text">Head Name</span>
                     </label>
-                    <select className="select select-sm w-full border-gray-400" required
-                        ref={headRef}>
+                    <select onChange={handleHeadChange} className="select select-sm w-full border-gray-400">
                         <option >Head Name</option>
-                        {
-                            headsName?.users?.map((user) =>
-                                <option
-                                    key={user._id}
-                                    value={user.name}>
-                                    {user.name}
-                                </option>
-                            )
-                        }
+                        {uniqueHead.map(value => (
+                            <option key={value._id} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
-                </div>
-                <div className='mt-8'>
-                    <button
-                        onClick={handleSearch}
-                        className="btn btn-sm btn-primary text-white bg-green-500"
-                    >
-                        Filter
-                    </button>
                 </div>
 
                 <div className='mt-10 mx-2'>
@@ -341,6 +351,7 @@ const PaymentDetails = () => {
                 <PaymentModal
                     admission={admission}
                     setAdmission={setAdmission}
+                    refetchUpdateData={refetchUpdateData}
                 >
                 </PaymentModal>
             }

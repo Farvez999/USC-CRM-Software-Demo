@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useRef, useState, } from 'react';
 import { toast } from 'react-hot-toast';
 
-const PaymentModal = ({ admission, setAdmission }) => {
+const PaymentModal = ({ admission, setAdmission, refetchUpdateData }) => {
     // console.log(admission);
 
     const fristPaymentAccountsRef = useRef()
@@ -77,11 +77,12 @@ const PaymentModal = ({ admission, setAdmission }) => {
 
         console.log(user)
 
-        axios.patch(`http://localhost:5000/update-admission-pay/${admission._id}`, user)
+        axios.patch(`https://demo-usc-crm-software.vercel.app/update-admission-pay/${admission._id}`, user)
             .then((data) => {
                 // console.log(data);
                 toast.success('Lead Updates Success')
                 setAdmission(null)
+                refetchUpdateData()
             });
 
     }
@@ -93,7 +94,7 @@ const PaymentModal = ({ admission, setAdmission }) => {
     const { data: paygetwaysName = [] } = useQuery({
         queryKey: ['paygetwaysName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/pay-getway`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/pay-getway`);
             const data = await res.json();
             return data;
         }

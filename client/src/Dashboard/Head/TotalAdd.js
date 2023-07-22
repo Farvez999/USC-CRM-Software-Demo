@@ -21,7 +21,7 @@ const TotalAdd = () => {
     const { data: totalAdmission = [], refetch } = useQuery({
         queryKey: ['totalAdmission'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/leads?admission=true&head.name=${user.name}`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&head.name=${user.name}`);
             const data = await res.json();
 
             // let lData = data.filter(lead => lead.onlineInterested !== true && lead.offlineInterested !== true && lead.seminarInterested !== true)
@@ -39,7 +39,7 @@ const TotalAdd = () => {
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/course`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/course`);
             const data = await res.json();
             return data;
         }
@@ -48,7 +48,7 @@ const TotalAdd = () => {
     const { data: batchsName = [] } = useQuery({
         queryKey: ['batchsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/batch`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/batch`);
             const data = await res.json();
             return data;
         }
@@ -57,7 +57,7 @@ const TotalAdd = () => {
     const { data: headsName = [] } = useQuery({
         queryKey: ['headsName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/head`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/head`);
             const data = await res.json();
             return data;
         }
@@ -66,7 +66,7 @@ const TotalAdd = () => {
     const { data: userName = [] } = useQuery({
         queryKey: ['userName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/users`);
             const data = await res.json();
             return data;
         }

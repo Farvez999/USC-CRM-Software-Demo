@@ -15,7 +15,7 @@ const OfflineStudents = () => {
     const tableRef = useRef(null);
 
     useEffect(() => {
-        fetch("http://localhost:5000/leads?offlineInterested=true")
+        fetch("https://demo-usc-crm-software.vercel.app/leads?offlineInterested=true")
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -90,7 +90,7 @@ const OfflineStudents = () => {
             return;
         }
 
-        fetch(`http://localhost:5000/delete/${offline}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/delete/${offline}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -99,7 +99,7 @@ const OfflineStudents = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Leads ${user.name} deleted successfully`);
-                fetch('http://localhost:5000/leads?offlineInterested=true')
+                fetch('https://demo-usc-crm-software.vercel.app/leads?offlineInterested=true')
                     .then(res => res.json())
                     .then(updatedData => {
                         setFilterData(updatedData)

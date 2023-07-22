@@ -21,7 +21,7 @@ const CashIn = () => {
 
     // Collection Api Load
     useEffect(() => {
-        fetch("http://localhost:5000/collection")
+        fetch("https://demo-usc-crm-software.vercel.app/collection")
             .then(response => response.json())
             .then(data => {
                 // setFilterData(data)
@@ -31,7 +31,7 @@ const CashIn = () => {
 
     // Expense Api Load
     useEffect(() => {
-        fetch("http://localhost:5000/expense")
+        fetch("https://demo-usc-crm-software.vercel.app/expense")
             .then(response => response.json())
             .then(data => {
                 // setFilterData(data)
@@ -41,7 +41,7 @@ const CashIn = () => {
 
     // Collection Course Api Load
     useEffect(() => {
-        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
+        fetch("https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setCourseCollectionData(data)

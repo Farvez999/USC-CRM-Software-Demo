@@ -20,7 +20,7 @@ const MyLead = () => {
 
 
     const refetchUpdateData = async () => {
-        const res = await fetch(`http://localhost:5000/leads/${user._id}`);
+        const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads/${user._id}`);
         const data = await res.json();
 
         let afterFilter = []
@@ -35,7 +35,7 @@ const MyLead = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/leads/${user._id}`)
+        fetch(`https://demo-usc-crm-software.vercel.app/leads/${user._id}`)
             .then(response => response.json())
             .then(data => {
 
@@ -77,7 +77,7 @@ const MyLead = () => {
             fristInstallmentDate: "",
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -107,7 +107,7 @@ const MyLead = () => {
             close: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -136,7 +136,7 @@ const MyLead = () => {
             onlineInterested: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -165,7 +165,7 @@ const MyLead = () => {
             offlineInterested: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -192,7 +192,7 @@ const MyLead = () => {
             seminarInterested: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -219,7 +219,7 @@ const MyLead = () => {
             noReceive: true
         }
 
-        fetch(`http://localhost:5000/update/${singleLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${singleLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',

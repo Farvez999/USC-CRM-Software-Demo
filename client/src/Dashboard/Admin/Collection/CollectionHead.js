@@ -13,7 +13,7 @@ const CollectionHead = () => {
     const { data: collectionHeadName = [], refetch } = useQuery({
         queryKey: ['collectionHeadName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/collection-head`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/collection-head`);
             const data = await res.json();
             return data;
         }
@@ -25,7 +25,7 @@ const CollectionHead = () => {
             purpose: collectionHead
         }
 
-        fetch(`http://localhost:5000/collection-head`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/collection-head`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -47,7 +47,7 @@ const CollectionHead = () => {
             return;
         }
 
-        fetch(`http://localhost:5000/delete-collection-head/${leads}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/delete-collection-head/${leads}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

@@ -19,7 +19,7 @@ const NoReceive = () => {
     // const { data: noReceives = [], refetch } = useQuery({
     //     queryKey: ['noReceives'],
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/leads?noReceive=true&user.name=${user.name}`);
+    //         const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?noReceive=true&user.name=${user.name}`);
     //         const data = await res.json();
     //         setFilterData(data)
     //         return data;
@@ -27,7 +27,7 @@ const NoReceive = () => {
     // });
 
     const refetchUpdateData = async () => {
-        const res = await fetch(`http://localhost:5000/leads?noReceive=true&user.name=${user.name}`);
+        const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?noReceive=true&user.name=${user.name}`);
         const data = await res.json();
 
         let afterFilter = []
@@ -42,7 +42,7 @@ const NoReceive = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/leads?noReceive=true&user.name=${user.name}`)
+        fetch(`https://demo-usc-crm-software.vercel.app/leads?noReceive=true&user.name=${user.name}`)
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -84,7 +84,7 @@ const NoReceive = () => {
             fristInstallmentDate: "",
         }
 
-        fetch(`http://localhost:5000/update/${noReceive._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -115,7 +115,7 @@ const NoReceive = () => {
             noReceive: false
         }
 
-        fetch(`http://localhost:5000/update/${noReceive._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -143,7 +143,7 @@ const NoReceive = () => {
             noReceive: false
         }
 
-        fetch(`http://localhost:5000/update/${noReceive._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -172,7 +172,7 @@ const NoReceive = () => {
         }
 
 
-        fetch(`http://localhost:5000/update/${noReceive._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -201,7 +201,7 @@ const NoReceive = () => {
             noReceive: false
         }
 
-        fetch(`http://localhost:5000/update/${noReceive._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${noReceive._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',

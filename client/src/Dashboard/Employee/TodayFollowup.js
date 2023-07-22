@@ -20,7 +20,7 @@ const TodayFollowup = () => {
     const { data: todayFollowLeads = [], refetch } = useQuery({
         queryKey: ['todayFollowLeads'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/todayLead/${date}`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/todayLead/${date}`);
             const data = await res.json();
             console.log(data)
             let lData = data.filter(lead => lead.user.name === user.name)
@@ -34,7 +34,7 @@ const TodayFollowup = () => {
 
     // useEffect(() => {
     //     let interval = setInterval(() => {
-    //         fetch(`http://localhost:5000/todayLead/${date}?&user.name=${user.name}`, {
+    //         fetch(`https://demo-usc-crm-software.vercel.app/todayLead/${date}?&user.name=${user.name}`, {
     //             headers: {
     //                 authorization: `bearer ${localStorage.getItem('accessToken')}`
     //             }
@@ -59,7 +59,7 @@ const TodayFollowup = () => {
 
     const handleUpdate = (event) => {
         event.preventDefault();
-        fetch(`http://localhost:5000/update/${sLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${sLead._id}`, {
             method: 'PATCH', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ const TodayFollowup = () => {
             // todayFollowLead: false
         }
 
-        fetch(`http://localhost:5000/update/${todayFollowLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${todayFollowLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -115,7 +115,7 @@ const TodayFollowup = () => {
             // todayFollowLead: false
         }
 
-        fetch(`http://localhost:5000/update/${todayFollowLead._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${todayFollowLead._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',

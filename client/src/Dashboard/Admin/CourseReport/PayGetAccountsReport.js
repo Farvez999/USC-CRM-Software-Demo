@@ -17,7 +17,7 @@ const PayGetAccountsReport = () => {
     const payGetwayRef = useRef();
 
     useEffect(() => {
-        fetch("http://localhost:5000/leads?admission=true&admissionStatus=true")
+        fetch("https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
                 setAdmissionsData(data)
@@ -38,7 +38,7 @@ const PayGetAccountsReport = () => {
     const { data: payGetwaysName = [], refetch } = useQuery({
         queryKey: ['payGetwaysName'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/pay-getway`);
+            const res = await fetch(`https://demo-usc-crm-software.vercel.app/pay-getway`);
             const data = await res.json();
             return data;
         }

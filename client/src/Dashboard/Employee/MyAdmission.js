@@ -22,7 +22,7 @@ const MyAdmission = () => {
     // const { data: admissions = [], refetch } = useQuery({
     //     queryKey: ['admissions'],
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/leads?admission=true&user.name=${user.name}`);
+    //         const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&user.name=${user.name}`);
     //         const data = await res.json();
     //         setFilterData(data)
     //         return data;
@@ -31,7 +31,7 @@ const MyAdmission = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/leads?admission=true&user.name=${user.name}`)
+        fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&user.name=${user.name}`)
             .then(response => response.json())
             .then(data => {
                 setFilterData(data)
@@ -56,7 +56,7 @@ const MyAdmission = () => {
             admission: false,
         }
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -86,7 +86,7 @@ const MyAdmission = () => {
         }
 
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -116,7 +116,7 @@ const MyAdmission = () => {
             onlineInterested: false
         }
 
-        fetch(`http://localhost:5000/update/${admission._id}`, {
+        fetch(`https://demo-usc-crm-software.vercel.app/update/${admission._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -173,7 +173,7 @@ const MyAdmission = () => {
     // const { data: coursesName = [] } = useQuery({
     //     queryKey: ['coursesName'],
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/course`);
+    //         const res = await fetch(`https://demo-usc-crm-software.vercel.app/course`);
     //         const data = await res.json();
     //         return data;
     //     }
@@ -182,7 +182,7 @@ const MyAdmission = () => {
     // const { data: batchsName = [] } = useQuery({
     //     queryKey: ['batchsName'],
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/batch`);
+    //         const res = await fetch(`https://demo-usc-crm-software.vercel.app/batch`);
     //         const data = await res.json();
     //         return data;
     //     }
@@ -191,7 +191,7 @@ const MyAdmission = () => {
     // const { data: headsName = [] } = useQuery({
     //     queryKey: ['headsName'],
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/head`);
+    //         const res = await fetch(`https://demo-usc-crm-software.vercel.app/head`);
     //         const data = await res.json();
     //         return data;
     //     }
