@@ -38,6 +38,9 @@ app.use('/', require('./routes/loan.head.routes'))
 app.use('/', require('./routes/loan.r.history.routes'))
 app.use('/', require('./routes/loan.p.history.routes'))
 
+// Student
+app.use('/', require('./routes/student.routes'))
+
 
 app.get("/", (req, res) => {
     res.send("Server running...")
