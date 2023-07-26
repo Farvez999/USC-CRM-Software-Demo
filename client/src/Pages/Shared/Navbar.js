@@ -62,7 +62,7 @@ const Navbar = () => {
                         <li className='font-semibold'><Link to='/dashboard/today-followup'>Today Follow Up<p className="badge badge-secondary badge-sm">{todayFollowup?.length}</p></Link></li>
                     }
 
-                    <li className='font-semibold'><button onClick={logout}><MdLogout></MdLogout></button></li>
+                    <li className='text-red-500 font-semibold'><button onClick={logout}><MdLogout></MdLogout></button></li>
 
                 </>
                 :

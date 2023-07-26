@@ -23,13 +23,30 @@ const PayDetails = () => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
 
+    // const [closePayment, setClosePayment] = useState(false);
+
     const printRef = useRef();
+
+
+    const refetchUpdateData = async () => {
+        const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true`);
+        const data = await res.json();
+        let afterFilter = []
+        filterData.forEach(sData => {
+            const ssData = data.filter(d => d?._id === sData?._id)
+            afterFilter = [...afterFilter, ...ssData]
+        })
+        console.log(afterFilter)
+        console.log(filterData)
+        setFilterData(afterFilter)
+    }
 
 
     useEffect(() => {
         fetch("https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true")
             .then(response => response.json())
             .then(data => {
+                // setClosePayment(data)
                 setFilterData(data)
                 setAdmissionsData(data)
             })
@@ -117,23 +134,23 @@ const PayDetails = () => {
     // -------------Due Date to Date wise Filter End--------------------
 
     // -------------Collection Date to Date wise Filter Start--------------------
-    const handleCollectionStartInputChange = event => {
-        const value = event.target.value;
-        setStartDate(value)
-        console.log(typeof (value));
-    }
+    // const handleCollectionStartInputChange = event => {
+    //     const value = event.target.value;
+    //     setStartDate(value)
+    //     console.log(typeof (value));
+    // }
 
-    const handleCollectionEndInputChange = event => {
-        const value = event.target.value;
-        setEndDate(value)
-        console.log(value);
-    }
+    // const handleCollectionEndInputChange = event => {
+    //     const value = event.target.value;
+    //     setEndDate(value)
+    //     console.log(value);
+    // }
 
-    const handleCollectionDateSearch = () => {
-        var resultProductData = admissions.filter(a => (a.fristInstallmentDate || a.secondInstallmentDate || a.thirdInstallmentDate) >= startDate && (a.fristInstallmentDate || a.secondInstallmentDate || a.thirdInstallmentDate) <= endDate);
-        setFilterData(resultProductData)
+    // const handleCollectionDateSearch = () => {
+    //     var resultProductData = admissions.filter(a => (a.fristInstallmentDate || a.secondInstallmentDate || a.thirdInstallmentDate) >= startDate && (a.fristInstallmentDate || a.secondInstallmentDate || a.thirdInstallmentDate) <= endDate);
+    //     setFilterData(resultProductData)
 
-    };
+    // };
     // -------------Collection Date to Date wise Filter End--------------------
 
 
@@ -163,15 +180,16 @@ const PayDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Close successfully`);
-                fetch('https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true')
-                    .then(res => res.json())
-                    .then(updatedData => {
-                        setFilterData(updatedData)
-                    })
-                    .catch(error => {
-                        console.error('Update request failed:', error);
-                        toast.error('An error occurred while updating the API.');
-                    });
+                refetchUpdateData(data)
+                // fetch('https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true')
+                //     .then(res => res.json())
+                //     .then(updatedData => {
+                //         setFilterData(updatedData)
+                //     })
+                //     .catch(error => {
+                //         console.error('Update request failed:', error);
+                //         toast.error('An error occurred while updating the API.');
+                //     });
             })
             .catch(error => {
                 console.error('Delete request failed:', error);
@@ -202,15 +220,16 @@ const PayDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success(`Open successfully`);
-                fetch('https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true')
-                    .then(res => res.json())
-                    .then(updatedData => {
-                        setFilterData(updatedData)
-                    })
-                    .catch(error => {
-                        console.error('Update request failed:', error);
-                        toast.error('An error occurred while updating the API.');
-                    });
+                refetchUpdateData(data)
+                // fetch('https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true')
+                //     .then(res => res.json())
+                //     .then(updatedData => {
+                //         setFilterData(updatedData)
+                //     })
+                //     .catch(error => {
+                //         console.error('Update request failed:', error);
+                //         toast.error('An error occurred while updating the API.');
+                //     });
             })
             .catch(error => {
                 console.error('Delete request failed:', error);
@@ -343,7 +362,7 @@ const PayDetails = () => {
                     <div className='mt-8 mx-2'>
                         <button
                             onClick={handleDueDateSearch}
-                            className="btn btn-sm btn-primary text-white bg-green-500"
+                            className="btn btn-sm btn-accent"
                         >
                             Due Date Filter
                         </button>
@@ -351,7 +370,7 @@ const PayDetails = () => {
                     {/* ------Due Start Date and End Date------ */}
 
                     {/* ------Collection Start Date and End Date------ */}
-                    <div className="form-control mx-2">
+                    {/* <div className="form-control mx-2">
                         <label className="label">
                             <span className="label-text">Collection Start Date</span>
                         </label>
@@ -363,16 +382,16 @@ const PayDetails = () => {
                             <span className="label-text">Collection End Date</span>
                         </label>
                         <input onChange={handleCollectionEndInputChange} name="" type="date" className="input input-sm w-full input-bordered" />
-                    </div>
+                    </div> */}
 
-                    <div className='mt-8 mx-2'>
+                    {/* <div className='mt-8 mx-2'>
                         <button
                             onClick={handleCollectionDateSearch}
                             className="btn btn-sm btn-primary text-white bg-green-500"
                         >
                             Collection Date Filter
                         </button>
-                    </div>
+                    </div> */}
                     {/* ------Collection Start Date and End Date------ */}
 
                     <DownloadTableExcel
@@ -385,6 +404,19 @@ const PayDetails = () => {
 
                     </DownloadTableExcel>
 
+                    <div>
+                        <button className='mt-8 mx-2 btn btn-sm btn-outline' onClick={pdfDownload}>PDF<FaFileDownload className='inline-block'></FaFileDownload></button>
+
+                    </div>
+
+                    <div className='mt-8 mx-2'>
+                        <button
+                            onClick={handlePrint}
+                            className="btn btn-sm btn-outline"
+                        >
+                            Print
+                        </button>
+                    </div>
 
 
                 </div>
@@ -459,20 +491,6 @@ const PayDetails = () => {
                         <button onClick={refreshPage}><FiRefreshCw></FiRefreshCw></button>
                     </div>
 
-                    <div>
-                        <button className='mt-8 mx-2 btn btn-sm btn-outline' onClick={pdfDownload}>PDF<FaFileDownload className='inline-block'></FaFileDownload></button>
-
-                    </div>
-
-                    <div className='mt-8 mx-2'>
-                        <button
-                            onClick={handlePrint}
-                            className="btn btn-sm btn-primary text-white bg-green-500"
-                        >
-                            Print
-                        </button>
-                    </div>
-
                 </div>
 
                 <div>
@@ -533,8 +551,11 @@ const PayDetails = () => {
                                                             <label onClick={() => handleUpdate(admission)} htmlFor="payModal" className="btn btn-xs btn-accent">Edit</label>
                                                         </td>
                                                         <td className='p-1 border-2 flex flex-col'>
-                                                            <p className='btn btn-xs btn-danger p-1 m-1' onClick={() => handleClosePayment(admission)} >Close</p>
-                                                            <p className='btn btn-xs btn-accent p-1 m-1' onClick={() => handleOpenPayment(admission)} >Open</p>
+                                                            {admission.closePayment === false ?
+                                                                <p className='btn btn-xs border-0 bg-red-500 p-1 m-1' onClick={() => handleClosePayment(admission)} >Close</p>
+                                                                :
+                                                                <p className='btn btn-xs btn-accent p-1 m-1' onClick={() => handleOpenPayment(admission)} >Open</p>
+                                                            }
                                                         </td>
                                                     </tr>
 

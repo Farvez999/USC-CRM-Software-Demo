@@ -4,7 +4,7 @@ const { signupService, gets, findOne, getByDeleteId, remove, update, getById } =
 
 const createUser = async (req, res) => {
     try {
-        // console.log(req.user);
+        console.log(req.body);
         if (req.user.role !== 'admin') {
             return res.status(403).send({ message: 'forbidden access' })
         }

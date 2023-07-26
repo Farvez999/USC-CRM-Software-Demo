@@ -47,8 +47,12 @@ const Signup = () => {
                             name="role"
                             id="role" className="select select-bordered w-full max-w-xs">
 
+                            <option>user</option> {/* User === Employee */}
                             <option>head</option>
-                            <option>user</option>
+                            <option>accounts</option>
+
+
+
                         </select>
 
                     </div>

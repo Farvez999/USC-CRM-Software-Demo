@@ -143,15 +143,16 @@ const PaymentDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Close Payment Added')
-                fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`)
-                    .then(res => res.json())
-                    .then(updatedData => {
-                        setFilterData(updatedData)
-                    })
-                    .catch(error => {
-                        console.error('Update request failed:', error);
-                        toast.error('An error occurred while updating the API.');
-                    });
+                refetchUpdateData(data)
+                // fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`)
+                //     .then(res => res.json())
+                //     .then(updatedData => {
+                //         setFilterData(updatedData)
+                //     })
+                //     .catch(error => {
+                //         console.error('Update request failed:', error);
+                //         toast.error('An error occurred while updating the API.');
+                //     });
             })
             .catch(error => {
                 console.error('Delete request failed:', error);
@@ -175,15 +176,16 @@ const PaymentDetails = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Open Payment Added')
-                fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`)
-                    .then(res => res.json())
-                    .then(updatedData => {
-                        setFilterData(updatedData)
-                    })
-                    .catch(error => {
-                        console.error('Update request failed:', error);
-                        toast.error('An error occurred while updating the API.');
-                    });
+                refetchUpdateData(data)
+                // fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`)
+                //     .then(res => res.json())
+                //     .then(updatedData => {
+                //         setFilterData(updatedData)
+                //     })
+                //     .catch(error => {
+                //         console.error('Update request failed:', error);
+                //         toast.error('An error occurred while updating the API.');
+                //     });
             })
             .catch(error => {
                 console.error('Delete request failed:', error);
