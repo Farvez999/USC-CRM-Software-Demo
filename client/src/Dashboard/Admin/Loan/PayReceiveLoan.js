@@ -22,7 +22,7 @@ const PayReceiveLoan = () => {
 
 
     const matchingItems = payLoan?.loans?.filter((item) => item.loanId._id === value);
-    console.log(matchingItems)
+    // console.log(matchingItems)
     const amounts = matchingItems?.map(item => parseInt(item.payAmmount));
     const payAmmount = amounts?.reduce((total, amount) => total + amount, 0);
 

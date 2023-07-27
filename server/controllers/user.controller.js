@@ -4,7 +4,6 @@ const { signupService, gets, findOne, getByDeleteId, remove, update, getById } =
 
 const createUser = async (req, res) => {
     try {
-        console.log(req.body);
         if (req.user.role !== 'admin') {
             return res.status(403).send({ message: 'forbidden access' })
         }
@@ -16,7 +15,7 @@ const createUser = async (req, res) => {
 
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -32,7 +31,7 @@ const getUsers = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -44,13 +43,13 @@ const getHeads = async (req, res) => {
         const query = req.query;
         const users = await gets(query);
         const heads = users.filter(user => user.role === 'head')
-        // console.log(head)
+        // // console.log(head)
         res.status(200).json({
             heads
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -89,7 +88,7 @@ const loginUser = async (req, res) => {
 
     }
     catch (err) {
-        console.log(err.message);
+        // console.log(err.message);
         res.status(500).json({
             message: err.message
         })
@@ -98,7 +97,7 @@ const loginUser = async (req, res) => {
 
 const getLoggedUser = async (req, res) => {
     try {
-        // console.log(req.user);
+        // // console.log(req.user);
         const user = req.user;
 
         res.status(200).json({
@@ -106,7 +105,7 @@ const getLoggedUser = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err.message);
+        // console.log(err.message);
         res.status(500).json({
             message: err.message
         })
@@ -122,7 +121,7 @@ const getLoggedUser = async (req, res) => {
 //         })
 //     }
 //     catch (err) {
-//         console.log(err);
+//         // console.log(err);
 //         res.status(500).json({
 //             message: err.message
 //         })
@@ -131,7 +130,7 @@ const getLoggedUser = async (req, res) => {
 
 // const updateUserById = async (req, res) => {
 // const id = req.params.id;
-// console.log(id)
+// // console.log(id)
 // const hashPassword = async (password) => {
 //     const salt = await bcrypt.genSalt(10);
 //     password = await bcrypt.hash(password, salt);
@@ -142,13 +141,13 @@ const getLoggedUser = async (req, res) => {
 //     req.body.password = await hashPassword(req.body.password)
 // }
 
-// // console.log(req.body)
-// // console.log(req.params.id)
+// // // console.log(req.body)
+// // // console.log(req.params.id)
 
 
 
 // const user = await User.findOneAndUpdate(id, { password: req.body.password }, { new: true })
-// console.log("id", user._id)
+// // console.log("id", user._id)
 // if (!user) return res.status(404).send("Error updating user")
 // // res.status(200).send(user, 'Password update successful')
 // res.status(200).json({
@@ -168,7 +167,7 @@ const updateUserById = async (req, res) => {
             req.body.password = await hashPassword(req.body.password)
         }
 
-        // console.log("pass", req.body.password)
+        // // console.log("pass", req.body.password)
 
         const id = req.params.id;
 
@@ -179,7 +178,7 @@ const updateUserById = async (req, res) => {
             })
         }
 
-        console.log("id", id)
+        // console.log("id", id)
 
 
         const options = { new: true };
@@ -189,10 +188,10 @@ const updateUserById = async (req, res) => {
             message: "User update successful",
             user: user
         })
-        console.log(user)
+        // console.log(user)
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -204,7 +203,7 @@ const updateUserById = async (req, res) => {
 const deleteUserById = async (req, res) => {
     try {
         const id = req.params.id;
-        // console.log(id);
+        // // console.log(id);
 
         const exist = await getByDeleteId(id);
         if (!exist) {
@@ -220,7 +219,7 @@ const deleteUserById = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })

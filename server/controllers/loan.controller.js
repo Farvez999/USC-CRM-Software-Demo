@@ -2,7 +2,7 @@ const { loanAddService, getsAllService, getByDeleteId, remove, update } = requir
 
 const addLoan = async (req, res) => {
     try {
-        console.log(req.user);
+        // console.log(req.user);
         if (req.user.role !== 'admin') {
             return res.status(403).send({ message: 'forbidden access' })
         }
@@ -15,7 +15,7 @@ const addLoan = async (req, res) => {
 
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -31,7 +31,7 @@ const getLoan = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -56,7 +56,7 @@ const deleteUserById = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -82,11 +82,11 @@ const updateLoanPayById = async (req, res) => {
             // newLead,
             lead
         })
-        // console.log(lead)
-        // console.log(newLead)
+        // // console.log(lead)
+        // // console.log(newLead)
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -111,11 +111,11 @@ const updateLoanProPayById = async (req, res) => {
             // newLead,
             lead
         })
-        // console.log(lead)
-        // console.log(newLead)
+        // // console.log(lead)
+        // // console.log(newLead)
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })

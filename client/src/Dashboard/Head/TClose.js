@@ -84,10 +84,10 @@ const TClose = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = totalClose.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
-        console.log(fiData);
+        // console.log(fiData);
     }
     // -------------Date wise Filter End--------------------
 

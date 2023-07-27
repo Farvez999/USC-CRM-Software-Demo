@@ -4,7 +4,7 @@ import React, { useRef, useState, } from 'react';
 import { toast } from 'react-hot-toast';
 
 const PaymentModal = ({ admission, setAdmission, refetchUpdateData }) => {
-    // console.log(admission);
+    // // console.log(admission);
 
     const fristPaymentAccountsRef = useRef()
     const secondPaymentAccountsRef = useRef()
@@ -13,7 +13,7 @@ const PaymentModal = ({ admission, setAdmission, refetchUpdateData }) => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        // console.log(admission)
+        // // console.log(admission)
 
         const admissionFee = e.target.admissionFee.value;
 
@@ -22,19 +22,19 @@ const PaymentModal = ({ admission, setAdmission, refetchUpdateData }) => {
 
         const fristInstallment = e.target.fristInstallment.value;
         const fristPaymentAccounts = fristPaymentAccountsRef.current.value;
-        console.log(fristPaymentAccounts)
+        // console.log(fristPaymentAccounts)
         const fristInstallmentTID = e.target.fristInstallmentTID.value;
         const fristInstallmentDate = e.target.fristInstallmentDate.value;
 
         const secondInstallment = e.target.secondInstallment.value;
         const secondPaymentAccounts = secondPaymentAccountsRef.current.value;
-        console.log(secondPaymentAccounts)
+        // console.log(secondPaymentAccounts)
         const secondInstallmentTID = e.target.secondInstallmentTID.value;
         const secondInstallmentDate = e.target.secondInstallmentDate.value;
 
         const thirdInstallment = e.target.thirdInstallment.value;
         const thirdPaymentAccounts = thirdPaymentAccountsRef.current.value;
-        console.log(thirdPaymentAccounts)
+        // console.log(thirdPaymentAccounts)
         const thirdInstallmentTID = e.target.thirdInstallmentTID.value;
         const thirdInstallmentDate = e.target.thirdInstallmentDate.value;
 
@@ -46,7 +46,7 @@ const PaymentModal = ({ admission, setAdmission, refetchUpdateData }) => {
 
         const admissionStatus = true;
 
-        // console.log(admissionFee, fristInstallment, fristPaymentAccounts,fristInstallmentTID,fristInstallmentDate, nextInstallmentDate, );
+        // // console.log(admissionFee, fristInstallment, fristPaymentAccounts,fristInstallmentTID,fristInstallmentDate, nextInstallmentDate, );
         const user = {
             admissionStatus,
             admissionFee,
@@ -75,11 +75,11 @@ const PaymentModal = ({ admission, setAdmission, refetchUpdateData }) => {
 
         };
 
-        console.log(user)
+        // console.log(user)
 
         axios.patch(`https://demo-usc-crm-software.vercel.app/update-admission-pay/${admission._id}`, user)
             .then((data) => {
-                // console.log(data);
+                // // console.log(data);
                 toast.success('Lead Updates Success')
                 setAdmission(null)
                 refetchUpdateData()
@@ -100,7 +100,7 @@ const PaymentModal = ({ admission, setAdmission, refetchUpdateData }) => {
         }
     });
 
-    console.log(paygetwaysName)
+    // console.log(paygetwaysName)
 
 
     return (

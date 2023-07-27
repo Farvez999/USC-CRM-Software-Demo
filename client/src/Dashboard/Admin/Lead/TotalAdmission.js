@@ -29,7 +29,7 @@ const TotalAdmission = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(totalAdmission?.map(user => user?.course?.name))];
 
@@ -79,10 +79,10 @@ const TotalAdmission = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = totalAdmission.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
-        console.log(fiData);
+        // console.log(fiData);
     }
     // -------------Date wise Filter End--------------------
 

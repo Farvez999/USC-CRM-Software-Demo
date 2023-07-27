@@ -8,8 +8,8 @@ const VoucherNoWiseReport = () => {
     const componentRef = useRef();
     const [show, setShow] = useState(false);
     const voucherNoRef = useRef();
-    // console.log(typeof (voucherNoRef.current.value))
-    console.log(expenses)
+    // // console.log(typeof (voucherNoRef.current.value))
+    // console.log(expenses)
 
 
 
@@ -25,9 +25,9 @@ const VoucherNoWiseReport = () => {
 
     const handleCollectionDateSearch = () => {
 
-        console.log("first")
+        // console.log("first")
         const fData = expenses?.expenses?.filter(si => si?.voucherNo === parseFloat(voucherNoRef.current.value))
-        console.log(fData)
+        // console.log(fData)
         setFilterData(fData)
         setShow(true)
 

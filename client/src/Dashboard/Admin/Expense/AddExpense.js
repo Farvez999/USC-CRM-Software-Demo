@@ -33,7 +33,7 @@ const AddExpense = () => {
             amount,
             discription
         }
-        console.log(date, voucherNo, purpose, expenseBy, amount, discription,);
+        // console.log(date, voucherNo, purpose, expenseBy, amount, discription,);
 
         fetch(`https://demo-usc-crm-software.vercel.app/expense`, {
             method: 'POST',
@@ -50,7 +50,7 @@ const AddExpense = () => {
                     navigate('/dashboard/expense/expense')
                 }
                 toast.success(`Database Data ${data.message}`)
-                console.log(data);
+                // console.log(data);
             })
 
 
@@ -60,8 +60,8 @@ const AddExpense = () => {
     return (
         <div className='mt-2 w-12/12 mx-auto'>
 
-            <fieldset class="border border-solid border-gray-500 p-3 mx-10">
-                <legend class="text-2xl">Add Expense</legend>
+            <fieldset className="border border-solid border-gray-500 p-3 mx-10">
+                <legend className="text-2xl">Add Expense</legend>
 
                 <div div >
                     <div className='my-3 mx-2'>

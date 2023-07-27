@@ -21,7 +21,7 @@ const PaymentDetails = () => {
 
 
     const [due, setDue] = useState()
-    // console.log(due)
+    // // console.log(due)
 
     const refetchUpdateData = async () => {
         const res = await fetch(`https://demo-usc-crm-software.vercel.app/leads?admission=true&admissionStatus=true&user.name=${user.name}`);
@@ -32,8 +32,8 @@ const PaymentDetails = () => {
             const ssData = data.filter(d => d?._id === sData?._id)
             afterFilter = [...afterFilter, ...ssData]
         })
-        console.log(afterFilter)
-        console.log(filterData)
+        // console.log(afterFilter)
+        // console.log(filterData)
         setFilterData(afterFilter)
     }
 
@@ -55,7 +55,7 @@ const PaymentDetails = () => {
 
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
@@ -95,7 +95,7 @@ const PaymentDetails = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        // console.log(value);
+        // // console.log(value);
         const fiData = admissions.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
 
@@ -109,7 +109,7 @@ const PaymentDetails = () => {
 
     const handleDueChange = event => {
         const value = event.target.value;
-        // console.log(value);
+        // // console.log(value);
         const fiData = admissions.filter(si => formatedDate(si.nextInstallmentDate) === value)
         setFilterData(fiData)
 
@@ -124,7 +124,7 @@ const PaymentDetails = () => {
     for (var i = 0; i < filterData.length; i++) {
         add += filterData[i].admissionFee - (filterData[i].fristInstallment + filterData[i].secondInstallment + filterData[i].thirdInstallment)
     }
-    // console.log("Sum of the array values is: ", add);
+    // // console.log("Sum of the array values is: ", add);
 
 
     const handleClosePayment = (admission) => {

@@ -17,14 +17,14 @@ const RevPayableLoan = () => {
         }
     });
 
-    console.log(revLoan)
+    // console.log(revLoan)
 
     const totalLoan = loansPayData?.loans?.filter((item) => item._id === value);
     const loanAmount = totalLoan?.map(item => parseInt(item.loanAmount));
 
 
     const matchingItems = revLoan?.loans?.filter((item) => item?.loanId?._id === value);
-    console.log(matchingItems)
+    // console.log(matchingItems)
     const amounts = matchingItems?.map(item => parseInt(item.revAmmount));
     const revAmmount = amounts?.reduce((total, amount) => total + amount, 0);
 

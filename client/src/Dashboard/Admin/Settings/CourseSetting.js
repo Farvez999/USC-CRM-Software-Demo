@@ -34,7 +34,7 @@ const CourseSetting = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 toast.success(`${courseName} added successfully`)
                 refetch()
             })

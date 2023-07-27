@@ -40,8 +40,8 @@ const MyClose = () => {
             const ssData = data.filter(d => d?._id === sData?._id)
             afterFilter = [...afterFilter, ...ssData]
         })
-        console.log(afterFilter)
-        console.log(filterData)
+        // console.log(afterFilter)
+        // console.log(filterData)
         setFilterData(afterFilter)
     }
 
@@ -200,7 +200,7 @@ const MyClose = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
@@ -240,7 +240,7 @@ const MyClose = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = closes.filter(si => formatedDate(si.updatedAt) === value)
         setFilterData(fiData)
 

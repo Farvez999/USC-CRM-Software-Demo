@@ -35,7 +35,7 @@ const ExpenseHead = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 toast.success(`${expenseHead} added successfully`)
                 refetch()
             })

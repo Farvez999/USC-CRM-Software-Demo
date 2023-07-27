@@ -50,7 +50,7 @@ const ExpenseDateWiseReport = () => {
         var resultExpenseData = expenses?.expenses?.filter(a => (a.createdAt) >= startDate && (a.createdAt) <= endDate);
         setFilterData(resultExpenseData)
         setShow(true)
-        console.log(resultExpenseData)
+        // console.log(resultExpenseData)
 
         var totalAmount = 0;
         for (var i = 0; i < resultExpenseData.length; i++) {
@@ -60,14 +60,14 @@ const ExpenseDateWiseReport = () => {
 
         // Collection Data
         var resultProductDataFrist = collections.filter(a => (a.fristInstallmentDate) >= startDate && (a.fristInstallmentDate) <= endDate);
-        console.log(resultProductDataFrist)
+        // console.log(resultProductDataFrist)
         setShow(true)
 
         var resultProductDataTwo = collections.filter(a => (a.secondInstallmentDate) >= startDate && (a.secondInstallmentDate) <= endDate);
-        console.log(resultProductDataTwo)
+        // console.log(resultProductDataTwo)
 
         var resultProductDataThird = collections.filter(a => (a.thirdInstallmentDate) >= startDate && (a.thirdInstallmentDate) <= endDate);
-        console.log(resultProductDataThird)
+        // console.log(resultProductDataThird)
 
         // const aa = [...resultProductDataFrist, ...resultProductDataTwo, ...resultProductDataThird]
         // setFilterData(aa)
@@ -77,23 +77,23 @@ const ExpenseDateWiseReport = () => {
         for (var tsOne = 0; tsOne < resultProductDataFrist.length; tsOne++) {
             totalOne += resultProductDataFrist[tsOne].fristInstallment
         }
-        console.log("Sum of the array values is: ", totalOne);
+        // console.log("Sum of the array values is: ", totalOne);
 
         var totalTwo = 0;
         for (var tsTwo = 0; tsTwo < resultProductDataTwo.length; tsTwo++) {
             totalTwo += resultProductDataTwo[tsTwo].secondInstallment
         }
 
-        console.log("Sum of the array values is: ", totalTwo);
+        // console.log("Sum of the array values is: ", totalTwo);
 
         var totalThree = 0;
         for (var tsThree = 0; tsThree < resultProductDataThird.length; tsThree++) {
             totalThree += resultProductDataThird[tsThree].thirdInstallment
         }
-        console.log("Sum of the array values is: ", totalThree);
+        // console.log("Sum of the array values is: ", totalThree);
 
         const totalColloction = totalOne + totalTwo + totalThree
-        console.log(totalColloction)
+        // console.log(totalColloction)
         setCollectionTotal(totalColloction)
 
     };

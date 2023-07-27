@@ -1,9 +1,11 @@
+
+
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const AddAdmission = () => {
+const EnrollCourse = () => {
 
     const navigate = useNavigate();
     const [courseName, setCourseName] = useState('')
@@ -11,9 +13,36 @@ const AddAdmission = () => {
     const [employeeName, setEmployeeName] = useState('')
     const [headName, setHeadName] = useState('')
 
+    const [filterBatchName, setFilterBatchName] = useState([])
+    const [usersName, setUserName] = useState([])
+
+
     const handleCourseName = (e) => {
+
+        const defaultValueCourse = e.target.value;
+
         setCourseName(e.target.value);
+
+
+        const filterBatch = batchsName.users.filter(batch => batch.name.includes(defaultValueCourse))
+
+
+        setFilterBatchName(filterBatch)
+        // batchsName
+
+
     }
+
+    const [allStudents, setAllStudents] = useState([])
+
+    useEffect(() => {
+        fetch("https://demo-usc-crm-software.vercel.app/students")
+            .then(response => response.json())
+            .then(data => {
+                setAllStudents(data)
+            })
+    }, [])
+
 
     const { data: coursesName = [] } = useQuery({
         queryKey: ['coursesName'],
@@ -42,16 +71,19 @@ const AddAdmission = () => {
         setEmployeeName(e.target.value);
     }
 
-    const { data: usersName = [] } = useQuery({
-        queryKey: ['usersName'],
+    const { data: allUser = [] } = useQuery({
+        queryKey: ['allUser'],
         queryFn: async () => {
             const res = await fetch(`https://demo-usc-crm-software.vercel.app/users`);
             const data = await res.json();
-            return data;
+
+            const uData = data.users.filter(user => user.role === 'user')
+            setUserName(uData);
+            return uData;
         }
     });
 
-    // // console.log(usersName);
+    console.log(usersName);
 
     const handleSelectHead = (e) => {
         setHeadName(e.target.value);
@@ -163,7 +195,7 @@ const AddAdmission = () => {
                                 coursesName?.users?.map((user) =>
                                     <option
                                         key={user._id}
-                                        value={user._id}>
+                                        value={user.name}>
                                         {user.name}
                                     </option>
                                 )
@@ -173,7 +205,7 @@ const AddAdmission = () => {
                         <select className="select select-bordered select-sm  max-w-xs" required onChange={handleBatchName}>
                             <option disabled selected>Select Batch Name</option>
                             {
-                                batchsName?.users?.map((user) =>
+                                filterBatchName?.map((user) =>
                                     <option
                                         key={user._id}
                                         value={user._id}>
@@ -186,7 +218,7 @@ const AddAdmission = () => {
                         <select className="select select-bordered select-sm  max-w-xs" required onChange={handleSelectUser}>
                             <option disabled selected>Select User Name</option>
                             {
-                                usersName?.users?.map((user) =>
+                                usersName?.map((user) =>
                                     user.role !== 'admin' &&
                                     <option
                                         key={user._id}
@@ -195,7 +227,7 @@ const AddAdmission = () => {
                                     </option>
                                 )
                             }
-                            {/* <option disabled selected>Select User</option>
+                            {/* <option disabled defaultValue>Select User</option>
                             <option>Sumaiya</option>
                             <option>Sonia</option> */}
                         </select>
@@ -272,7 +304,7 @@ const AddAdmission = () => {
                                             <span className="label-text">Total Installment</span>
                                         </label>
                                         <select name="totalInstallment" className="select select-bordered select-sm w-full">
-                                            <option disabled selected>Total Installment</option>
+                                            <option disabled defaultValue>Total Installment</option>
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -298,7 +330,7 @@ const AddAdmission = () => {
                                             <span className="label-text">Frist Pay Accounts</span>
                                         </label>
                                         <select name="fristPaymentAccounts" className="select select-bordered select-sm w-full">
-                                            <option disabled selected>Payment Accounts</option>
+                                            <option disabled defaultValue>Payment Accounts</option>
                                             <option>Bkash</option>
                                             <option>Nagad</option>
                                             <option>Bank</option>
@@ -330,7 +362,7 @@ const AddAdmission = () => {
                                             <span className="label-text">Second Pay Account</span>
                                         </label>
                                         <select name="secondPaymentAccounts" className="select select-bordered select-sm w-full">
-                                            <option disabled selected>Payment Accounts</option>
+                                            <option disabled defaultValue>Payment Accounts</option>
                                             <option>Bkash</option>
                                             <option>Nagad</option>
                                             <option>Bank</option>
@@ -362,7 +394,7 @@ const AddAdmission = () => {
                                             <span className="label-text">Third Pay Account</span>
                                         </label>
                                         <select name="thirdPaymentAccounts" className="select select-bordered select-sm w-full">
-                                            <option disabled selected>Payment Accounts</option>
+                                            <option disabled defaultValue>Payment Accounts</option>
                                             <option>Bkash</option>
                                             <option>Nagad</option>
                                             <option>Bank</option>
@@ -396,4 +428,4 @@ const AddAdmission = () => {
     );
 };
 
-export default AddAdmission;
+export default EnrollCourse;

@@ -10,10 +10,10 @@ const TodayFollowup = () => {
     const [sLead, setSLead] = useState()
     const [filterData, setFilterData] = useState([])
 
-    console.log(filterData)
+    // console.log(filterData)
 
     // const name = user.name;
-    // console.log(name)
+    // // console.log(name)
 
     var date = new Date()
 
@@ -22,15 +22,15 @@ const TodayFollowup = () => {
         queryFn: async () => {
             const res = await fetch(`https://demo-usc-crm-software.vercel.app/todayLead/${date}`);
             const data = await res.json();
-            console.log(data)
+            // console.log(data)
             let lData = data.filter(lead => lead.user.name === user.name)
             setFilterData(lData)
             return data;
         }
     });
 
-    console.log(todayFollowLeads)
-    console.log(filterData)
+    // console.log(todayFollowLeads)
+    // console.log(filterData)
 
     // useEffect(() => {
     //     let interval = setInterval(() => {
@@ -68,7 +68,7 @@ const TodayFollowup = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 toast.success('Lead Updates Success')
                 refetch()
                 // setLeadsUpdate(null)

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
 
 export const AuthContext = createContext()
 
@@ -8,9 +9,12 @@ export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState({});
-    console.log(user);
+    // console.log(user);
     const [filterData, setFilterData] = useState([])
-    console.log(filterData)
+
+    const [loginError, setLoginError] = useState('')
+    const [signupError, setSignupError] = useState('')
+    const [signupData, setSignupData] = useState()
 
     const { data: loansData = [] } = useQuery({
         queryKey: ['loansData'],
@@ -60,7 +64,7 @@ const AuthProvider = ({ children }) => {
                 }
                 ).then((res) => {
                     setUser(res.data?.user);
-                    console.log(res.data);
+                    // console.log(res.data);
                     // localStorage.setItem(
                     //     "access_token",
                     //     `Bearer ${res.data.accessToken}`
@@ -73,34 +77,76 @@ const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (e) => {
+        setLoginError('')
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
 
+        if (!email) {
+            setLoginError('Please enter a valid email')
+            return;
+        }
+        if (!password) {
+            setLoginError('Please enter a valid password');
+            return;
+        }
 
         axios.post('https://demo-usc-crm-software.vercel.app/login', {
             email, password
         })
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 localStorage.setItem(
                     "access_token",
                     `Bearer ${res.data.accessToken}`
                 );
                 setUser(res.data?.user);
             })
-            .catch(err => { console.log(err); })
+            .catch(err => {
+                setLoginError(err?.response?.data?.message)
+                // console.log(err);
+            })
     };
 
 
     const signup = (e) => {
+
+        // console.log("e")
+        setSignupError('')
         e.preventDefault();
         const name = e.target.name.value;
         const email = e.target.email.value;
         const role = e.target.role.value;
         const password = e.target.password.value;
 
-        console.log(name, email, role, password);
+        // console.log(name, email, role, password);
+
+        if (!name) {
+            setSignupError('Please enter a valid name')
+            return;
+        }
+
+        if (!email) {
+            setSignupError('Please enter a valid email')
+            return;
+        }
+
+        if (!role) {
+            setSignupError('Please enter a valid role')
+            return;
+        }
+
+        if (!password) {
+            setSignupError('Please enter a valid password');
+            return;
+        }
+
+        if (password.length < 6) {
+            setSignupError('Password must be at least 6 characters');
+            return;
+        }
+
+        // console.log(name, email, role, password);
         const user = { name: name, email: email, role: role, password: password };
 
 
@@ -114,8 +160,12 @@ const AuthProvider = ({ children }) => {
         })
             .then(res => res.json())
             .then(data => {
-                // setUser(data);
-                console.log(data);
+                toast.success('User Created Success')
+                // console.log(data);
+                setSignupData(data)
+            })
+            .catch(err => {
+                setSignupError(err?.message)
             })
 
 
@@ -129,7 +179,10 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         user,
         signup,
+        signupData,
         login,
+        loginError,
+        signupError,
         logout,
         loansData,
         loansPayData,

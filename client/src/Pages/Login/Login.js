@@ -1,18 +1,24 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
+import toast from 'react-hot-toast';
 
 const Login = () => {
 
-    const { login, user } = useContext(AuthContext);
+    const { login, user, loginError } = useContext(AuthContext);
     const navigate = useNavigate();
     useEffect(() => {
-        console.log(user);
+        // console.log(user);
         if (user?._id) {
             navigate("/dashboard");
         }
     }, [user, navigate]);
 
+
+    useEffect(() => {
+        toast.error(loginError)
+
+    }, [loginError])
 
     return (
         <div className='h-[400px] flex justify-center items-center'>
@@ -49,6 +55,8 @@ const Login = () => {
                         <label className="label">
                             <span className="label-text">Forgot Password ?</span>
                         </label>
+
+
                     </div>
 
 

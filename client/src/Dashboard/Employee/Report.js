@@ -25,7 +25,7 @@ const Report = () => {
             }
         }
     });
-    console.log(allleads);
+    // console.log(allleads);
 
 
     const { data: admissions = [] } = useQuery({

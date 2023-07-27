@@ -8,7 +8,7 @@ const PurposeWiseExReport = () => {
     const componentRef = useRef();
     const [show, setShow] = useState(false);
     const voucherNoRef = useRef();
-    console.log(expenses)
+    // console.log(expenses)
 
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const PurposeWiseExReport = () => {
     }, [])
 
     const uniqueExpensesData = [...new Set(expenses?.expenses?.map(user => user.purpose))];
-    console.log(uniqueExpensesData)
+    // console.log(uniqueExpensesData)
 
 
     // -------------Collection Date to Date wise Filter Start--------------------

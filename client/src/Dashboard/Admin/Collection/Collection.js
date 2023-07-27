@@ -41,7 +41,7 @@ const Collection = () => {
     var totalSum = 0;
     for (var ts = 0; ts < collections?.collection?.length; ts++) {
         totalSum += collections.collection[ts].amount
-        // console.log(totalSum)
+        // // console.log(totalSum)
     }
 
     //Course Collection Api Load
@@ -53,18 +53,18 @@ const Collection = () => {
             })
     }, [])
 
-    // console.log(collectionsCourse)
+    // // console.log(collectionsCourse)
 
     //Course Collection Data
     var resultProductDataFrist = collectionsCourse.filter(a => a.fristInstallment);
-    // console.log(resultProductDataFrist)
+    // // console.log(resultProductDataFrist)
     // // setShow(true)
 
     var resultProductDataTwo = collectionsCourse.filter(a => a.secondInstallment);
-    // console.log(resultProductDataTwo)
+    // // console.log(resultProductDataTwo)
 
     var resultProductDataThird = collectionsCourse.filter(a => a.thirdInstallment);
-    // console.log(resultProductDataThird)
+    // // console.log(resultProductDataThird)
 
     // // const aa = [...resultProductDataFrist, ...resultProductDataTwo, ...resultProductDataThird]
     // // setFilterData(aa)
@@ -74,23 +74,23 @@ const Collection = () => {
     for (var tsOne = 0; tsOne < resultProductDataFrist.length; tsOne++) {
         totalOne += resultProductDataFrist[tsOne].fristInstallment
     }
-    // console.log("Sum of the array values is: ", totalOne);
+    // // console.log("Sum of the array values is: ", totalOne);
 
     var totalTwo = 0;
     for (var tsTwo = 0; tsTwo < resultProductDataTwo.length; tsTwo++) {
         totalTwo += resultProductDataTwo[tsTwo].secondInstallment
     }
 
-    // console.log("Sum of the array values is: ", totalTwo);
+    // // console.log("Sum of the array values is: ", totalTwo);
 
     var totalThree = 0;
     for (var tsThree = 0; tsThree < resultProductDataThird.length; tsThree++) {
         totalThree += resultProductDataThird[tsThree].thirdInstallment
     }
-    // console.log("Sum of the array values is: ", totalThree);
+    // // console.log("Sum of the array values is: ", totalThree);
 
     const totalColloction = (totalOne + totalTwo + totalThree)
-    // console.log(totalColloction)
+    // // console.log(totalColloction)
     // setCollectionTotal(totalColloction)
 
     return (

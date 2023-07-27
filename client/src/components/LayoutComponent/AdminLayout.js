@@ -3,6 +3,7 @@ import { AuthContext } from '../../contexts/AuthProvider';
 import { NavLink, NavNavLink } from 'react-router-dom';
 import { RiBaseStationLine } from 'react-icons/ri';
 import { HiStatusOffline } from 'react-icons/hi';
+import { FaUsers } from 'react-icons/fa';
 
 const AdminLayout = () => {
 
@@ -38,6 +39,7 @@ const AdminLayout = () => {
                                 <span>Total Lead</span>
                             </NavLink>
                         </li>
+
                         <li className="rounded-sm">
                             <NavLink rel="noopener noreferrer" to={`/dashboard/total-admission`} className={({ isActive }) =>
                                 isActive ? "text-green-400 flex items-center p-2 space-x-3 rounded-md" : " flex items-center p-2 space-x-3 rounded-md"
@@ -105,6 +107,33 @@ const AdminLayout = () => {
 
                     </ul>
 
+                    <hr></hr>
+
+                    <ul className="p-4 space-y-4 text-left">
+                        <li>
+                            <details>
+                                <summary >Students</summary>
+
+                                <ul>
+                                    <li>
+                                        <NavLink className={({ isActive }) =>
+                                            isActive ? "text-green-400 flex items-center p-2 space-x-3 rounded-md" : " flex items-center p-2 space-x-3 rounded-md"
+                                        } to={`/dashboard/student/all-student`}>
+                                            <FaUsers ></FaUsers>
+                                            <span className='text-xs'>All Students</span></NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink className={({ isActive }) =>
+                                            isActive ? "text-green-400 flex items-center p-2 space-x-3 rounded-md" : " flex items-center p-2 space-x-3 rounded-md"
+                                        } to={`/dashboard/student/enroll-course`}>
+                                            <img width="16" height="16" src="https://img.icons8.com/fluency/48/pay-date.png" alt="pay-date" />
+                                            <span className='text-xs'>Enroll Course</span></NavLink>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+
+                    </ul>
                     <hr></hr>
 
                     <ul className="pt-4 pb-2 space-y-1 text-sm">

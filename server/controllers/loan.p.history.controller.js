@@ -2,7 +2,7 @@ const { getsAllService, loanPayAddService } = require('../services/loan.p.histor
 
 const addRevLoan = async (req, res) => {
     try {
-        console.log(req.user);
+        // console.log(req.user);
         if (req.user.role !== 'admin') {
             return res.status(403).send({ message: 'forbidden access' })
         }
@@ -15,7 +15,7 @@ const addRevLoan = async (req, res) => {
 
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -31,7 +31,7 @@ const getRevLoan = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })

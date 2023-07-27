@@ -79,9 +79,9 @@ const addLeads = async (req, res) => {
 
         await newLeadsArray.map(async (lead, index) => {
             try {
-                console.log(lead)
+                // console.log(lead)
                 const saveLead = await Lead.create(lead);
-                console.log("saveLead", saveLead)
+                // console.log("saveLead", saveLead)
                 if (saveLead._id) {
                     success += 1;
                 }
@@ -89,7 +89,7 @@ const addLeads = async (req, res) => {
             catch (err) {
                 // console.error(err);
                 error += 1;
-                console.log(err);
+                // console.log(err);
             }
 
             if (index === newLeadsArray.length - 1) {
@@ -105,7 +105,7 @@ const addLeads = async (req, res) => {
 
     }
     catch (err) {
-        // console.log(err);
+        // // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -126,7 +126,7 @@ const addOnlineLeads = async (req, res) => {
         // const headDetails = await Head.findById(headName);
         const headDetails = await User.findById(headName);
 
-        console.log(leads)
+        // console.log(leads)
         const newLeadsArray = leads.map(lead => {
             return {
                 name: lead.Name,
@@ -166,9 +166,9 @@ const addOnlineLeads = async (req, res) => {
 
         await newLeadsArray.map(async (lead, index) => {
             try {
-                console.log(lead)
+                // console.log(lead)
                 const saveLead = await Lead.create(lead);
-                console.log("saveLead", saveLead)
+                // console.log("saveLead", saveLead)
                 if (saveLead._id) {
                     success += 1;
                 }
@@ -176,7 +176,7 @@ const addOnlineLeads = async (req, res) => {
             catch (err) {
                 // console.error(err);
                 error += 1;
-                console.log(err);
+                // console.log(err);
             }
 
             if (index === newLeadsArray.length - 1) {
@@ -192,7 +192,7 @@ const addOnlineLeads = async (req, res) => {
 
     }
     catch (err) {
-        // console.log(err);
+        // // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -212,7 +212,7 @@ const addOfflineLeads = async (req, res) => {
         const employeeDetails = await User.findById(employeeName);
         const headDetails = await User.findById(headName);
 
-        console.log(leads)
+        // console.log(leads)
         const newLeadsArray = leads.map(lead => {
             return {
                 name: lead.Name,
@@ -252,9 +252,9 @@ const addOfflineLeads = async (req, res) => {
 
         await newLeadsArray.map(async (lead, index) => {
             try {
-                console.log(lead)
+                // console.log(lead)
                 const saveLead = await Lead.create(lead);
-                console.log("saveLead", saveLead)
+                // console.log("saveLead", saveLead)
                 if (saveLead._id) {
                     success += 1;
                 }
@@ -262,7 +262,7 @@ const addOfflineLeads = async (req, res) => {
             catch (err) {
                 // console.error(err);
                 error += 1;
-                console.log(err);
+                // console.log(err);
             }
 
             if (index === newLeadsArray.length - 1) {
@@ -278,7 +278,7 @@ const addOfflineLeads = async (req, res) => {
 
     }
     catch (err) {
-        // console.log(err);
+        // // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -345,7 +345,7 @@ const addAdmissions = async (req, res) => {
                 id: batchDetails._id,
             }
         }
-        // console.log(lead)
+        // // console.log(lead)
 
         const saveLead = await Lead.create(lead);
         // res.status(200).json(saveLead)
@@ -359,7 +359,7 @@ const addAdmissions = async (req, res) => {
 
     }
     catch (err) {
-        // console.log(err);
+        // // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -373,7 +373,7 @@ const getLeads = async (req, res) => {
         res.status(200).json(users)
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -383,12 +383,12 @@ const getLeads = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         const id = req.params.id;
-        // console.log(id);
+        // // console.log(id);
         const users = await getById(id);
         res.status(200).json(users)
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -409,11 +409,11 @@ const updateLeadById = async (req, res) => {
             // newLead,
             lead
         })
-        // console.log(lead)
-        // console.log(newLead)
+        // // console.log(lead)
+        // // console.log(newLead)
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -465,7 +465,7 @@ const updateAddPayById = async (req, res) => {
 
             totalInstallment: req.body.totalInstallment
         };
-        // console.log(document)
+        // // console.log(document)
         const options = { new: true };
 
         const lead = await update(id, document, options);
@@ -475,11 +475,11 @@ const updateAddPayById = async (req, res) => {
             // newLead,
             lead
         })
-        // console.log(lead)
-        // console.log(newLead)
+        // // console.log(lead)
+        // // console.log(newLead)
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -508,14 +508,14 @@ function formatedDate(date) {
 const getTodayLeads = async (req, res) => {
     try {
         const date = formatedDate(req.params.date);
-        console.log(date);
+        // console.log(date);
 
         const users = await getsLead({ $or: [{ firstFollow: date }, { secondFollow: date }, { thirdtFollow: date }, { nextFollow: date }] });
-        console.log(users);
+        // console.log(users);
         res.status(200).json(users)
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -524,7 +524,7 @@ const getTodayLeads = async (req, res) => {
 const deleteUserById = async (req, res) => {
     try {
         const id = req.params.id;
-        // console.log(id);
+        // // console.log(id);
 
         const exist = await getByDeleteId(id);
         if (!exist) {
@@ -540,7 +540,7 @@ const deleteUserById = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })

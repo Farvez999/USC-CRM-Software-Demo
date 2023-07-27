@@ -32,7 +32,7 @@ const TotalAdd = () => {
         }
     });
 
-    // console.log(admissions)
+    // // console.log(admissions)
 
     // -----------------Filter Start--------------------
 
@@ -88,10 +88,10 @@ const TotalAdd = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = totalAdmission.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
-        console.log(fiData);
+        // console.log(fiData);
     }
     // -------------Date wise Filter End--------------------
 

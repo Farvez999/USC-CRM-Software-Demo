@@ -36,8 +36,8 @@ const PayDetails = () => {
             const ssData = data.filter(d => d?._id === sData?._id)
             afterFilter = [...afterFilter, ...ssData]
         })
-        console.log(afterFilter)
-        console.log(filterData)
+        // console.log(afterFilter)
+        // console.log(filterData)
         setFilterData(afterFilter)
     }
 
@@ -56,7 +56,7 @@ const PayDetails = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(admissions?.map(user => user?.course?.name))];
 
@@ -105,7 +105,7 @@ const PayDetails = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        // console.log(value);
+        // // console.log(value);
         const fiData = admissions.filter(si => formatedDate(si.updatedAt) === value)
         setFilterData(fiData)
 
@@ -117,13 +117,13 @@ const PayDetails = () => {
     const handleDueStartInputChange = event => {
         const value = event.target.value;
         setStartDate(value)
-        console.log(typeof (value));
+        // console.log(typeof (value));
     }
 
     const handleDueEndInputChange = event => {
         const value = event.target.value;
         setEndDate(value)
-        console.log(value);
+        // console.log(value);
     }
 
     const handleDueDateSearch = () => {
@@ -137,13 +137,13 @@ const PayDetails = () => {
     // const handleCollectionStartInputChange = event => {
     //     const value = event.target.value;
     //     setStartDate(value)
-    //     console.log(typeof (value));
+    //     // console.log(typeof (value));
     // }
 
     // const handleCollectionEndInputChange = event => {
     //     const value = event.target.value;
     //     setEndDate(value)
-    //     console.log(value);
+    //     // console.log(value);
     // }
 
     // const handleCollectionDateSearch = () => {
@@ -241,7 +241,7 @@ const PayDetails = () => {
     var due = 0;
     for (var i = 0; i < filterData.length; i++) {
         const tt = filterData[i].admissionFee - (filterData[i].fristInstallment + filterData[i].secondInstallment + filterData[i].thirdInstallment)
-        // console.log(tt)
+        // // console.log(tt)
         if (filterData[i].closePayment === true) {
             due += 0
         } else {
@@ -249,13 +249,13 @@ const PayDetails = () => {
         }
 
     }
-    // console.log("Sum of the array values is: ", due);
+    // // console.log("Sum of the array values is: ", due);
 
     var totalSum = 0;
     for (var ts = 0; ts < filterData.length; ts++) {
         totalSum += filterData[ts].fristInstallment + filterData[ts].secondInstallment + filterData[ts].thirdInstallment
     }
-    // console.log("Sum of the array values is: ", totalSum);
+    // // console.log("Sum of the array values is: ", totalSum);
 
     //print
     const handlePrint = useReactToPrint({

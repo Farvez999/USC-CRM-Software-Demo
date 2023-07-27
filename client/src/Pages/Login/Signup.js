@@ -1,18 +1,30 @@
 import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const Signup = () => {
 
-    const { signup, user } = useContext(AuthContext)
+    const { signup, signupData, signupError } = useContext(AuthContext)
 
-    // const navigate = useNavigate();
+
+    const navigate = useNavigate();
     // useEffect(() => {
-    //     console.log(user);
+    //     // console.log(user);
     //     if (user?._id) {
-    //         navigate("/login");
+    //         navigate("/dashboard/setting/user");
+    //         toast.success('User Created Success')
     //     }
     // }, [user, navigate]);
+
+
+    if (signupData) {
+        navigate("/dashboard/setting/user");
+    }
+
+    if (signupError) {
+        toast.error(signupError)
+    }
 
 
     return (
@@ -57,9 +69,6 @@ const Signup = () => {
 
                     </div>
 
-
-
-
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
                             <span className="label-text">Password</span>
@@ -67,17 +76,14 @@ const Signup = () => {
                         <input type="password"
                             name="password"
                             id="password"
-                            className="input input-bordered w-full max-w-xs" />
+                            className="input input-bordered w-full max-w-xs mb-6" />
 
-                        <label className="label">
-                            <span className="label-text">Forgot Password ?</span>
-                        </label>
                     </div>
 
 
                     <input className='btn btn-accent w-full text-white' value="Sign Up" type="submit" />
 
-                    <p>Already have an Account <Link className='text-secondary' to="/login">Please Login</Link></p>
+                    {/* <p>Already have an Account <Link className='text-secondary' to="/login">Please Login</Link></p> */}
 
                 </form>
             </div>

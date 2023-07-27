@@ -36,7 +36,7 @@ const ProvideLoan = () => {
             discription,
             loanProvideStatus: true
         }
-        console.log(loanReceipt, loanPurpose, loanProvide, loanAmount, discription,);
+        // console.log(loanReceipt, loanPurpose, loanProvide, loanAmount, discription,);
 
         fetch(`https://demo-usc-crm-software.vercel.app/loan`, {
             method: 'POST',
@@ -52,7 +52,7 @@ const ProvideLoan = () => {
                     navigate('/dashboard/loan/all-provide')
                 }
                 toast.success(`Database Data ${data.message}`)
-                console.log(data);
+                // console.log(data);
             })
 
     };
@@ -61,8 +61,8 @@ const ProvideLoan = () => {
     return (
         <div className='mt-2 w-12/12 mx-auto'>
 
-            <fieldset class="border border-solid border-gray-500 p-3 mx-10">
-                <legend class="text-2xl">Loan Payable Entry</legend>
+            <fieldset className="border border-solid border-gray-500 p-3 mx-10">
+                <legend className="text-2xl">Loan Payable Entry</legend>
 
                 <div div >
                     <div className='my-3 mx-2'>

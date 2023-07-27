@@ -23,7 +23,7 @@ const MeneyReceiptWiseReport = () => {
 
     const handleCollectionDateSearch = () => {
 
-        console.log("first")
+        // console.log("first")
         const fData = collections?.collection?.filter(si => (si?.moneyReceipt) === moneyReceiptRef.current.value)
         setFilterData(fData)
         setShow(true)

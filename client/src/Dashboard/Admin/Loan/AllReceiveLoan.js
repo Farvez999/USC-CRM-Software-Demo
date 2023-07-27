@@ -21,7 +21,7 @@ const AllReceiveLoan = () => {
     });
 
     const handleDelete = (leads) => {
-        console.log(leads._id);
+        // console.log(leads._id);
 
         fetch(`https://demo-usc-crm-software.vercel.app/delete-loan/${leads._id}`, {
             method: 'DELETE',
@@ -43,7 +43,7 @@ const AllReceiveLoan = () => {
     }
 
     const handleClick = (online) => {
-        console.log(online)
+        // console.log(online)
         const value = online._id;
         localStorage.setItem('myValue', value);
     };

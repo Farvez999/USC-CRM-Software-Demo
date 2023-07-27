@@ -13,7 +13,7 @@ import AccountsLayout from '../components/LayoutComponent/AccountsLayout';
 
 const DashboardLayoutM = () => {
     const { user, logout } = useContext(AuthContext);
-    console.log(user?.role);
+    // console.log(user?.role);
     return (
         <div>
             <Navbar></Navbar>

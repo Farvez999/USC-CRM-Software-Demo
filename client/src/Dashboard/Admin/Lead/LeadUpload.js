@@ -17,17 +17,17 @@ const LeadUpload = () => {
     const pageSize = 10;
     const [paginationData, setPaginationData] = useState()
     const [currentPage, setcurrentPage] = useState(1)
-    // console.log(paginationData);
+    // // console.log(paginationData);
 
     const [courseName, setCourseName] = useState('')
-    // console.log(courseName);
+    // // console.log(courseName);
     const [batchName, setBatchName] = useState('')
     const [employeeName, setEmployeeName] = useState('')
     const [headName, setHeadName] = useState('')
-    console.log(headName)
+    // console.log(headName)
 
     const [checkData, setCheckData] = useState([]);
-    // console.log(checkData);
+    // // console.log(checkData);
 
 
     // on change states
@@ -38,12 +38,15 @@ const LeadUpload = () => {
     const [excelData, setExcelData] = useState(null);
     // it will contain array of objects
 
+    const [filterBatchName, setFilterBatchName] = useState([])
+    const [usersName, setUserName] = useState([])
+
     // handle File
     const fileType = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     const handleFile = (e) => {
         let selectedFile = e.target.files[0];
         if (selectedFile) {
-            // console.log(selectedFile.type);
+            // // console.log(selectedFile.type);
             if (selectedFile && fileType.includes(selectedFile.type)) {
                 let reader = new FileReader();
                 reader.readAsArrayBuffer(selectedFile);
@@ -58,7 +61,7 @@ const LeadUpload = () => {
             }
         }
         else {
-            console.log('plz select your file');
+            // console.log('plz select your file');
         }
     }
 
@@ -70,7 +73,7 @@ const LeadUpload = () => {
             const worksheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[worksheetName];
             const data = XLSX.utils.sheet_to_json(worksheet);
-            console.log(data);
+            // console.log(data);
             setExcelData(data);
             // setPaginationData(_(data).slice(0).take(pageSize).value())
         }
@@ -80,7 +83,17 @@ const LeadUpload = () => {
     }
 
     const handleCourseName = (e) => {
+        const defaultValueCourse = e.target.value;
+
         setCourseName(e.target.value);
+
+        console.log(defaultValueCourse)
+
+
+        const filterBatch = batchsName.users.filter(batch => batch.name.includes(defaultValueCourse))
+        console.log(filterBatchName)
+
+        setFilterBatchName(filterBatch)
     }
 
     const { data: coursesName = [] } = useQuery({
@@ -111,20 +124,22 @@ const LeadUpload = () => {
         setEmployeeName(e.target.value);
     }
 
-    const { data: usersName = [] } = useQuery({
-        queryKey: ['usersName'],
+    const { data: allUser = [] } = useQuery({
+        queryKey: ['allUser'],
         queryFn: async () => {
             const res = await fetch(`https://demo-usc-crm-software.vercel.app/users`);
             const data = await res.json();
+            const uData = data.users.filter(user => user.role === 'user')
+            setUserName(uData);
             return data;
         }
     });
 
-    // console.log(usersName);
+    // // console.log(usersName);
 
     const handleSelectHead = (e) => {
         setHeadName(e.target.value);
-        // console.log(e.target.value)
+        // // console.log(e.target.value)
     }
 
     const { data: headsName = [] } = useQuery({
@@ -142,6 +157,8 @@ const LeadUpload = () => {
     const handleAdded = () => {
         const leads = excelData.filter(cd => cd.isChecked === true)
 
+        // console.log(leads)
+
         const personalData = {
             leads,
             courseName,
@@ -150,21 +167,23 @@ const LeadUpload = () => {
             headName,
         }
 
-        fetch(`https://demo-usc-crm-software.vercel.app/add-leads`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                authorization: localStorage.getItem('access_token')
-            },
-            body: JSON.stringify(personalData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                // toast.success('Database Data added successfully')
-                toast.success(data.message)
-                console.log(data);
+        // console.log(personalData)
 
-            })
+        // fetch(`https://demo-usc-crm-software.vercel.app/add-leads`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json',
+        //         authorization: localStorage.getItem('access_token')
+        //     },
+        //     body: JSON.stringify(personalData)
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         // toast.success('Database Data added successfully')
+        //         toast.success(data.message)
+        //         // console.log(data);
+
+        //     })
         // .catch(error => { toast.error(error.message); setIsloader(false) })
     }
 
@@ -191,7 +210,7 @@ const LeadUpload = () => {
             .then(data => {
                 // toast.success('Database Data added successfully')
                 toast.success(data.message)
-                console.log(data);
+                // console.log(data);
 
             })
         // .catch(error => { toast.error(error.message); setIsloader(false) })
@@ -220,7 +239,7 @@ const LeadUpload = () => {
             .then(data => {
                 // toast.success('Database Data added successfully')
                 toast.success(data.message)
-                console.log(data);
+                // console.log(data);
 
             })
         // .catch(error => { toast.error(error.message); setIsloader(false) })
@@ -229,7 +248,7 @@ const LeadUpload = () => {
 
     // pagination
     // const pageCount = excelData !== null && Math.ceil(excelData.length / pageSize);
-    // // console.log(pageCount);
+    // // // console.log(pageCount);
     // if (pageCount === 1) { return null }
     // const pages = _.range(1, pageCount + 1)
 
@@ -242,7 +261,7 @@ const LeadUpload = () => {
 
     // All select checkbox 
     const toggle = (e) => {
-        console.log(e.target.checked);
+        // console.log(e.target.checked);
         setAllChecked(e.target.checked)
         if (e.target.checked) {
             // paginationData.map(data => data.isChecked = true)
@@ -252,12 +271,12 @@ const LeadUpload = () => {
             // paginationData.map(data => data.isChecked = false)
             excelData.map(data => data.isChecked = false)
         }
-        console.log(excelData);
+        // console.log(excelData);
     }
 
     // single checkbox 
     const handleChange = (e, name) => {
-        console.log(e.target.checked);
+        // console.log(e.target.checked);
         // paginationData.map(pd => pd?.Name === name ? pd.isChecked = e.target.checked : pd)
         // setPaginationData(paginationData)
         excelData.map(pd => pd?.Name === name ? pd.isChecked = e.target.checked : pd)
@@ -317,7 +336,7 @@ const LeadUpload = () => {
                                 coursesName?.users?.map((user) =>
                                     <option
                                         key={user._id}
-                                        value={user._id}>
+                                        value={user.name}>
                                         {user.name}
                                     </option>
                                 )
@@ -327,7 +346,7 @@ const LeadUpload = () => {
                         <select className="select select-bordered select-sm w-1/10" required onChange={handleBatchName}>
                             <option disabled selected>Select Batch Name</option>
                             {
-                                batchsName?.users?.map((user) =>
+                                filterBatchName?.map((user) =>
                                     <option
                                         key={user._id}
                                         value={user._id}>
@@ -353,7 +372,7 @@ const LeadUpload = () => {
                         <select className="select select-bordered select-sm w-1/10" required onChange={handleSelectUser}>
                             <option disabled selected>Select User Name</option>
                             {
-                                usersName?.users?.map((user) =>
+                                usersName?.map((user) =>
                                     user.role !== 'admin' &&
                                     <option
                                         key={user._id}

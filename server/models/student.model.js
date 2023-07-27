@@ -5,16 +5,21 @@ const jwt = require("jsonwebtoken");
 const studentSchema = mongoose.Schema({
     name: {
         type: String,
-        required: [true, "Name is required"],
+        required: [true, "Name is required"]
     },
     email: {
         type: String,
         required: [true, "Email is required"],
-        unique: true
+        unique: [true, "Email is required"],
+    },
+    phone: {
+        type: String,
+        required: [true, "Phone is required"],
+        unique: true,
     },
     password: {
         type: String,
-        required: [true, "Password is required"]
+        required: [true, "Password is required ghgh"],
     },
     role: {
         type: String,
@@ -23,8 +28,11 @@ const studentSchema = mongoose.Schema({
         default: "student",
     },
 }, {
-    timestamps: true
-})
+    timestamps: true,
+});
+
+studentSchema.index({ email: 1 }, { unique: true });
+studentSchema.index({ phone: 1 }, { unique: true });
 
 studentSchema.pre("save", function (next) {
     const password = this.password;
@@ -34,7 +42,7 @@ studentSchema.pre("save", function (next) {
 })
 
 studentSchema.methods.matchPassword = async function (enteredPassword) {
-    console.log(enteredPassword, this.password)
+    // console.log(enteredPassword, this.password)
     return await bcrypt.compare(enteredPassword, this.password);
 }
 
@@ -47,7 +55,7 @@ studentSchema.methods.createJWT = async function () {
         return accessToken;
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         throw new Error(err.message)
     }
 }

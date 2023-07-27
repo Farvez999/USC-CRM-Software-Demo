@@ -27,7 +27,7 @@ const OfflineStudents = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(totalOffline?.map(user => user?.course?.name))];
 
@@ -77,10 +77,10 @@ const OfflineStudents = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = totalOffline.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
-        console.log(fiData);
+        // console.log(fiData);
     }
     // -------------Date wise Filter End--------------------
 

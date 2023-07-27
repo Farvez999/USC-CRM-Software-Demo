@@ -37,7 +37,7 @@ const AddCollection = () => {
             receiveFrom,
             discription
         }
-        console.log(date, moneyReceipt, purpose, payType, amount, receiveBy, receiveFrom, discription,);
+        // console.log(date, moneyReceipt, purpose, payType, amount, receiveBy, receiveFrom, discription,);
 
         fetch(`https://demo-usc-crm-software.vercel.app/collection`, {
             method: 'POST',
@@ -54,7 +54,7 @@ const AddCollection = () => {
                     navigate('/dashboard/collection/collection')
                 }
                 toast.success(`Database Data ${data.message}`)
-                console.log(data);
+                // console.log(data);
             })
 
 
@@ -69,14 +69,14 @@ const AddCollection = () => {
             return data;
         }
     });
-    // console.log(payGetwayName)
+    // // console.log(payGetwayName)
 
 
     return (
         <div className='mt-2 w-12/12 mx-auto'>
 
-            <fieldset class="border border-solid border-gray-500 p-3 mx-10">
-                <legend class="text-2xl">Add Collection</legend>
+            <fieldset className="border border-solid border-gray-500 p-3 mx-10">
+                <legend className="text-2xl">Add Collection</legend>
 
                 <div div >
                     <div className='my-3 mx-2'>

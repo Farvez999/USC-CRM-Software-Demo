@@ -2,7 +2,7 @@ const { expenseAddService, getsAllService, getByDeleteId, remove } = require('..
 
 const addExpense = async (req, res) => {
     try {
-        console.log(req.user);
+        // console.log(req.user);
         if (req.user.role !== 'admin') {
             return res.status(403).send({ message: 'forbidden access' })
         }
@@ -15,7 +15,7 @@ const addExpense = async (req, res) => {
 
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -31,7 +31,7 @@ const getExpense = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -56,7 +56,7 @@ const deleteUserById = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })

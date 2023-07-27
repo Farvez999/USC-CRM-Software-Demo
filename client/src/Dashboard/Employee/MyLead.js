@@ -28,8 +28,8 @@ const MyLead = () => {
             const ssData = data.filter(d => d?._id === sData?._id)
             afterFilter = [...afterFilter, ...ssData]
         })
-        console.log(afterFilter)
-        console.log(filterData)
+        // console.log(afterFilter)
+        // console.log(filterData)
         setFilterData(afterFilter)
     }
 
@@ -54,7 +54,7 @@ const MyLead = () => {
 
     const handleEdidData = (singleLead) => {
         setSLead(singleLead)
-        console.log(singleLead)
+        // console.log(singleLead)
     }
 
     // -------------Edit End -------------
@@ -240,7 +240,7 @@ const MyLead = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
@@ -281,7 +281,7 @@ const MyLead = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = allleads.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
     }

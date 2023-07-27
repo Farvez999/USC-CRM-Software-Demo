@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
-    console.log(updateData)
+    // console.log(updateData)
 
     const { payLoans } = useContext(AuthContext)
 
@@ -41,7 +41,7 @@ const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
             discription,
             loanId: updateData._id
         }
-        console.log(payAmmount);
+        // console.log(payAmmount);
 
         fetch(`https://demo-usc-crm-software.vercel.app/loan/pay`, {
             method: 'POST',
@@ -57,7 +57,7 @@ const LoanModal = ({ updateData, setUpdateData, setFilterData }) => {
                     navigate('/dashboard/loan/pay-receive-loan')
                 }
                 toast.success(`Database Data ${data.message}`)
-                console.log(data);
+                // console.log(data);
                 setUpdateData(null)
             })
 

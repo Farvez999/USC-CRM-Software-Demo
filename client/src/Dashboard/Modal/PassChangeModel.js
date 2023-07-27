@@ -3,24 +3,24 @@ import React from 'react';
 import { toast } from 'react-hot-toast';
 
 const PassChangeModel = ({ singleLead, setSLead, refetch }) => {
-    console.log(singleLead, singleLead._id);
+    // console.log(singleLead, singleLead._id);
     const handleSubmit = e => {
         e.preventDefault();
 
-        console.log(singleLead)
+        // console.log(singleLead)
 
         const password = e.target.setPass.value;
 
-        console.log(password);
+        // console.log(password);
         const user = {
             password
         };
 
-        console.log(user)
+        // console.log(user)
 
         axios.patch(`https://demo-usc-crm-software.vercel.app/update-pass/${singleLead._id}`, user)
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 toast.success('Password Updates Success')
                 setSLead(null)
                 refetch()

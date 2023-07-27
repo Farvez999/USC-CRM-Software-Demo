@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 
 const Edit = ({ l, singleLead, setLeads, leadsStatus, setLeadsStatus }) => {
-    // console.log(lead);
-    // console.log(leads);
-    // console.log(setLeads);
-    // console.log(leadsStatus);
+    // // console.log(lead);
+    // // console.log(leads);
+    // // console.log(setLeads);
+    // // console.log(leadsStatus);
 
 
     const handleInputChange = event => {
         const field = event.target.name;
-        console.log(field);
+        // console.log(field);
         const value = event.target.value;
-        console.log(value);
-        console.log("field : ", field, "value : ", value);
+        // console.log(value);
+        // console.log("field : ", field, "value : ", value);
         const newLeads = singleLead?.data?.map(newLead => newLead.Id === l.Id ? { ...newLead, [field]: value } : newLead)
-        // console.log(newLeads);
+        // // console.log(newLeads);
         setLeadsStatus(newLeads);
     }
 

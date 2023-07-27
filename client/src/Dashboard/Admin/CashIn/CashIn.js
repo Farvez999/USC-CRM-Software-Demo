@@ -64,7 +64,7 @@ const CashIn = () => {
         var resultCollectionData = collections?.collection?.filter(a => (a.createdAt) >= startDate && (a.createdAt) <= endDate);
         setFilterData(resultCollectionData)
         setShow(true)
-        console.log(resultCollectionData)
+        // console.log(resultCollectionData)
 
         var totalAmount = 0;
         for (var i = 0; i < resultCollectionData?.length; i++) {
@@ -74,12 +74,12 @@ const CashIn = () => {
 
         //Course Collection Data
         var resultProductDataFrist = collectionsCourse.filter(a => (a.fristInstallmentDate) >= startDate && (a.fristInstallmentDate) <= endDate);
-        console.log(resultProductDataFrist)
+        // console.log(resultProductDataFrist)
         setFilterCourseCollectionData(collectionsCourse)
         setShow(true)
 
         var resultProductDataTwo = collectionsCourse.filter(a => (a.secondInstallmentDate) >= startDate && (a.secondInstallmentDate) <= endDate);
-        console.log(resultProductDataTwo)
+        // console.log(resultProductDataTwo)
 
         var resultProductDataThird = collectionsCourse.filter(a => (a.thirdInstallmentDate) >= startDate && (a.thirdInstallmentDate) <= endDate);
 
@@ -88,37 +88,37 @@ const CashIn = () => {
         for (var tsOne = 0; tsOne < resultProductDataFrist.length; tsOne++) {
             totalOne += resultProductDataFrist[tsOne].fristInstallment
         }
-        console.log("Sum of the array values is: ", totalOne);
+        // console.log("Sum of the array values is: ", totalOne);
 
         var totalTwo = 0;
         for (var tsTwo = 0; tsTwo < resultProductDataTwo.length; tsTwo++) {
             totalTwo += resultProductDataTwo[tsTwo].secondInstallment
         }
 
-        console.log("Sum of the array values is: ", totalTwo);
+        // console.log("Sum of the array values is: ", totalTwo);
 
         var totalThree = 0;
         for (var tsThree = 0; tsThree < resultProductDataThird.length; tsThree++) {
             totalThree += resultProductDataThird[tsThree].thirdInstallment
         }
-        console.log("Sum of the array values is: ", totalThree);
+        // console.log("Sum of the array values is: ", totalThree);
 
         const totalColloction = totalOne + totalTwo + totalThree
-        console.log(totalColloction)
+        // console.log(totalColloction)
         setCourseCollectionTotal(totalColloction)
 
         // Total Exprese 
         var resultExpenseData = expenses?.expenses?.filter(a => (a.createdAt) >= startDate && (a.createdAt) <= endDate);
         setExpenseDataDetails(expenses)
         setShow(true)
-        console.log(resultExpenseData)
+        // console.log(resultExpenseData)
 
         var totalExpenseAmount = 0;
         for (var p = 0; p < resultExpenseData?.length; p++) {
             totalExpenseAmount += resultExpenseData[p].amount
         }
         setExpenseTotal(totalExpenseAmount)
-        console.log("end ")
+        // console.log("end ")
 
     };
     // -------------Collection Date to Date wise Filter End--------------------

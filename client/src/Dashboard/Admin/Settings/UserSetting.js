@@ -17,7 +17,7 @@ const UserSetting = () => {
         }
     });
 
-    console.log(usersName)
+    // console.log(usersName)
 
     const handleDelete = (leads) => {
         const confirmDelete = window.confirm('Are you sure you want to delete this item?');

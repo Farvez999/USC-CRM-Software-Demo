@@ -139,7 +139,7 @@ const MyAdmission = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
@@ -213,7 +213,7 @@ const MyAdmission = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = admissions.filter(si => formatedDate(si.updatedAt) === value)
         setFilterData(fiData)
 

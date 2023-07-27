@@ -28,7 +28,7 @@ const TotalClose = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(totalClose?.map(user => user?.course?.name))];
 
@@ -79,10 +79,10 @@ const TotalClose = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = totalClose.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
-        console.log(fiData);
+        // console.log(fiData);
     }
     // -------------Date wise Filter End--------------------
 

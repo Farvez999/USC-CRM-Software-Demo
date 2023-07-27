@@ -19,7 +19,7 @@ app.use(cors({
 
 // db connection
 mongoose.connect(process.env.DATABASE).then(() => {
-    console.log(`Database connection is successful`);
+    // console.log(`Database connection is successful`);
 })
 
 // routes
@@ -50,5 +50,5 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server running in ${PORT}`);
+    // console.log(`Server running in ${PORT}`);
 });

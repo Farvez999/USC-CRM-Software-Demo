@@ -30,8 +30,8 @@ const OnlineStudent = () => {
             const ssData = data.filter(d => d?._id === sData?._id)
             afterFilter = [...afterFilter, ...ssData]
         })
-        console.log(afterFilter)
-        console.log(filterData)
+        // console.log(afterFilter)
+        // console.log(filterData)
         setFilterData(afterFilter)
     }
 
@@ -225,7 +225,7 @@ const OnlineStudent = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(uniquefilterData?.map(user => user?.course?.name))];
 
@@ -265,7 +265,7 @@ const OnlineStudent = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = onlines.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
 

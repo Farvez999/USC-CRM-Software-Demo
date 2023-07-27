@@ -54,7 +54,7 @@ userSchema.methods.createJWT = async function () {
         return accessToken;
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         throw new Error(err.message)
     }
 }

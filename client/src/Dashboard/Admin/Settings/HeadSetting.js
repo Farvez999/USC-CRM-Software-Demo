@@ -33,14 +33,14 @@ const HeadSetting = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 toast.success(`${headName} added successfully`)
                 refetch()
             })
     }
 
     const handleDelete = (leads) => {
-        console.log(leads);
+        // console.log(leads);
 
         fetch(`https://demo-usc-crm-software.vercel.app/delete-head/${leads}`, {
             method: 'DELETE',

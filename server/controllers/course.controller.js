@@ -2,7 +2,7 @@ const { courseAddService, getsAllService, getByDeleteId, remove } = require('../
 
 const addCourse = async (req, res) => {
     try {
-        console.log(req.user);
+        // console.log(req.user);
         if (req.user.role !== 'admin') {
             return res.status(403).send({ message: 'forbidden access' })
         }
@@ -14,7 +14,7 @@ const addCourse = async (req, res) => {
 
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -30,7 +30,7 @@ const getCourse = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })
@@ -40,7 +40,7 @@ const getCourse = async (req, res) => {
 const deleteUserById = async (req, res) => {
     try {
         const id = req.params.id;
-        // console.log(id);
+        // // console.log(id);
 
         const exist = await getByDeleteId(id);
         if (!exist) {
@@ -56,7 +56,7 @@ const deleteUserById = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({
             message: err.message
         })

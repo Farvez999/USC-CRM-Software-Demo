@@ -35,7 +35,7 @@ const CollectionHead = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 toast.success(`${collectionHead} added successfully`)
                 refetch()
             })

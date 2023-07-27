@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const LoanRevModel = ({ updateData, setUpdateData, setFilterData }) => {
-    console.log(updateData)
+    // console.log(updateData)
 
     const { revLoans } = useContext(AuthContext)
 
@@ -13,10 +13,10 @@ const LoanRevModel = ({ updateData, setUpdateData, setFilterData }) => {
     const amounts = matchingItems?.map(item => parseInt(item.revAmmount));
     const payDue = amounts?.reduce((total, amount) => total + amount, 0);
 
-    console.log(payDue)
+    // console.log(payDue)
 
     const totalDue = updateData.loanAmount - payDue
-    console.log(totalDue)
+    // console.log(totalDue)
 
     const handleChange = (event) => {
 
@@ -42,7 +42,7 @@ const LoanRevModel = ({ updateData, setUpdateData, setFilterData }) => {
             discription,
             loanId: updateData._id
         }
-        console.log(revAmmount);
+        // console.log(revAmmount);
 
         fetch(`https://demo-usc-crm-software.vercel.app/loan/rev`, {
             method: 'POST',
@@ -58,7 +58,7 @@ const LoanRevModel = ({ updateData, setUpdateData, setFilterData }) => {
                     navigate('/dashboard/loan/rev-payable-loan')
                 }
                 toast.success(`Database Data ${data.message}`)
-                console.log(data);
+                // console.log(data);
                 setUpdateData(null)
             })
 

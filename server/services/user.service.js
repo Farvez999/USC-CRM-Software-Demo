@@ -11,7 +11,7 @@ exports.findOne = async (query) => {
         return user;
     }
     catch (err) {
-        console.log(err.message);
+        // console.log(err.message);
         throw new Error(err.message.split(":")[2]);
     }
 }
@@ -22,7 +22,7 @@ exports.gets = async (document) => {
         return users
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
         throw new Error(err.message);
     }
 }
@@ -33,20 +33,20 @@ exports.getById = async (id) => {
         return user
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
         throw new Error(err.message);
     }
 }
 
 exports.update = async (id, document, options) => {
-    // console.log("Document", document)
-    // console.log("id", id)
+    // // console.log("Document", document)
+    // // console.log("id", id)
     try {
         const update = await User.findByIdAndUpdate(id, { password: document }, options);
         return update
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         if (err.code === 11000) {
             if (err.keyValue?.name) {
                 throw new Error("Name already exist");
@@ -67,7 +67,7 @@ exports.update = async (id, document, options) => {
 //         return user
 //     }
 //     catch (err) {
-//         console.log(err);
+//         // console.log(err);
 //         throw new Error(err.message.split(":")[2]);
 
 //     }
@@ -76,11 +76,11 @@ exports.update = async (id, document, options) => {
 exports.getByDeleteId = async (id) => {
     try {
         const user = await User.findById(id);
-        // console.log(user);
+        // // console.log(user);
         return user
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
         throw new Error(err.message);
     }
 }
@@ -91,7 +91,7 @@ exports.remove = async (id) => {
         return lead
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         throw new Error(err.message.split(":")[2]);
 
     }

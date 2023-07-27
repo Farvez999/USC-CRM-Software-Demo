@@ -78,7 +78,7 @@ const HeadPayDetails = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = filterData.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
 
@@ -91,13 +91,13 @@ const HeadPayDetails = () => {
     for (var i = 0; i < filterData.length; i++) {
         due += filterData[i].admissionFee - (filterData[i].fristInstallment + filterData[i].secondInstallment + filterData[i].thirdInstallment)
     }
-    console.log("Sum of the array values is: ", due);
+    // console.log("Sum of the array values is: ", due);
 
     var totalSum = 0;
     for (var ts = 0; ts < filterData.length; ts++) {
         totalSum += filterData[ts].fristInstallment + filterData[ts].secondInstallment + filterData[ts].thirdInstallment
     }
-    console.log("Sum of the array values is: ", totalSum);
+    // console.log("Sum of the array values is: ", totalSum);
 
     return (
         <div className='mx-2 my-6'>

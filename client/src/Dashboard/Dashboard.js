@@ -35,7 +35,7 @@ const Dashboard = () => {
     const [filterData, setFilterData] = useState([])
     const [addmissionData, setAddmissionData] = useState([])
     const [todayFollowup, setTodayFollowup] = useState([])
-    console.log(filterData);
+    // console.log(filterData);
 
     // ChartJS.register(
     //     CategoryScale,
@@ -105,7 +105,7 @@ const Dashboard = () => {
             }
         }
     });
-    console.log(allleads);
+    // console.log(allleads);
 
 
     const { data: admissions = [] } = useQuery({
@@ -310,7 +310,7 @@ const Dashboard = () => {
 
     // let date = new Date("01/05/2020");
     // let day = date.toLocaleString('en-us', { weekday: 'long' });
-    // console.log(day);
+    // // console.log(day);
     // expected result = tuesday
 
     var today = new Date().toLocaleDateString(undefined, {

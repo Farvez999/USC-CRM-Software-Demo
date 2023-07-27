@@ -3,12 +3,12 @@ import React from 'react';
 import { toast } from 'react-hot-toast';
 
 const EditModal = ({ singleLead, setSLead, refetchUpdateData }) => {
-    console.log(singleLead);
+    // console.log(singleLead);
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        console.log(singleLead)
+        // console.log(singleLead)
 
         const firstFollow = e.target.firstFollow.value;
         const secondFollow = e.target.secondFollow.value;
@@ -19,7 +19,7 @@ const EditModal = ({ singleLead, setSLead, refetchUpdateData }) => {
         const remarkTwo = e.target.remarkTwo.value;
         const admissionStatus = e.target.admissionStatus.value;
 
-        console.log(firstFollow, secondFollow, thirdtFollow, nextFollow, remark, remarkTwo, admissionStatus);
+        // console.log(firstFollow, secondFollow, thirdtFollow, nextFollow, remark, remarkTwo, admissionStatus);
         const user = {
             firstFollow,
             secondFollow,
@@ -31,11 +31,11 @@ const EditModal = ({ singleLead, setSLead, refetchUpdateData }) => {
 
         };
 
-        console.log(user)
+        // console.log(user)
 
         axios.patch(`https://demo-usc-crm-software.vercel.app/update/${singleLead._id}`, user)
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 toast.success('Lead Updates Success')
                 setSLead(null)
                 refetchUpdateData()

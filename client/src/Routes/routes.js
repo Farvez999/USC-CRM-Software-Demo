@@ -68,6 +68,8 @@ import CashIn from "../Dashboard/Admin/CashIn/CashIn";
 import CollectionReport from "../Dashboard/Admin/CourseReport/CollectionReport";
 import PayGetAccountsReport from "../Dashboard/Admin/CourseReport/PayGetAccountsReport";
 import PayReport from "../Dashboard/Admin/CourseReport/BatchReport";
+import AllStudents from "../Dashboard/Students/AllStudents";
+import EnrollCourse from "../Dashboard/Students/EnrollCourse";
 
 const router = createBrowserRouter([
     {
@@ -367,8 +369,14 @@ const router = createBrowserRouter([
                 path: '/dashboard/payment-details',
                 element: <PaymentDetails></PaymentDetails>
             },
-
-
+            {
+                path: '/dashboard/student/all-student',
+                element: <AllStudents></AllStudents>
+            },
+            {
+                path: '/dashboard/student/enroll-course',
+                element: <EnrollCourse></EnrollCourse>
+            },
         ]
     },
 

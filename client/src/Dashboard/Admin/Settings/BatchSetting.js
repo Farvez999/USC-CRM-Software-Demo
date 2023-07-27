@@ -41,7 +41,7 @@ const BatchSetting = () => {
             })
     }
 
-    // console.log(batchsName)
+    // // console.log(batchsName)
 
     const handleBatchAdd = () => {
         const addBatchName = {
@@ -58,7 +58,7 @@ const BatchSetting = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 toast.success(`${batchName} added successfully`)
                 refetch()
             })

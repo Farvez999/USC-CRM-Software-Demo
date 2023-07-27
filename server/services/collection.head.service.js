@@ -12,7 +12,7 @@ exports.getsAllService = async (document) => {
         return courses
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
         throw new Error(err.message);
     }
 }
@@ -20,11 +20,11 @@ exports.getsAllService = async (document) => {
 exports.getByDeleteId = async (id) => {
     try {
         const user = await CollectionHead.findById(id);
-        // console.log(user);
+        // // console.log(user);
         return user
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
         throw new Error(err.message);
     }
 }
@@ -35,7 +35,7 @@ exports.remove = async (id) => {
         return lead
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         throw new Error(err.message.split(":")[2]);
 
     }

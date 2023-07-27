@@ -28,7 +28,7 @@ const TotalLead = () => {
     // -----------------Filter Start--------------------
 
     const [selectedValue, setSelectedValue] = useState([]);
-    console.log(selectedValue)
+    // console.log(selectedValue)
 
     const uniqueCourse = [...new Set(totalleads?.map(user => user?.course?.name))];
 
@@ -86,7 +86,7 @@ const TotalLead = () => {
     //         (si.batch.name) === batchRef.current.value &&
     //         (si.user.name) === userRef.current.value)
     //     setFilterData(fData)
-    //     console.log(fData)
+    //     // console.log(fData)
     // };
 
     // -----------------Filter End--------------------
@@ -99,10 +99,10 @@ const TotalLead = () => {
 
     const handleInputChange = event => {
         const value = event.target.value;
-        console.log(value);
+        // console.log(value);
         const fiData = totalleads.filter(si => formatedDate(si.createdAt) === value)
         setFilterData(fiData)
-        console.log(fiData);
+        // console.log(fiData);
     }
     // -------------Date wise Filter End--------------------
 
